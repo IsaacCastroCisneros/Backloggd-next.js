@@ -1,6 +1,10 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import GlobalContext from './context/GlobalContext'
+import Msg from './components/Msg'
+import Navbar from './components/Navbar'
+import Popup from './components/Popup'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,8 +19,15 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="en" className="bg-bg">
+      <body className="relative">
+        <GlobalContext>
+          <Popup />
+          <Msg />
+          <Navbar />
+          <main className="custom-container">{children}</main>
+        </GlobalContext>
+      </body>
     </html>
-  )
+  );
 }
