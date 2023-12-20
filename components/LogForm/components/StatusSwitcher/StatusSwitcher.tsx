@@ -9,7 +9,7 @@ import StatusOption from './components/StatusOption'
 import myStatus from './types/myStatus'
 import config from '../../interfaces/config'
 import { twMerge } from 'tailwind-merge'
-import {use} from "react"
+
 
 interface props extends HtmlHTMLAttributes<HTMLDivElement>
 {
@@ -82,14 +82,14 @@ export default function StatusSwitcher(myProps:props)
   const playingStyle = playing? {button:"bg-myPink text-[#fff]",icon:"text-[#fff]"} :{button:"bg-field text-text3",icon:"text-text4"} 
 
   return (
-    <div {...props} className={twMerge('flex flex-col mob:flex-row items-center gap-[.5rem] mob1:h-[24px] mob1:items-stretch',className)} >
+    <div {...props} className={twMerge('flex flex-col mob:flex-row items-center gap-[.5rem] mob1:h-[24px] mob1:items-stretch mob:mb-[1rem]',className)} >
       <div
         className={`flex relative mt-[1rem] mob:mt-0 rounded-[.3rem] w-full mob:flex-1 mob1:min-w-[112.48px] ${styles.container}`}
       >
         {show && (
           <div
             ref={ref}
-            className="w-full bg-border2 absolute left-0 top-[115%] rounded-[.3rem] flex flex-col border-field border-[1px]"
+            className="w-full bg-border2 absolute left-0 top-[115%] rounded-[.3rem] flex flex-col border-field border-[1px] z-[99999]"
           >
             <StatusOption
               status="played"

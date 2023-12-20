@@ -6,8 +6,9 @@ import score from './interfaces/score'
 import user from '@/interfaces/user'
 import getScore from './server/getScore'
 import gameLogin from '@/server/gameLogin'
-import gameLog from '@/interfaces/gameLog'
 import config from '../LogForm/interfaces/config'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
 
 interface props 
 {
@@ -34,7 +35,12 @@ export default function Score(props:props)
       }
       
       request()
-    },[])
+  },[])
+
+  function handleToDefault()
+  {
+    setHighligth(0)
+  }
     
   if (user === null) return null;
 
@@ -42,14 +48,22 @@ export default function Score(props:props)
     <form
       onSubmit={async (e) => {
         e.preventDefault();
-        if (setConfig)
+        if (setConfig) {
           return setConfig((prev) => {
             return { ...prev, values: { ...prev.values, score } };
           });
+        }
+
         await gameLogin({ score, user_id: user.id, game_id: id });
       }}
     >
-      <div className="flex text-gray w-fit justify-center">
+      <div className="flex text-gray w-fit justify-center relative items-center">
+        <button
+          className=" text-text hover:text-myPink"
+          onClick={handleToDefault}
+        >
+          <FontAwesomeIcon icon={faXmark} size='sm' />
+        </button>
         <Star
           myScore={[1, 2]}
           size={size}

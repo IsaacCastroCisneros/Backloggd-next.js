@@ -28,7 +28,10 @@ export default function Input(myProps:props)
           </span>
         )}
       </div>
+      {
+      underText&&
       <label className="text-text text-[12px]">{underText}</label>
+      }
     </div>
   );
 }

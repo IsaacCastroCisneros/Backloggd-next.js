@@ -13,6 +13,7 @@ import gameLogin from '@/server/gameLogin'
 import config from './interfaces/config'
 import CancelingLog from './components/CancelingLog/CancelingLog'
 import request from './util/request'
+import Textarea from '../Textarea'
 
 interface props extends gameCardData
 {
@@ -70,7 +71,16 @@ export default function LogForm(props:props)
   async function loginTheGame()
   {
       if(noChanges)return clossingPopup();
-      const{err}=await gameLogin({ game_id: id, user_id: user.id, ...values });
+
+      const myStatus= values.status==="none" ? "played":values.status
+   
+      const { err } = await gameLogin({
+        game_id: id,
+        user_id: user.id,
+        ...values,
+        status: myStatus,
+      });
+      
       if(err)
       {
         setMsg({show:true,msg:"An error was occured",type:"fail"})
@@ -103,23 +113,22 @@ export default function LogForm(props:props)
         {name}&nbsp;
         <span className="font-normal text-[20px] text-gray4">{date}</span>
       </span>
-      {(!loading && !err)&&(
+      {!loading && !err && (
         <>
-          <div className="flex">
+          <div className="flex mob:flex-col">
             <div className="flex flex-col">
               <CardPic
                 src={cover}
                 height={178}
                 width={132}
-                className="mob:h-[123px] mob:w-[90px]"
+                className="mob:hidden"
               />
               <StatusSwitcher
                 setConfig={setConfig}
-                className="mob:hidden"
                 currentStatus={values.status}
               />
             </div>
-            <div className="pl-[2rem] mob:pl-[1rem] flex-1">
+            <div className="pl-[2rem] mob:pl-[1rem] flex-1 mob1:px-0">
               <div className="flex flex-col">
                 <div className="flex justify-between mb-[1rem]">
                   <div>
@@ -151,6 +160,7 @@ export default function LogForm(props:props)
                           }))
                         }
                       >
+                        <option value="none">Choose a platform...</option>
                         {platformsIgdb.map((plat, pos) => (
                           <option key={pos} value={plat.id}>
                             {plat.name}
@@ -160,18 +170,12 @@ export default function LogForm(props:props)
                     )}
                   </div>
                 </div>
-
-                {/*  <StatusSwitcher
-                  setConfig={setConfig}
-                  className="mob:flex hidden"
-                  currentStatus={values.status}
-                /> */}
               </div>
               <div className="w-full">
                 <span className="text-[20px] mob:text-[16px] text-text mb-[.3rem] block">
                   Review
                 </span>
-                <textarea
+                <Textarea
                   maxLength={3000}
                   value={values.review}
                   onChange={(e) =>
@@ -180,8 +184,7 @@ export default function LogForm(props:props)
                       values: { ...prev.values, review: e.target.value },
                     }))
                   }
-                  className="bg-field text-text2 p-[8px] rounded-[.3rem] resize-none w-full h-[200px] block focus:border-text border-[1px] border-[transparent] outline-none focus:text-[#fff]"
-                ></textarea>
+                />
               </div>
             </div>
           </div>
@@ -197,19 +200,16 @@ export default function LogForm(props:props)
           </div>
         </>
       )}
-      {(loading&&!err) && (
+      {loading && !err && (
         <span className="text-[2rem] text-[#fff] w-[100%] mt-[5rem] flex justify-center items-center">
           Loading...
         </span>
       )}
-      {
-        err&&
-        (
-          <span className="text-[2rem] text-[#fff] w-[100%] mt-[5rem] flex justify-center items-center">
-            An error was occured
-          </span>
-        )
-      }
+      {err && (
+        <span className="text-[2rem] text-[#fff] w-[100%] mt-[5rem] flex justify-center items-center">
+          An error was occured
+        </span>
+      )}
     </div>
   );
 }

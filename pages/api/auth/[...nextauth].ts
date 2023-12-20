@@ -18,7 +18,7 @@ export const authOptions:NextAuthOptions =
         async authorize(credentials):Promise<user|null>
         { 
 
-          const {err,res} =await login({user:credentials as logUser,query:"select * from users where email=?"})
+          const {err,res} =await login({user:credentials as logUser})
 
           if(err)
           {

@@ -5,20 +5,23 @@ import React, { ImgHTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 interface props extends ImgHTMLAttributes<HTMLImageElement>
-{}
+{
+  notFoundStyles?:string
+}
 
 export default function CardPic(myProps:props) 
 {
 
-   const{src,height=123,width=90}=myProps
+   const{src,height=123,width=90,notFoundStyles}=myProps
    const imgSrc=src ?  choosingImgSize({url:src,size:"cover_big"}):undefined
 
   return (
     <>
       {src && <Pic {...myProps} src={imgSrc} />}
       {!src && (
-        <div className="relative w-fit h-fit">
+        <div className={twMerge("relative w-fit h-fit",notFoundStyles)}>
           <Pic
+            {...myProps}
             height={height}
             width={width}
             src="/img/no_image-eee1d555ae021e9cf0ca691c0e9ec60a.jpg"
@@ -36,9 +39,7 @@ export default function CardPic(myProps:props)
 function Pic(myProps:props)
 {
 
-  const{className="",height=123,width=90,...props}=myProps
-
-  const styles=`min-h-[${height}px] min-w-[${width}px]`
+  const{className="",height=134.28,width=90,...props}=myProps
 
   return (
     <img
@@ -47,7 +48,7 @@ function Pic(myProps:props)
       height={height}
       width={width}
       className={twMerge(
-        `object-cover rounded-[4px] mob1:min-h-[initial] ${styles} mob1:min-w-[initial] border-field border-[1px] hover:border-gray`,
+        `object-cover rounded-[4px] min-h-[134.28px] min-w-[90px] border-field border-[1px] hover:border-gray`,
         className
       )}
     />

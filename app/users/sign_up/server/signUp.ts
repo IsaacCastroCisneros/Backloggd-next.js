@@ -34,8 +34,8 @@ export default async function signUp({query,user}:props):Promise<{err:Array<stri
     const errors=results[1]
     const errorsMsg=
     [
-      errors.username ? "el usuario se encuentra registrado":null,
-      errors.email?"el email se encuentra registrado":null
+      errors.username ? "the username is already registered":null,
+      errors.email?"the email is already registered":null
     ]
     return {err:errorsMsg.filter(err=>err!==null) as Array<string>,res:null} 
   }

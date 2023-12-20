@@ -29,7 +29,7 @@ export default async function request(props:props)
 
         if (platformsIgdb.length > 0) 
         {
-          const platform=platformsIgdb[0].id
+          const platform="none"
 
           setConfig(prev=>
             (

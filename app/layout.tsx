@@ -5,6 +5,7 @@ import GlobalContext from './context/GlobalContext'
 import Msg from './components/Msg'
 import Navbar from './components/Navbar'
 import Popup from './components/Popup'
+import '@fortawesome/fontawesome-svg-core/styles.css';
 
 const inter = Inter({ subsets: ['latin'] })
 
