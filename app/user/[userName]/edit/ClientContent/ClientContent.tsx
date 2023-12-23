@@ -4,25 +4,67 @@
 import LabedInput from '@/components/LabedInput/LabedInput'
 import LabedTextarea from '@/components/LabedTextarea/LabedTextarea'
 import user from '@/interfaces/user'
-import React, { FormEvent, useContext } from 'react'
+import React, { FormEvent, createContext, useContext, useRef, useState } from 'react'
 import updateUser from './server/updateUser'
 import { SignInResponse, signIn, useSession } from 'next-auth/react'
 import { global } from '@/app/context/GlobalContext'
 import Button from '@/components/Button'
+import Link from 'next/link'
+import { game } from '@/interfaces/game'
+import SearcherIGDB from '../../components/SearcherIGDB/SearcherIGDB'
+import Favorites from './components/Favorites'
+import { context } from './context/context'
+import favorite from './interfaces/favorite'
+import cardPosition from './types/cardPosition'
 
 interface props extends user
 {
-
+  favorites:Array<game>
 }
+
+const defaulFavorites:Array<favorite>=
+[
+  {
+    pos:0,
+    isIn:false,
+    id:"",
+    cover:""
+  },
+  {
+    pos:1,
+    isIn:false,
+    id:"",
+    cover:""
+  },
+  {
+    pos:"king",
+    isIn:false,
+    id:"",
+    cover:""
+  },
+  {
+    pos:2,
+    isIn:false,
+    id:"",
+    cover:""
+  },
+  {
+    pos:3,
+    isIn:false,
+    id:"",
+    cover:""
+  },
+]
 
 export default function ClientContent(props:props) 
 {
+    const{setMsg,setPopup}=useContext(global)
+    const[favorites,setFavorites]=useState<Array<favorite>>(defaulFavorites)
+    const{data} =useSession() 
+    const{user}=data || {user:{}as user}
+    const{username:name}=user as user
 
-    const{setMsg}=useContext(global)
-    const{data} =useSession()
-    const{user}=data || {user:{}}
-
-    const{username,twitter,bio,id}=props 
+    const{username,twitter,bio}=props 
 
     async function submittingForm(e:FormEvent<HTMLFormElement>)
     {
@@ -30,7 +72,7 @@ export default function ClientContent(props:props)
        const formData= new FormData(e.currentTarget)
        const data=Object.fromEntries(formData)
 
-       const{err}=await updateUser({...props,...data})
+       const{err}=JSON.parse(await updateUser({...props,...data})) 
        if(err)return setMsg({msg:"an error was occurred",type:"fail",show:true})
 
        const {error} = await signIn("credentials", {
@@ -43,8 +85,30 @@ export default function ClientContent(props:props)
 
     }
 
+    function updateFavorites(newFavorite:favorite)
+    {
+      const newFavorites=[...favorites]
+      const index=favorites.findIndex(fav=>fav.pos===newFavorite.pos)
+      newFavorites[index]=newFavorite
+
+      setFavorites(newFavorites)
+    }
+
+    function showPopup(pos:cardPosition)
+    {
+
+      setPopup({show:true,content:<SearcherIGDB updateFavorites={updateFavorites} pos={pos}/>,clickOutside:true})
+    }
+
+    const values:context=
+    {
+      showPopup,
+      favorites,
+      updateFavorites
+    }
+  
   return (
-    <>
+    <context.Provider value={values}>
       <h1 className=" text-text4 text-[32px] font-medium mb-[.8rem] block">
         Profile
       </h1>
@@ -73,12 +137,18 @@ export default function ClientContent(props:props)
           label="Biography"
           props={{
             textarea: { maxLength: 602, name: "bio", defaultValue: bio },
+            container: { className: "mt-[1.2rem]" },
           }}
         />
-        <Button myType="cancel">Cancel</Button>
-        <Button>Save Changes</Button>
+        <Favorites />
+        <div className="flex gap-[1rem] items-end justify-end ">
+          <Link href={`/user/${name}`} className=" text-text hover:underline">
+            Cancel
+          </Link>
+          <Button>Save Changes</Button>
+        </div>
       </form>
-    </>
+    </context.Provider>
   );
     
 }

@@ -15,7 +15,6 @@ export default async function page({params}:any)
     const{res,err}=await getUser({userName})
   
     if(err)return <ErrMsg/>
-    if(res.length===0)return notFound()
 
     const{password,...user}=res[0] as user
 

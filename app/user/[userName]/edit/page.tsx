@@ -3,6 +3,9 @@ import { authOptions } from '@/pages/api/auth/[...nextauth]'
 import { Session, getServerSession } from 'next-auth'
 import { notFound } from 'next/navigation'
 import ClientContent from './ClientContent/ClientContent'
+import getGame from '@/server/getGame'
+import getFavorites from '../server/getFavorites'
+import ErrMsg from '@/components/ErrMsg/ErrMsg'
 
 interface values
 {
@@ -14,12 +17,23 @@ interface values
 export default async function page() 
 {
 
-  const session = await getServerSession(authOptions)
-  if(session===null)return notFound()
+  try
+  {
+    const session = await getServerSession(authOptions)
+    if(session===null)return notFound()
+  
+    const{user}=session as Session
+    const{id}=user as user
+    const {res:favorites} = JSON.parse(await getFavorites(id))  
 
-  const{user}=session as Session
+    return (
+      <ClientContent {...user as user} favorites={favorites} />
+    );
+  }
+  catch(err)
+  {
+     return <ErrMsg/>
+  }
+ 
 
-  return (
-    <ClientContent {...user as user} />
-  );
 }

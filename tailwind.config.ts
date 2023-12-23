@@ -19,6 +19,7 @@ const config: Config = {
      text2:"#cbd4dc",
      text3:"#ffffff99",
      text4:"#badefc",
+     text5:"#656e77",
      field:"#30394c",
      gray:"#3b4760",
      placeholder:"#7d8a96",
