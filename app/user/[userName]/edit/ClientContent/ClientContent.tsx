@@ -97,7 +97,15 @@ export default function ClientContent(props:props)
     function showPopup(pos:cardPosition)
     {
 
-      setPopup({show:true,content:<SearcherIGDB updateFavorites={updateFavorites} pos={pos}/>,clickOutside:true})
+      setPopup({
+        show: true,
+        content: (
+          <div className="w-[50rem] max-w-full top-[-10rem] absolute">
+            <SearcherIGDB updateFavorites={updateFavorites} pos={pos} />
+          </div>
+        ),
+        clickOutside: true,
+      });
     }
 
     const values:context=

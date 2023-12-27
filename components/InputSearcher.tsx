@@ -1,13 +1,15 @@
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { IconDefinition, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon, FontAwesomeIconProps } from '@fortawesome/react-fontawesome'
 import React, { InputHTMLAttributes } from 'react'
 
 interface props extends InputHTMLAttributes<HTMLInputElement>
 {
-  
+   icon:FontAwesomeIconProps
 }
 
-export default function InputSearcher({...props}:props) {
+export default function InputSearcher({icon,...props}:props) 
+{
+
   return (
     <div className="flex items-stretch bg-field rounded-[.3rem]">
       <input
@@ -17,7 +19,7 @@ export default function InputSearcher({...props}:props) {
         placeholder="Search"
       />
       <button className="text-text2 hover:text-[#fff] font-bold pl-[4px] pr-[8px]">
-        <FontAwesomeIcon icon={faMagnifyingGlass} />
+        <FontAwesomeIcon {...icon} icon={icon.icon||faMagnifyingGlass} />
       </button>
     </div>
   );

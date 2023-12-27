@@ -2,16 +2,17 @@
 import InputSearcher from '@/components/InputSearcher'
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import Option from './components/Option'
-import result from './interfaces/result'
 import favorite from '../../edit/ClientContent/interfaces/favorite'
 import cardPosition from '../../edit/ClientContent/types/cardPosition'
-import igdb from '@/util/igdb'
-import getCoverDate from '@/util/getCoverDate'
+import getFullGameIGDB from '@/util/getFullGameIGDB'
+import gameCardData from '@/interfaces/gameCardData'
+import { IconDefinition, faCircleNotch, faMagnifyingGlass, faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIconProps } from '@fortawesome/react-fontawesome'
 
 interface finalResults
 {
-  results:Array<result>
-  show:boolean
+  results:Array<gameCardData>
+  status:"isLoading"|boolean
 }
 interface props
 {
@@ -21,29 +22,23 @@ interface props
 
 export default function SearcherIGDB({updateFavorites,pos}:props) 
 {
-  const[finalResults,setFinalResults]=useState<finalResults>({show:false,results:[]})
+  const[finalResults,setFinalResults]=useState<finalResults>({status:false,results:[]})
   const[isSearching,setIsSearching]=useState<any>(null)
 
-  function handleSearch(e:ChangeEvent<HTMLInputElement>)
+  
+  async function handleSearch(e:ChangeEvent<HTMLInputElement>)
   {
     if(isSearching)clearTimeout(isSearching)
  
-    const param=e.target.value
-    if(param==="")return
+    const game=e.target.value
+    if(game==="")return
 
     const searching=setTimeout(async()=>
     {
-      const{res}=await igdb({type:"games",query:`search "${param}"; fields name, cover, release_dates; limit 25;`})
-
-      const{coversIds,dateIds}=getCoverDate({games:res})
-
-      const {res:covers} = await igdb({type:"covers",query:`where id=(${coversIds}); fields url,game;`})
-      const {res:dates} = await igdb({type:"release_dates",query:`where id=(${dateIds}); fields y,game;`})
-      
-      const results= res as Array<result>
-
-      setFinalResults({show:true,results}) 
-    },800)
+      setFinalResults({ results:[], status: "isLoading" })
+      const results=await getFullGameIGDB({game})
+      setFinalResults({status:true,results}) 
+    },350)
     setIsSearching(searching)
   }
 
@@ -53,20 +48,37 @@ export default function SearcherIGDB({updateFavorites,pos}:props)
     {
       if(isSearching)clearTimeout(isSearching)
     }
-  },[])
+  },[isSearching])
 
-  const{show,results}=finalResults
+  const{status,results}=finalResults
+  console.log(results)
+
+  const loadingIcon:FontAwesomeIconProps= status==="isLoading" ? {icon:faSpinner,spin:true} :{icon:faMagnifyingGlass,spin:false} 
 
   return (
     <div className="relative z-[999]">
-      <InputSearcher onChange={handleSearch} onBlur={()=>setFinalResults(prev=>({...prev,show:false}))}/>
-      {(
-        <div className="flex flex-col absolute top-[100%] left-0 max-h-[25rem] overflow-y-auto w-full rounded-[0px_0px_.3rem_.3rem]">
+      <InputSearcher
+        onChange={handleSearch}
+        icon={loadingIcon}
+    /*     onBlur={() => setFinalResults((prev) => ({ ...prev, status: false }))} */
+      />
+      {
+        <div
+          className={`flex-col absolute top-[100%] left-0 max-h-[25rem] overflow-y-auto w-full rounded-[0px_0px_.3rem_.3rem] ${
+            status===true ? "flex" : "hidden"
+          }`}
+        >
           {results.map((res, index) => (
-            <Option key={index} pos={pos} {...res} updateFavorites={updateFavorites} />
+            <Option
+              key={index}
+              pos={pos}
+              {...res}
+              updateFavorites={updateFavorites}
+            />
           ))}
         </div>
-      )}
+      }
+    
     </div>
   );
 }
