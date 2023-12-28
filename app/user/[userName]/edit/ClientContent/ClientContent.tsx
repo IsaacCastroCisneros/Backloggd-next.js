@@ -149,7 +149,7 @@ export default function ClientContent(props:props)
           }}
         />
         <Favorites />
-        <div className="flex gap-[1rem] items-end justify-end ">
+        <div className="flex gap-[1rem] items-end justify-end mt-[2rem]">
           <Link href={`/user/${name}`} className=" text-text hover:underline">
             Cancel
           </Link>

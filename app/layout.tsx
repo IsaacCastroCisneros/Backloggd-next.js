@@ -26,7 +26,7 @@ export default function RootLayout({
           <Popup />
           <Msg />
           <Navbar />
-          <main className="custom-container">{children}</main>
+          <main className="custom-container pb-[1rem] block">{children}</main>
         </GlobalContext>
       </body>
     </html>

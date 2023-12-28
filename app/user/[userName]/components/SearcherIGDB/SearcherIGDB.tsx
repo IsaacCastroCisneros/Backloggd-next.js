@@ -13,6 +13,7 @@ interface finalResults
 {
   results:Array<gameCardData>
   status:"isLoading"|boolean
+  noResults?:boolean
 }
 interface props
 {
@@ -22,7 +23,7 @@ interface props
 
 export default function SearcherIGDB({updateFavorites,pos}:props) 
 {
-  const[finalResults,setFinalResults]=useState<finalResults>({status:false,results:[]})
+  const[finalResults,setFinalResults]=useState<finalResults>({status:false,results:[],noResults:false})
   const[isSearching,setIsSearching]=useState<any>(null)
 
   
@@ -37,7 +38,11 @@ export default function SearcherIGDB({updateFavorites,pos}:props)
     {
       setFinalResults({ results:[], status: "isLoading" })
       const results=await getFullGameIGDB({game})
-      setFinalResults({status:true,results}) 
+      if(results.length===0)
+      {
+        return setFinalResults({status:false,results:[],noResults:true})
+      }
+      setFinalResults({status:true,results,noResults:false}) 
     },350)
     setIsSearching(searching)
   }
@@ -50,8 +55,7 @@ export default function SearcherIGDB({updateFavorites,pos}:props)
     }
   },[isSearching])
 
-  const{status,results}=finalResults
-  console.log(results)
+  const{status,results,noResults}=finalResults
 
   const loadingIcon:FontAwesomeIconProps= status==="isLoading" ? {icon:faSpinner,spin:true} :{icon:faMagnifyingGlass,spin:false} 
 
@@ -60,25 +64,27 @@ export default function SearcherIGDB({updateFavorites,pos}:props)
       <InputSearcher
         onChange={handleSearch}
         icon={loadingIcon}
-    /*     onBlur={() => setFinalResults((prev) => ({ ...prev, status: false }))} */
+        focusOnStar
       />
-      {
-        <div
-          className={`flex-col absolute top-[100%] left-0 max-h-[25rem] overflow-y-auto w-full rounded-[0px_0px_.3rem_.3rem] ${
-            status===true ? "flex" : "hidden"
-          }`}
-        >
-          {results.map((res, index) => (
-            <Option
-              key={index}
-              pos={pos}
-              {...res}
-              updateFavorites={updateFavorites}
-            />
-          ))}
-        </div>
-      }
-    
+      <div
+        className={`flex-col absolute top-[100%] left-0 max-h-[25rem] overflow-y-auto w-full rounded-[0px_0px_.3rem_.3rem] ${
+          status === true ? "flex" : "hidden"
+        }`}
+      >
+        {results.map((res, index) => (
+          <Option
+            key={index}
+            pos={pos}
+            {...res}
+            updateFavorites={updateFavorites}
+          />
+        ))}
+      </div>
+      {noResults && (
+        <span className="absolute text-[#fff] text-[2rem] bottom-0 translate-y-[100%] left-[50%] translate-x-[-50%]">
+          There is no results
+        </span>
+      )}
     </div>
   );
 }

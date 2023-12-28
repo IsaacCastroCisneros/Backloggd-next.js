@@ -26,7 +26,6 @@ export default async function igdb({type,query=""}:props):Promise<{res:Array<Rec
    }
    catch(err)
    {    
-      console.log(err)
       return {err,res:[]}
    }
    

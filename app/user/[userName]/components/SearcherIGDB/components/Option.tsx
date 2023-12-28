@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { MutableRefObject, useContext } from 'react'
 import favorite from '../../../edit/ClientContent/interfaces/favorite'
 import cardPosition from '../../../edit/ClientContent/types/cardPosition'
 import gameCardData from '@/interfaces/gameCardData'
 import choosingImgSize from '@/app/games/search/components/Results/util/choosingImgSize'
+import { global } from '@/app/context/GlobalContext'
 
 interface props extends gameCardData
 {
@@ -12,12 +13,14 @@ interface props extends gameCardData
 
 export default function Option(props:props) 
 {
+  const{setPopup}=useContext(global)
   const{id,name,cover,updateFavorites,pos,date}=props
 
   async function handleUpadteFavorite()
   {
     const myCover=cover ? choosingImgSize({url:cover,size:"cover_big"}) : ""
     updateFavorites({id,cover:myCover,pos,isIn:true})
+    setPopup(prev=>({...prev,show:false}))
   }
 
   
