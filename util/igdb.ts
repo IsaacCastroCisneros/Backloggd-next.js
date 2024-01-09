@@ -15,8 +15,8 @@ export default async function igdb({type,query=""}:props):Promise<{res:Array<Rec
      headers:
      {
         'Accept': 'application/json',
-        'Client-ID' : 'c5zbqhwccotr4honkq7do968evsfr1',
-        'Authorization' :  'Bearer y7h59m1r6fs6wk9dhvkhvjkq6rijgm', 
+        'Client-ID' : 'h8j1a9qs3atk4blop7oiz3yvouv5py',
+        'Authorization' :  'Bearer db37kmv9da1d1wau56gxj9ukjmr4d2', 
      }
    }
    try
@@ -24,7 +24,7 @@ export default async function igdb({type,query=""}:props):Promise<{res:Array<Rec
       const res= await axios.post(`https://api.igdb.com/v4/${type}/`,query,headers)
       return {res:res.data,err:null}
    }
-   catch(err)
+   catch(err) 
    {    
       return {err,res:[]}
    }

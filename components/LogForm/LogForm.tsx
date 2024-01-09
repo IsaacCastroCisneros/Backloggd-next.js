@@ -74,12 +74,12 @@ export default function LogForm(props:props)
 
       const myStatus= values.status==="none" ? "played":values.status
    
-      const { err } = await gameLogin({
+      const { err } = JSON.parse(await gameLogin({
         game_id: id,
         user_id: user.id,
         ...values,
         status: myStatus,
-      });
+      }));
       
       if(err)
       {

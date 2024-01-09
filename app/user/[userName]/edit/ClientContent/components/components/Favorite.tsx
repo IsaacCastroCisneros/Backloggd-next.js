@@ -15,7 +15,7 @@ interface props extends ButtonHTMLAttributes<HTMLButtonElement>
 export default function Favorite(props:props)
 {
   const{favorite,...myProps}=props
-  const{isIn,pos,cover}=favorite
+  const{isIn,pos,cover,id}=favorite
   const[hover,setHover]=useState(false)
   const{showPopup,updateFavorites}=useContext(context)
 
@@ -29,7 +29,7 @@ export default function Favorite(props:props)
     updateFavorites({
       pos,
       isIn: false,
-      id: "",
+      id,
       cover: "",
     });
     setHover(false)
@@ -50,11 +50,12 @@ export default function Favorite(props:props)
   }
 
   const isKing = pos === "king"
+  const responsive= "mob:text-[.5rem]"
 
   return (
     <div className="relative flex-1">
       {isKing && (
-        <span className="text-[#ffad00] absolute left-0 top-0 translate-y-[-100%] flex justify-center w-[100%]">
+        <span className={`text-[#ffad00] absolute left-0 top-0 translate-y-[-100%] flex justify-center w-[100%] ${responsive}`}>
           <FontAwesomeIcon icon={faCrown} size="xl" />
         </span>
       )}
@@ -73,7 +74,7 @@ export default function Favorite(props:props)
           style={imgFavorite}
         >
           {!isIn && (
-            <span className="text-[#fff]">
+            <span className={`text-[#fff] ${responsive}`}>
               <FontAwesomeIcon icon={faPlusCircle} size="2xl" />
             </span>
           )}
@@ -81,7 +82,7 @@ export default function Favorite(props:props)
         {hover && (
           <div className="pointer-events-none absolute w-[100%] h-[100%] top-0 left-0">
             <div className="opacity-[.5] bg-[#000] absolute left-0 top-0 w-[100%] h-[100%]"></div>
-            <div className="absolute w-[100%] left-0 top-0 h-[100%] flex justify-center items-center z-[999] text-[#fff]">
+            <div className={`absolute w-[100%] left-0 top-0 h-[100%] flex justify-center items-center z-[999] text-[#fff] ${responsive}`}>
               <FontAwesomeIcon icon={faArrowsRotate} size="4x" />
             </div>
           </div>
@@ -90,7 +91,7 @@ export default function Favorite(props:props)
       {isIn && (
         <button
           className="absolute bottom-0 translate-y-[100%] left-0 text-text4 hover:text-[#fff]"
-          onMouseEnter={() => setHover(false)}
+          type="button"
           onClick={handleDeletingFavorite}
         >
           Remove

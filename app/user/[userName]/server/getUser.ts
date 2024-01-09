@@ -15,6 +15,8 @@ export default async function getUser({userName}:props):Promise<serverResponse>
    {
 
        const[results]= await pool.query<Array<RowDataPacket>>("select * from users where username=?",userName)
+
+       if(results.length===0)return {res:results,err:true}
        return {res:results,err:null}
    }
    catch(err)

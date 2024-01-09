@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import cardPosition from "../types/cardPosition";
+import cardPosition from "../../../../../../types/favoritePosition";
 import favorite from "../interfaces/favorite";
 
 export interface context

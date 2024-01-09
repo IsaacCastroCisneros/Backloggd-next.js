@@ -2,28 +2,41 @@
 
 import pool from "@/config/db"
 import { game } from "@/interfaces/game"
-import serverResponse from "@/interfaces/serverResponse"
 import { authOptions } from "@/pages/api/auth/[...nextauth]"
 import { RowDataPacket } from "mysql2"
 import { getServerSession } from "next-auth/next"
 import getGame from "./getGame"
+import favoritePosition from "@/types/favoritePosition"
 
 interface gameMinimal
 {
     game_id:string
     user_id:string
-    score:number
 } 
+
+interface gameScore extends gameMinimal
+{
+    score:number
+}
+interface gameFavorite extends gameMinimal
+{
+    favorite:boolean
+    favorite_position:{new:favoritePosition,old:favoritePosition}
+}
 
 interface gameNoId extends Omit<game, 'id'>
 {
 
 }
 
-export default async function gameLogin(game:gameNoId|gameMinimal):Promise<serverResponse> 
+type props = gameNoId|gameMinimal|gameFavorite|gameScore
+
+export default async function gameLogin(game:props):Promise<string> 
 {
     const user = await getServerSession(authOptions)
-    if(user===null)return {res:[],err:"unauthorized"}
+    if(user===null)return JSON.stringify({res:[],err:"unauthorized"}) 
+
+    console.log(game)
 
     try
     {
@@ -32,15 +45,16 @@ export default async function gameLogin(game:gameNoId|gameMinimal):Promise<serve
         if(results.length===0)
         {
             await pool.query<Array<RowDataPacket>>("insert into game set ?",game)
-            return {res:["created"],err:null}
+            return JSON.stringify({res:["created"],err:null}) 
         }
-        await pool.query<Array<RowDataPacket>>("update game set ? where id=?",[game,results[0].id])
-        return {res:["updated"],err:null}
+       
+        await pool.query<Array<RowDataPacket>>(`update game set ? where id=?`,[game,results[0].id])
+        return JSON.stringify({res:["updated"],err:null}) 
     }
     catch(err)
     {
        console.log(err)
-       return {res:[],err}
+       return JSON.stringify({res:[],err}) 
     }
 
 }

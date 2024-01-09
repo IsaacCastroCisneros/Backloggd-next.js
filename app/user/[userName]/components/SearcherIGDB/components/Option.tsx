@@ -1,6 +1,6 @@
 import React, { MutableRefObject, useContext } from 'react'
 import favorite from '../../../edit/ClientContent/interfaces/favorite'
-import cardPosition from '../../../edit/ClientContent/types/cardPosition'
+import cardPosition from '../../../../../../types/favoritePosition'
 import gameCardData from '@/interfaces/gameCardData'
 import choosingImgSize from '@/app/games/search/components/Results/util/choosingImgSize'
 import { global } from '@/app/context/GlobalContext'

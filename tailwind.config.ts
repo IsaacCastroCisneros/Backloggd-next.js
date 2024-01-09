@@ -16,10 +16,11 @@ const config: Config = {
     {
      bg:"#16181c",
      text:"#8f9ca7",
-     text2:"#cbd4dc",
+     text2:"#242832",
      text3:"#ffffff99",
      text4:"#badefc",
      text5:"#656e77",
+     text6:"#cbd4dc",
      field:"#30394c",
      gray:"#3b4760",
      placeholder:"#7d8a96",

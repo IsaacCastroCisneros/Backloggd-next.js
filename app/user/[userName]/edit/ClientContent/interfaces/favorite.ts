@@ -1,4 +1,4 @@
-import cardPosition from "../types/cardPosition";
+import favoritePosition from "@/types/favoritePosition";
 
 export default interface favorite
-{id:string,pos:cardPosition,cover:string,isIn:boolean}
+{id:string,pos:favoritePosition,cover:string,isIn:boolean}

@@ -3,10 +3,10 @@ import InputSearcher from '@/components/InputSearcher'
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import Option from './components/Option'
 import favorite from '../../edit/ClientContent/interfaces/favorite'
-import cardPosition from '../../edit/ClientContent/types/cardPosition'
+import cardPosition from '../../../../../types/favoritePosition'
 import getFullGameIGDB from '@/util/getFullGameIGDB'
 import gameCardData from '@/interfaces/gameCardData'
-import { IconDefinition, faCircleNotch, faMagnifyingGlass, faSpinner } from '@fortawesome/free-solid-svg-icons'
+import {faMagnifyingGlass, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIconProps } from '@fortawesome/react-fontawesome'
 
 interface finalResults
@@ -81,7 +81,7 @@ export default function SearcherIGDB({updateFavorites,pos}:props)
         ))}
       </div>
       {noResults && (
-        <span className="absolute text-[#fff] text-[2rem] bottom-0 translate-y-[100%] left-[50%] translate-x-[-50%]">
+        <span className="absolute text-[#fff] text-[2rem] bottom-0 translate-y-[100%] left-[50%] translate-x-[-50%] mob:text-[.8rem]">
           There is no results
         </span>
       )}

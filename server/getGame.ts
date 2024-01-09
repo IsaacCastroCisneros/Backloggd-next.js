@@ -9,7 +9,7 @@ export default async function getGame(gameId:string,userId:string):Promise<serve
 {
     try
     {
-        const[results]=await pool.query<Array<RowDataPacket>>("select * from game where game_id=? and user_id=?",)
+        const[results]=await pool.query<Array<RowDataPacket>>("select * from game where game_id=? and user_id=?",[gameId,userId])
         return {res:results as Array<game>,err:null}
     }
     catch(err)
