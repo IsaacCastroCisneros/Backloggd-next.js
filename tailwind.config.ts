@@ -16,7 +16,7 @@ const config: Config = {
     {
      bg:"#16181c",
      text:"#8f9ca7",
-     text2:"#242832",
+     text2:"#cbd4dc",
      text3:"#ffffff99",
      text4:"#badefc",
      text5:"#656e77",

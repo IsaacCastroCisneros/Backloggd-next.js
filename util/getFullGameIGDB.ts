@@ -6,15 +6,29 @@ import gameCardData from '@/interfaces/gameCardData'
 
 interface props
 {
-    game:string
+    game?:string
     offset?:string
     areDates?:boolean
+    ids?:Array<string>|false
 }
 
-export default async function getFullGameIGDB({game,offset,areDates=true}:props):Promise<Array<gameCardData>> 
+export default async function getFullGameIGDB(props:props):Promise<Array<gameCardData>> 
 {
 
-    const{res:games,err}=await igdb({type:"games",query:`search "${game}"; fields *; limit 25; offset ${offset||0};`})
+    const{game,offset,areDates=true,ids=false}=props
+    let initialData:{res:Array<Record<any,any>>,err:null|unknown}|null=null
+
+    if(ids)
+    {
+      initialData=await igdb({type:"games",query:`where id=(${ids.join(",")}); fields *;`})
+    }
+    else
+    {
+      initialData=await igdb({type:"games",query:`search "${game}"; fields *; limit 25; offset ${offset||0};`})       
+    }
+
+    const{res:games,err}=initialData 
+
     if(games===null)
     {
       console.log(err)

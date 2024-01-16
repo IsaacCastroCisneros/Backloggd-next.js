@@ -1,6 +1,6 @@
 export default function getCoverDate({games}:{games:Array<Record<any,any>>}):{coversIds:string,dateIds:string}
 {
-    let coversIds:Array<string>=[]
+  let coversIds:Array<string>=[]
   let dateIds:Array<string>=[]
 
   games.forEach((game:any)=>

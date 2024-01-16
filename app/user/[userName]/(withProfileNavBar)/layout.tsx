@@ -13,7 +13,9 @@ export default async function layout({children,params}:{children:ReactNode,param
 {
   const{userName}=params
   const session= await getServerSession(authOptions)
-  const isSession= session!==null ? true:false
+  const user=session?.user as user
+
+  const isMyProfile= user.username===userName
 
   try
   {
@@ -36,7 +38,7 @@ export default async function layout({children,params}:{children:ReactNode,param
               {twitter}
             </a>
           </section>
-          {isSession && (
+          {isMyProfile && (
             <Link href={`/user/${userName}/edit`} className="text-[#fff] px-[.2rem] bg-gray3 rounded-[.3rem]">
               Edit Profile
             </Link>
