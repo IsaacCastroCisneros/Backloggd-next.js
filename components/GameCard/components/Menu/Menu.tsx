@@ -6,9 +6,9 @@ import Button from './components/Button';
 export default function Menu() {
   return (
     <div className="rounded-[5px] bg-border2 border-gray border-[1px] px-[1rem] flex justify-between gap-[.5rem]">
-      <Button icon={faGamepad} />
-      <Button icon={faPlay} />
-      <Button icon={faEllipsisH} />
+      <Button label='Played' icon={faGamepad} />
+      <Button label='Playing' icon={faPlay} />
+      <Button label='more' icon={faEllipsisH} />
     </div>
   );
 }
