@@ -43,7 +43,6 @@ export default function ClientContent(props:props)
       {
         setFavorites(initialFavorites)
       }
-      console.log(props)
 
     },[])
 

@@ -24,15 +24,11 @@ export default async function page({params}:any)
   const ids=favorites.map((fav)=>fav.game_id)
   const fullFavorites:Array<gameCardData> = await getFullGameIGDB({ids})
 
-  console.log(favorites)
-
   const finalFavorites:Array<finalFavorite>= fullFavorites.map(fav=>
     {
       const one = favorites.find((favo)=>favo.game_id===fav.id) || {favorite_position:"0"}
       return {...fav,position:one.favorite_position}
     })
-
-  console.log(finalFavorites)
 
   const king = finalFavorites.find(fav=>fav.position==="king")
   const finalFavoritesSorted = finalFavorites.sort(

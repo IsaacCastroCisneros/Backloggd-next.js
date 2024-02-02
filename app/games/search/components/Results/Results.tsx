@@ -16,13 +16,14 @@ interface props
 export default function Results({results,offset,game}:props)  
 {
   const {data}=useSession()
-  const {user}=data||{user:null}
+  const {user:myUser}=data||{user:null}
+  const user = myUser as user|null
 
   return (
     <>
       <div className="flex flex-col gap-[1.8rem]">
         {results.map((card) => (
-          <Card key={card.id} {...card} user={user as user|null} />
+          <Card key={card.id} {...card} user={user} />
         ))}
         {results.length < 25 && (
           <span className="font-bold">There is results no more</span>
