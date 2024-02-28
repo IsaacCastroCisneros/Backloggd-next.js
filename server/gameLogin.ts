@@ -7,6 +7,7 @@ import { RowDataPacket } from "mysql2"
 import { getServerSession } from "next-auth/next"
 import getGame from "./getGame"
 import favoritePosition from "@/types/favoritePosition"
+import status from "@/types/gameStatus"
 
 interface gameMinimal
 {
@@ -18,6 +19,11 @@ interface gameScore extends gameMinimal
 {
     score:number
 }
+interface gameStatus extends gameMinimal
+{
+    status:status
+}
+
 interface gameFavorite extends gameMinimal
 {
     favorite:boolean
@@ -29,18 +35,16 @@ interface gameNoId extends Omit<game, 'id'>
 
 }
 
-type props = gameNoId|gameMinimal|gameFavorite|gameScore
+type props = gameNoId|gameMinimal|gameFavorite|gameScore|gameStatus
 
 export default async function gameLogin(game:props):Promise<string> 
 {
     const user = await getServerSession(authOptions)
     if(user===null)return JSON.stringify({res:[],err:"unauthorized"}) 
 
-    console.log(game)
-
     try
     {
-        const{res:results}=await getGame(game.game_id,game.user_id)
+        const{res:results}=JSON.parse(await  getGame(game.game_id,game.user_id)) 
         
         if(results.length===0)
         {

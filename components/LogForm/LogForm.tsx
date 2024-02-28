@@ -78,7 +78,7 @@ export default function LogForm(props:props)
         game_id: id,
         user_id: user.id,
         ...values,
-        status: myStatus,
+        status:myStatus,
       }));
       
       if(err)

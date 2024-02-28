@@ -6,8 +6,9 @@ import React, { useState } from 'react'
 import Menu from './components/Menu/Menu'
 import { useSession } from 'next-auth/react'
 import LoginForLogLink from '../LoginForLogLink/LoginForLogLink'
+import user from '@/interfaces/user'
 
-export const gameCard = React.createContext<{gameCardData:gameCardData|null}>({gameCardData:null})
+export const gameCard = React.createContext<{gameCardData:gameCardData|null,user:user|null}>({gameCardData:null,user:null})
 
 interface props extends gameCardData
 {
@@ -24,7 +25,8 @@ export default function GameCard(props:props)
 
   const value=
   {
-    gameCardData:props
+    gameCardData:props,
+    user:user as user
   }
 
   return (
@@ -37,7 +39,7 @@ export default function GameCard(props:props)
         <img
           width={173.8}
           height={234}
-          className={`object-cover ${
+          className={`object-cover rounded-[4px] ${
             hover ? "brightness-[45%]" : ""
           } duration-200`}
           src={src}
@@ -50,14 +52,20 @@ export default function GameCard(props:props)
                 {name}
               </span>
             </div>
-            {user && (
-              <div className="absolute bottom-[.5rem] left-0 w-full flex justify-center items-center">
-                <Menu />
-              </div>
-            )}
-            {!user && <LoginForLogLink />}
           </>
         )}
+        {user && (
+          <div
+            className={`absolute bottom-[.5rem] left-0 w-full flex justify-center items-center ${
+              hover
+                ? "opacity-1 pointer-events-auto"
+                : "opacity-0 pointer-events-none"
+            }`}
+          >
+            <Menu className="f" />
+          </div>
+        )}
+        {!user && hover && <LoginForLogLink />}
       </div>
     </gameCard.Provider>
   );

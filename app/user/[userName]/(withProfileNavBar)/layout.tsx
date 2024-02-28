@@ -12,10 +12,10 @@ import Navbar from './components/Navbar'
 export default async function layout({children,params}:{children:ReactNode,params:any}) 
 {
   const{userName}=params
-  const session= await getServerSession(authOptions)
+  const session= await getServerSession(authOptions)//session esta llegando null
   const user=session?.user as user
 
-  const isMyProfile= user.username===userName
+  const isMyProfile= session ? user.username===userName : false
 
   try
   {

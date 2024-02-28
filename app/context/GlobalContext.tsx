@@ -2,6 +2,9 @@
 
 import React,{ReactNode,Dispatch,SetStateAction,useState} from 'react'
 import { SessionProvider } from 'next-auth/react'
+import { QueryClient,QueryClientProvider } from 'react-query'
+
+const queryClient= new QueryClient
 
 interface values
 {
@@ -42,7 +45,9 @@ export default function GlobalContext({children}:{children:ReactNode})
 
   return (
     <global.Provider value={values}>
-      <SessionProvider>{children}</SessionProvider>
+      <QueryClientProvider client={queryClient}>
+        <SessionProvider>{children}</SessionProvider>
+      </QueryClientProvider>
     </global.Provider>
   );
 }

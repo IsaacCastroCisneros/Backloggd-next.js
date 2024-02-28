@@ -25,7 +25,7 @@ export default async function request(props:props)
         ]);
 
         const { res: platformsIgdb } = results[0];
-        const { res: gameArr } = results[1];
+        const { res: gameArr } = JSON.parse(results[1]);
 
         if (platformsIgdb.length > 0) 
         {

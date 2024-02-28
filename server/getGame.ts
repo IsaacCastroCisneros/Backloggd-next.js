@@ -5,15 +5,15 @@ import { game } from "@/interfaces/game"
 import serverResponse from "@/interfaces/serverResponse"
 import { RowDataPacket } from "mysql2"
 
-export default async function getGame(gameId:string,userId:string):Promise<serverResponse<game>>
+export default async function getGame(gameId:string,userId:string):Promise<string>
 {
     try
     {
         const[results]=await pool.query<Array<RowDataPacket>>("select * from game where game_id=? and user_id=?",[gameId,userId])
-        return {res:results as Array<game>,err:null}
+        return JSON.stringify({res:results as Array<game>,err:null}) 
     }
     catch(err)
     {
-        return{res:[],err}
+        return JSON.stringify({res:[],err}) 
     }
 }

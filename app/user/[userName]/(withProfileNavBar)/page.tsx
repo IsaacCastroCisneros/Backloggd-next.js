@@ -43,7 +43,7 @@ export default async function page({params}:any)
   }
   
   return (
-    <div className='flex mt-[1rem] gap-[2.5rem]'>
+    <div className='flex mt-[1rem] gap-[2.5rem] mob:flex-col'>
       <aside className='w-[160px]'>
         <span className='text-text4 capitalize block border-b-[1px] border-border pb-[.1rem]'>
            bio
