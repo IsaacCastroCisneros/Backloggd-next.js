@@ -7,6 +7,10 @@ const config: Config = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    fontSize:
+    {
+      mobText:"14px"
+    },
     screens:
     {
       mob:{'max':'1000px'},

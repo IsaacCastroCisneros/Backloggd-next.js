@@ -2,9 +2,10 @@
 
 import HoverMsg from '@/components/HoverMsg/HoverMsg'
 import { FontAwesomeIcon, FontAwesomeIconProps } from '@fortawesome/react-fontawesome'
-import React, { ButtonHTMLAttributes, useState } from 'react'
+import React, { ButtonHTMLAttributes, useContext, useState } from 'react'
 import Menu from './components/Menu/Menu'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
+import { gameCard } from '@/components/GameCard/GameCard'
 
 interface props extends ButtonHTMLAttributes<HTMLButtonElement>
 {
@@ -16,6 +17,7 @@ interface props extends ButtonHTMLAttributes<HTMLButtonElement>
 
 export default function Button({icon,label,isMenu=false,isActive,...props}:props)
 {
+  const{isMenuSmall}=useContext(gameCard)
   const[hover,setHover]=useState<boolean>(false)
     
   return (
@@ -27,7 +29,7 @@ export default function Button({icon,label,isMenu=false,isActive,...props}:props
     >
       {!isMenu && <HoverMsg show={hover} label={label} />}
       {isMenu && <Menu show={hover} /> }
-      <FontAwesomeIcon icon={icon} />
+      <FontAwesomeIcon size={isMenuSmall ? "xs":undefined} icon={icon} />
     </button>
   );
 }

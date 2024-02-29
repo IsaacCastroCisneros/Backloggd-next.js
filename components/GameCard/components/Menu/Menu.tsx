@@ -17,7 +17,7 @@ interface props extends HtmlHTMLAttributes<HTMLDivElement>
 
 export default function Menu(props:props) 
 {
-  const{gameCardData,user}=useContext(gameCard)
+  const{gameCardData,user,isMenuSmall}=useContext(gameCard)
   const{setMsg}=useContext(global)
   const{id:game_id}=gameCardData as gameCardData || {id:""}
   const{id:user_id}=user || {id:""}
@@ -47,7 +47,7 @@ export default function Menu(props:props)
   return (
     <div
       {...props}
-      className={twMerge("rounded-[5px] bg-border2 border-gray border-[1px] px-[1rem] flex justify-between gap-[.5rem] z-[9]",props.className)} 
+      className={twMerge(`rounded-[5px] bg-border2 border-gray border-[1px] ${isMenuSmall ? "px-[.5rem]":"px-[1rem]"} flex justify-between gap-[.5rem] z-[9] mob:hidden`,props.className)} 
     >
       <Button
         isActive={"played" === hightLigth}

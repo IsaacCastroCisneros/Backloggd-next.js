@@ -15,7 +15,7 @@ export default function Option(props:props)
   const[show,setShow]=useState(false)
 
   return (
-    <li className="text-text6 text-[16px] capitalize font-medium px-[1rem]">
+    <li className="text-text6 text-[16px] capitalize font-medium px-[1rem] mob:text-mobText">
       <Link
         href={href}
         className="relative hover:text-[#fff] block h-full"

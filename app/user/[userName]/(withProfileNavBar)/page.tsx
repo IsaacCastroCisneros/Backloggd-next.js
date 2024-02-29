@@ -5,8 +5,6 @@ import getFavorites from '../server/getFavorites'
 import getFullGameIGDB from '@/util/getFullGameIGDB'
 import GameCard from '@/components/GameCard/GameCard'
 import gameCardData from '@/interfaces/gameCardData'
-import { game } from '@/interfaces/game'
-import favorite from '../edit/ClientContent/interfaces/favorite'
 import favoriteDB from './interfaces/favoriteDB'
 import favoritePosition from '@/types/favoritePosition'
 
@@ -18,11 +16,11 @@ interface finalFavorite extends gameCardData
 export default async function page({params}:any) 
 {
   const{userName}=params
-  const{res,err}=await getUser({userName})
+  const{res,err}=JSON.parse(await getUser({userName})) 
   const{bio,id}=res[0] as user
   const {res:favorites} = JSON.parse(await getFavorites(id)) as {res:Array<favoriteDB>,err:null}
   const ids=favorites.map((fav)=>fav.game_id)
-  const fullFavorites:Array<gameCardData> = await getFullGameIGDB({ids})
+  const fullFavorites:Array<gameCardData> = await getFullGameIGDB({ids})  
 
   const finalFavorites:Array<finalFavorite>= fullFavorites.map(fav=>
     {
@@ -44,7 +42,7 @@ export default async function page({params}:any)
   
   return (
     <div className='flex mt-[1rem] gap-[2.5rem] mob:flex-col'>
-      <aside className='w-[160px]'>
+      <aside className='w-[160px] mob:text-mobText mob:w-full'>
         <span className='text-text4 capitalize block border-b-[1px] border-border pb-[.1rem]'>
            bio
         </span>
@@ -53,7 +51,7 @@ export default async function page({params}:any)
         </span>
       </aside>
       <section className='flex-1'>
-        <span className='text-text4 capitalize font-medium text-[32px]'>
+        <span className='text-text4 capitalize font-medium text-[32px] mob:text-[20px] block mb-[1rem]'>
             favorite games
         </span>
         <div className='flex w-full gap-[.6rem] justify-center'>
