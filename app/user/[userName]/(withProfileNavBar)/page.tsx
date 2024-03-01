@@ -16,7 +16,7 @@ interface finalFavorite extends gameCardData
 export default async function page({params}:any) 
 {
   const{userName}=params
-  const{res,err}=JSON.parse(await getUser({userName})) 
+  const{res}=JSON.parse(await getUser({userName})) 
   const{bio,id}=res[0] as user
   const {res:favorites} = JSON.parse(await getFavorites(id)) as {res:Array<favoriteDB>,err:null}
   const ids=favorites.map((fav)=>fav.game_id)

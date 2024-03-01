@@ -2,7 +2,7 @@
 
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import Star from './components/Star'
-import score from './interfaces/score'
+import score from './types/score'
 import user from '@/interfaces/user'
 import getScore from './server/getScore'
 import gameLogin from '@/server/gameLogin'

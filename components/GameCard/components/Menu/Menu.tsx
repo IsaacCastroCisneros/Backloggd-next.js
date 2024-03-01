@@ -1,5 +1,5 @@
 import { faEllipsisH, faGamepad, faPlay } from '@fortawesome/free-solid-svg-icons'
-import React, { HtmlHTMLAttributes, useContext, useEffect, useState } from 'react'
+import React, { HtmlHTMLAttributes, useContext, useState } from 'react'
 import Button from './components/Button/Button';
 import { gameCard } from '../../GameCard';
 import gameLogin from '@/server/gameLogin';

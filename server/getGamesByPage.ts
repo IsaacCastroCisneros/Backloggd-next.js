@@ -17,6 +17,7 @@ export default async function getGamesByPage({user_id,limit,offset}:props)
     try
     {
         const[results]=await pool.query<Array<RowDataPacket>>("select * from game where user_id=? limit ? offset ? ",[user_id,limit,offset])
+        const[lol]=await pool.query<Array<RowDataPacket>>("select count(*) from game where user_id=?",[user_id])
         return JSON.stringify({res:results as Array<game>,err:null})  
     }
     catch(err)

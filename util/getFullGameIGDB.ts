@@ -27,7 +27,7 @@ export default async function getFullGameIGDB(props:props):Promise<Array<gameCar
       initialData=await igdb({type:"games",query:`search "${game}"; fields *; limit 25; offset ${offset||0};`})       
     }
 
-    const{res:games,err}=initialData 
+    const{res:games,err}=initialData
 
     if(games===null)
     {

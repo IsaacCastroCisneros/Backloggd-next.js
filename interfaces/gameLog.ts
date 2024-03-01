@@ -1,4 +1,4 @@
-import score from "@/components/Score/interfaces/score"
+import score from "@/components/Score/types/score"
 
 export default interface gameLog
 {
