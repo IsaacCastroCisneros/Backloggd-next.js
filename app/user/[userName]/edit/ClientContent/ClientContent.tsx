@@ -18,7 +18,7 @@ import cardPosition from '../../../../../types/favoritePosition'
 import defaulFavorites from './util/defaultFavorites'
 import updatingFavoritesByIndex from './util/updatingFavoritesByIndex'
 import loginFavorite from './server/loginFavorite'
-import Advice from '@/components/Advice/Advice'
+import favoritePosition from '../../../../../types/favoritePosition'
 
 interface props extends user
 {
@@ -58,22 +58,32 @@ export default function ClientContent(props:props)
 
        if(thereIsFavorites.length>0)
        {
-        const favoritesToDB = thereIsFavorites.map((fav) =>
-          loginFavorite({
-            game_id: fav.id,
-            favorite: fav.isIn,
-            user_id: idUser,
-            favorite_position:fav.pos,
-          })
-        )
+         const arr:Array<favoritePosition> = ["0","1","2","3","king"]
+         const final = arr.map(entry=>
+          {
+            const thereIs= thereIsFavorites.find(fav=>fav.pos===entry)
 
-         try
-         {
-           await Promise.all(favoritesToDB) 
-         }
-         catch(err)
-         {
-          return setMsg({msg:"an error was occurred",type:"fail",show:true})
+            if(thereIs)return thereIs
+            return {pos:entry,isIn:false,id:""}
+          })
+         
+         const favoritesToDB = final.map((fav) =>
+           loginFavorite({
+             game_id: fav.id,
+             favorite: fav.isIn,
+             user_id: idUser,
+             favorite_position: fav.pos,
+           })
+         );
+
+         try {
+           await Promise.all(favoritesToDB);
+         } catch (err) {
+           return setMsg({
+             msg: "an error was occurred",
+             type: "fail",
+             show: true,
+           });
          }
        }
 

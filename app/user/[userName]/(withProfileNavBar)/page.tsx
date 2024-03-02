@@ -29,17 +29,18 @@ export default async function page({params}:any)
     })
 
   const king = finalFavorites.find(fav=>fav.position==="king")
-  const finalFavoritesSorted = finalFavorites.sort(
+
+  const finalFavoritesSorted = finalFavorites.filter(finalFavorite=>finalFavorite.position!=="king").sort(
     (a, b) => Number(a.position) - Number(b.position)
   );
 
   if(king)
   {
-    finalFavoritesSorted.pop()
     let pos = Math.floor(finalFavoritesSorted.length/2)
     finalFavoritesSorted.splice(pos,0,king)
   }
-  
+
+
   return (
     <div className='flex mt-[1rem] gap-[2.5rem] mob:flex-col'>
       <aside className='w-[160px] mob:text-mobText mob:w-full'>

@@ -38,7 +38,16 @@ export default async function page({params}:any)
 
 
   return (
-    <div className='grid grid-cols-[repeat(auto-fill,minmax(93.59px,1fr))] gap-[.5rem]'>
+    <div className='grid grid-cols-[repeat(auto-fill,minmax(93.59px,1fr))] gap-x-[.5rem] gap-y-[2rem]'>
+      {finalGames.map((game) => (
+        <GameCard isMenuSmall={true} key={game.id} position={null} {...game} />
+      ))}
+      {finalGames.map((game) => (
+        <GameCard isMenuSmall={true} key={game.id} position={null} {...game} />
+      ))}
+      {finalGames.map((game) => (
+        <GameCard isMenuSmall={true} key={game.id} position={null} {...game} />
+      ))}
       {finalGames.map((game) => (
         <GameCard isMenuSmall={true} key={game.id} position={null} {...game} />
       ))}

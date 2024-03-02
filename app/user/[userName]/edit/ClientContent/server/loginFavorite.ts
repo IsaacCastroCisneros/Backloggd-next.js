@@ -14,19 +14,50 @@ interface props
 
 export default async function loginFavorite(favorite:props) 
 {
-    const{favorite_position,user_id}=favorite
- 
+    const{favorite_position,user_id,game_id}=favorite
+
+    if(!favorite.favorite)
+    {
+      await pool.query("update game set ? where favorite_position=? and user_id=?", [
+        {
+          favorite:false,
+          favorite_position:null
+        },
+        favorite_position,
+        user_id
+      ]);
+      return
+    }
+    console.log(favorite)
+
     try
     {  
-        const[results]=await pool.query<Array<RowDataPacket>>("select id from game where favorite_position=? and user_id=?",[favorite_position,user_id]) 
+      const[exist]=await pool.query<Array<RowDataPacket>>("select id from game where game_id=? and user_id=?",[game_id,user_id]) 
 
-        if(results.length>0)
-        {
-          return await pool.query("update game set ? where id=?", [
-            favorite,
-            results[0].id,
-          ]);
-        }
+      if(exist.length>0)
+      {
+        await pool.query("update game set ? where id=?", [
+          {
+            favorite:true,
+            favorite_position
+          },
+          exist[0].id,
+        ]);
+        return
+      }
+
+      const[thereIsFavorite]=await pool.query<Array<RowDataPacket>>("select id from game where favorite_position=? and user_id=?",[favorite_position,user_id]) 
+      if(thereIsFavorite.length>0)
+      {
+        await pool.query("update game set ? where id=?", [
+          {
+            favorite:false,
+            favorite_position:null
+          },
+          thereIsFavorite[0].id,
+        ]);
+      }
+
         await pool.query("insert into game set ?",favorite)
         return JSON.stringify({res:["updated"],err:null}) 
     }

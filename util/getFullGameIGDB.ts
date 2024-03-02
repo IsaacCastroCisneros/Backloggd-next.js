@@ -36,7 +36,7 @@ export default async function getFullGameIGDB(props:props):Promise<Array<gameCar
     }
     
     const{coversIds,dateIds}=getCoverDate({games})
-
+    
     async function getCovers()
     {
       return await igdb({type:"covers",query:`where id=(${coversIds}); fields url,game;`})
@@ -45,11 +45,11 @@ export default async function getFullGameIGDB(props:props):Promise<Array<gameCar
     {
       return areDates ? await igdb({type:"release_dates",query:`where id=(${dateIds}); fields y,game;`}):{res:[]} 
     }
-
+    
     const[fullCovers,fullDates] = await Promise.all([getCovers(),getDates()])
     const{res:covers}=fullCovers
     const{res:dates}=fullDates
-
+    
     if(covers===null||dates===null)
     {
       return []
