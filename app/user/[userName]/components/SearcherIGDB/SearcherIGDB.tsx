@@ -8,6 +8,7 @@ import getFullGameIGDB from '@/util/getFullGameIGDB'
 import gameCardData from '@/interfaces/gameCardData'
 import {faMagnifyingGlass, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIconProps } from '@fortawesome/react-fontawesome'
+import { useQuery } from 'react-query'
 
 interface finalResults
 {
@@ -25,7 +26,9 @@ export default function SearcherIGDB({updateFavorites,pos}:props)
 {
   const[finalResults,setFinalResults]=useState<finalResults>({status:false,results:[],noResults:false})
   const[isSearching,setIsSearching]=useState<any>(null)
-
+  const data = useQuery({
+    
+  })
   
   async function handleSearch(e:ChangeEvent<HTMLInputElement>)
   {

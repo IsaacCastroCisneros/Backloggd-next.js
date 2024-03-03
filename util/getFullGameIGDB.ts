@@ -20,7 +20,7 @@ export default async function getFullGameIGDB(props:props):Promise<Array<gameCar
 
     if(ids)
     {
-      initialData=await igdb({type:"games",query:`where id=(${ids.join(",")}); fields *;`})
+      initialData=await igdb({type:"games",query:`where id=(${ids.join(",")}); fields *; limit 25;`})
     }
     else
     {
@@ -39,18 +39,16 @@ export default async function getFullGameIGDB(props:props):Promise<Array<gameCar
     
     async function getCovers()
     {
-      return await igdb({type:"covers",query:`where id=(${coversIds}); fields url,game;`})
+      return await igdb({type:"covers",query:`where id=(${coversIds}); fields url,game; limit 50;`})
     }
     async function getDates()
     {
-      return areDates ? await igdb({type:"release_dates",query:`where id=(${dateIds}); fields y,game;`}):{res:[]} 
+      return areDates ? await igdb({type:"release_dates",query:`where id=(${dateIds}); fields y,game; limit 50;`}):{res:[]} 
     }
     
     const[fullCovers,fullDates] = await Promise.all([getCovers(),getDates()])
     const{res:covers}=fullCovers
     const{res:dates}=fullDates
-
-    console.log(covers.length)
     
     if(covers===null||dates===null)
     {
