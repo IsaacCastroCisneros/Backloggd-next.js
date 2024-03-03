@@ -49,6 +49,8 @@ export default async function getFullGameIGDB(props:props):Promise<Array<gameCar
     const[fullCovers,fullDates] = await Promise.all([getCovers(),getDates()])
     const{res:covers}=fullCovers
     const{res:dates}=fullDates
+
+    console.log(covers.length)
     
     if(covers===null||dates===null)
     {

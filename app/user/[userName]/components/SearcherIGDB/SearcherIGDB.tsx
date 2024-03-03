@@ -38,6 +38,8 @@ export default function SearcherIGDB({updateFavorites,pos}:props)
     {
       setFinalResults({ results:[], status: "isLoading" })
       const results=await getFullGameIGDB({game})
+      console.log(results)
+
       if(results.length===0)
       {
         return setFinalResults({status:false,results:[],noResults:true})

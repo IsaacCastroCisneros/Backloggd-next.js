@@ -125,11 +125,6 @@ export default function ClientContent(props:props)
       updateFavorites
     }
 
-    function handleCanceling()
-    {
-      
-    }
-
   return (
     <context.Provider value={values}>
       <h1 className=" text-text4 text-[32px] font-medium mb-[.8rem] block">

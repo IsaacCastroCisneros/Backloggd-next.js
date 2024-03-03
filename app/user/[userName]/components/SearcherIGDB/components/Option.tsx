@@ -19,6 +19,7 @@ export default function Option(props:props)
   async function handleUpadteFavorite()
   {
     const myCover=cover ? choosingImgSize({url:cover,size:"cover_big"}) : ""
+    console.log(cover)
     updateFavorites({id,cover:myCover,pos,isIn:true})
     setPopup(prev=>({...prev,show:false}))
   }
