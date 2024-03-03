@@ -50,7 +50,7 @@ export default function GameCard(props:props)
   return (
     <gameCard.Provider value={value}>
       <div
-        className="relative rounded-[4px] border-[1px] border-field hover:border-gray"
+        className="relative rounded-[4px] border-[1px] border-field hover:border-gray flex items-center "
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
@@ -62,7 +62,7 @@ export default function GameCard(props:props)
         <img
           width={173.8}
           height={234}
-          className={`object-cover rounded-[4px] ${
+          className={`max-h-[2341px] object-cover rounded-[4px] ${
             hover ? "brightness-[45%]" : ""
           } duration-200`}
           src={src}
