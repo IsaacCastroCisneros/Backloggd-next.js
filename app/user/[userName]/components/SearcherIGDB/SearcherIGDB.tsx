@@ -8,7 +8,7 @@ import getFullGameIGDB from '@/util/getFullGameIGDB'
 import gameCardData from '@/interfaces/gameCardData'
 import {faMagnifyingGlass, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIconProps } from '@fortawesome/react-fontawesome'
-import { useQuery } from 'react-query'
+import { useQuery, useQueryClient } from 'react-query'
 
 interface finalResults
 {
@@ -25,40 +25,41 @@ interface props
 export default function SearcherIGDB({updateFavorites,pos}:props) 
 {
   const[finalResults,setFinalResults]=useState<finalResults>({status:false,results:[],noResults:false})
-  const[isSearching,setIsSearching]=useState<any>(null)
-  const data = useQuery({
+  const[game,setGame]=useState<string>("")
+  const[isFetching,setIsFetching]=useState<boolean>(false)
+  const {data} = useQuery(["search",game],myRequest)
+  const queryClient = useQueryClient()
+
+  async function myRequest({signal}:any)
+  {
+    if(isFetching)
+    {
+      queryClient.cancelQueries(game)
+    }
+    setIsFetching(true)
+    if(game==="")return []
+    const response =await fetch(`/api/igdb/${game}`,{signal})
+    setIsFetching(false)
+    const {res} = await response.json()
     
-  })
-  
+    return res
+  }
+
   async function handleSearch(e:ChangeEvent<HTMLInputElement>)
   {
-    if(isSearching)clearTimeout(isSearching)
- 
     const game=e.target.value
     if(game==="")return
-
-    const searching=setTimeout(async()=>
-    {
-      setFinalResults({ results:[], status: "isLoading" })
-      const results=await getFullGameIGDB({game})
-      console.log(results)
-
-      if(results.length===0)
-      {
-        return setFinalResults({status:false,results:[],noResults:true})
-      }
-      setFinalResults({status:true,results,noResults:false}) 
-    },350)
-    setIsSearching(searching)
+    setGame(game)
   }
 
   useEffect(()=>
   {
-    return ()=>
+    if(data?.length===0)
     {
-      if(isSearching)clearTimeout(isSearching)
+      return setFinalResults({status:false,results:[],noResults:true})
     }
-  },[isSearching])
+    setFinalResults({status:true,results:data||[],noResults:false}) 
+  },[data])
 
   const{status,results,noResults}=finalResults
 
