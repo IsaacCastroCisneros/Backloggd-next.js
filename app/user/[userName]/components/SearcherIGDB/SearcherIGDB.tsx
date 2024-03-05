@@ -4,7 +4,6 @@ import React, { ChangeEvent, useEffect, useState } from 'react'
 import Option from './components/Option'
 import favorite from '../../edit/ClientContent/interfaces/favorite'
 import cardPosition from '../../../../../types/favoritePosition'
-import getFullGameIGDB from '@/util/getFullGameIGDB'
 import gameCardData from '@/interfaces/gameCardData'
 import {faMagnifyingGlass, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIconProps } from '@fortawesome/react-fontawesome'
@@ -14,7 +13,6 @@ interface finalResults
 {
   results:Array<gameCardData>
   status:"isLoading"|boolean
-  noResults?:boolean
 }
 interface props
 {
@@ -24,22 +22,22 @@ interface props
 
 export default function SearcherIGDB({updateFavorites,pos}:props) 
 {
-  const[finalResults,setFinalResults]=useState<finalResults>({status:false,results:[],noResults:false})
+  const[finalResults,setFinalResults]=useState<finalResults>({status:false,results:[]})
   const[game,setGame]=useState<string>("")
-  const[isFetching,setIsFetching]=useState<boolean>(false)
   const {data} = useQuery(["search",game],myRequest)
   const queryClient = useQueryClient()
 
+  const{status,results}=finalResults
+
   async function myRequest({signal}:any)
   {
-    if(isFetching)
+    if(status==="isLoading")
     {
       queryClient.cancelQueries(game)
     }
-    setIsFetching(true)
-    if(game==="")return []
+    setFinalResults(prev=>({...prev,status:"isLoading"}))
     const response =await fetch(`/api/igdb/${game}`,{signal})
-    setIsFetching(false)
+    setFinalResults(prev=>({...prev,status:true}))
     const {res} = await response.json()
     
     return res
@@ -53,15 +51,9 @@ export default function SearcherIGDB({updateFavorites,pos}:props)
   }
 
   useEffect(()=>
-  {
-    if(data?.length===0)
-    {
-      return setFinalResults({status:false,results:[],noResults:true})
-    }
-    setFinalResults({status:true,results:data||[],noResults:false}) 
+  { 
+    setFinalResults({status:true,results:data||[]}) 
   },[data])
-
-  const{status,results,noResults}=finalResults
 
   const loadingIcon:FontAwesomeIconProps= status==="isLoading" ? {icon:faSpinner,spin:true} :{icon:faMagnifyingGlass,spin:false} 
 
@@ -73,7 +65,7 @@ export default function SearcherIGDB({updateFavorites,pos}:props)
         focusOnStar
       />
       <div
-        className={`flex-col absolute top-[100%] left-0 max-h-[25rem] overflow-y-auto w-full rounded-[0px_0px_.3rem_.3rem] ${
+        className={`flex-col absolute top-[100%] left-0 max-h-[25rem] overflow-y-auto w-full rounded-[0px_0px_.3rem_.3rem] z-[999] ${
           status === true ? "flex" : "hidden"
         }`}
       >
@@ -86,8 +78,8 @@ export default function SearcherIGDB({updateFavorites,pos}:props)
           />
         ))}
       </div>
-      {noResults && (
-        <span className="absolute text-[#fff] text-[2rem] bottom-0 translate-y-[100%] left-[50%] translate-x-[-50%] mob:text-[.8rem]">
+      {data?.length===0 && game!==""&&(
+        <span className="absolute text-[#fff] text-[2rem] bottom-0 translate-y-[100%] left-[50%] translate-x-[-50%] mob:text-[.8rem] z-[99]">
           There is no results
         </span>
       )}
