@@ -5,7 +5,7 @@ import { signOut } from "next-auth/react"
 
 export default function Navbar() 
 {
-  /* nada */
+  /* nada si*/
   const router = useRouter()
   const[params,setParams]=useState<string>("")
   const search =useSearchParams()
