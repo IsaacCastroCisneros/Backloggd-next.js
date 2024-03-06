@@ -42,15 +42,6 @@ export default async function page({params}:any)
       {finalGames.map((game) => (
         <GameCard isMenuSmall={true} key={game.id} position={null} {...game} />
       ))}
-      {finalGames.map((game) => (
-        <GameCard isMenuSmall={true} key={game.id} position={null} {...game} />
-      ))}
-      {finalGames.map((game) => (
-        <GameCard isMenuSmall={true} key={game.id} position={null} {...game} />
-      ))}
-      {finalGames.map((game) => (
-        <GameCard isMenuSmall={true} key={game.id} position={null} {...game} />
-      ))}
     </div>
   )
 }
