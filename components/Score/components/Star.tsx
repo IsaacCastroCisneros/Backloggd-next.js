@@ -10,7 +10,7 @@ interface props
   score:score
   setScore:Dispatch<SetStateAction<score>>
   myScore:Array<score>
-  size?:"big"|"normal" 
+  size?:"big"|"normal"|"small" 
   highligth:score
   setHighligth:Dispatch<SetStateAction<score>>
 }
@@ -27,17 +27,11 @@ export default function Star(props:props)
     setHighligth
   }=props
 
-/*   const[overHighligth,setOverHighligth]=useState<number>(0)
-
-  useEffect(()=>
-  {
-     setOverHighligth(score)
-  },[score]) */
-
   const sizes=
   {
     big:{w:"24.73px",icon:"xl"},
-    normal:{w:"17.99px",icon:undefined}
+    normal:{w:"17.99px",icon:undefined},
+    small:{w:"15.75px",icon:"sm"}
   }
 
   const{w,icon}=sizes[size]

@@ -5,4 +5,5 @@ export default interface gameCardData
   name:string
   date?:number
   platforms:Array<string>
+  slug:string
 }

@@ -2,7 +2,6 @@
 
 import pool from "@/config/db"
 import { game } from "@/interfaces/game"
-import serverResponse from "@/interfaces/serverResponse"
 import { RowDataPacket } from "mysql2"
 
 export default async function getGame(gameId:string,userId:string):Promise<string>

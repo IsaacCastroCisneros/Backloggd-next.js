@@ -12,7 +12,7 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons'
 
 interface props 
 {
-  size:"big"|"normal" 
+  size:"big"|"normal"|"small" 
   user:user|null
   id:string
   setConfig?:Dispatch<SetStateAction<config>>
@@ -23,6 +23,7 @@ export default function Score(props:props)
   const{size,user,id,setConfig}=props
   const[score,setScore]=useState<score>(0)
   const[highligth,setHighligth]=useState<score>(0)
+
   
   useEffect(()=>
   {
@@ -46,6 +47,7 @@ export default function Score(props:props)
 
   return (
     <form
+      className='w-fit'
       onSubmit={async (e) => {
         e.preventDefault();
         if (setConfig) {
@@ -59,7 +61,7 @@ export default function Score(props:props)
     >
       <div className="flex text-gray w-fit justify-center relative items-center">
         <button
-          className=" text-text hover:text-myPink"
+          className=" text-text hover:text-myPink absolute left-0 translate-x-[-100%] top-[50%] translate-y-[-50%]"
           onClick={handleToDefault}
         >
           <FontAwesomeIcon icon={faXmark} size='sm' />

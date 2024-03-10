@@ -5,6 +5,7 @@ import gameCardData from '../../../../../interfaces/gameCardData'
 import Card from './components/Card'
 import {useSession} from "next-auth/react"
 import user from '@/interfaces/user'
+import NavigationButton from './components/NavigationButton'
 
 interface props
 {
@@ -21,27 +22,22 @@ export default function Results({results,offset,game}:props)
 
   return (
     <>
-      <div className="flex flex-col gap-[1.8rem]">
+      <div className="flex flex-col gap-[1.8rem] pt-[5rem] mb-[2rem]">
         {results.map((card) => (
           <Card key={card.id} {...card} user={user} />
         ))}
-        {results.length < 25 && (
-          <span className="font-bold">There is results no more</span>
+      </div>
+      <div className='flex justify-between items-center'>
+        {offset > 0 && (
+          <NavigationButton game={game} offset={offset} type="prev" />
+        )}
+        {results.length === 25 && (
+          <NavigationButton game={game} offset={offset} type="next" />
         )}
       </div>
-      {offset > 0 && (
-        <Link href={`/games/search?game=${game}&offset=${Number(offset) - 25}`}>
-          prev
-        </Link>
-      )}
-      {results.length === 25 && (
-        <Link
-          href={`/games/search?game=${game}&offset=${Number(offset) + 25}`}
-          className="bg-[#fff]"
-        >
-          next
-        </Link>
-      )}
+      {results.length < 25 && (
+          <span className="font-bold block w-full text-center text-text2 text-[2rem]">There is results no more</span>
+        )}
     </>
   );
 }

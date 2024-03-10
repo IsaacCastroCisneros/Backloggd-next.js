@@ -171,7 +171,7 @@ export default function LogForm(props:props)
                   </div>
                 </div>
               </div>
-              <div className="w-full">
+              <div className="w-full mb-[1rem]">
                 <span className="text-[20px] mob:text-[16px] text-text mb-[.3rem] block">
                   Review
                 </span>

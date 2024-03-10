@@ -1,16 +1,19 @@
 "use client"
 import React, { FormEvent, useEffect, useState } from 'react'
-import {useRouter, useSearchParams}  from "next/navigation"
+import {usePathname, useRouter, useSearchParams}  from "next/navigation"
 import { signOut, useSession } from "next-auth/react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import Option from './components/Option'
 import user from '@/interfaces/user'
+import Link from 'next/link'
 
 
 export default  function Navbar() 
 {
   const router = useRouter()
+  const path = usePathname()
+
   const[params,setParams]=useState<string>("")
   const {data:session} = useSession() as {data:{user:user}|null}
   
@@ -42,6 +45,14 @@ export default  function Navbar()
   return (
     <header>
       <nav className="custom-container flex justify-end gap-[1rem] py-[.8rem] items-center">
+        {path !== "/" && (
+          <Link
+            className="block mr-auto text-[#fff] text-[26px] font-bold"
+            href="/"
+          >
+            Backloggd
+          </Link>
+        )}
         {session && (
           <>
             <Option href={`/user/${username}`}>{username}</Option>

@@ -16,18 +16,18 @@ interface finalGame extends gameCardData
 export default async function page({params}:any) 
 {
   const {userName} = params
-  const {res} =JSON.parse(await getUser({userName})) 
+  const {res} =JSON.parse(await getUser({userName}))
   const user = res[0] as user
-  const {res:games} = JSON.parse(await getGamesByPage({user_id:user.id,limit:50,offset:0})) 
-  const myGames = games as Array<game>
+  const {res:results} = JSON.parse(await getGamesByPage({user_id:user.id,limit:50,offset:0})) 
+  const {games,quantity}=results as {games:Array<game>,quantity:string}
   
-  const ids = myGames.map(game=>game.game_id)
+  const ids = games.map(game=>game.game_id)
 
   const igdbGames = await getFullGameIGDB({ids})
 
   let finalGames:Array<finalGame>=[]
 
-  igdbGames.forEach(igdbGame=>(myGames.forEach(myGame=>
+  igdbGames.forEach(igdbGame=>(games.forEach(myGame=>
     {
       if(igdbGame.id === myGame.game_id)
       {
@@ -36,12 +36,23 @@ export default async function page({params}:any)
       }
     })))
 
-
   return (
-    <div className='grid grid-cols-[repeat(auto-fill,minmax(93.59px,1fr))] gap-x-[.5rem] gap-y-[2rem]'>
-      {finalGames.map((game) => (
-        <GameCard isMenuSmall={true} key={game.id} position={null} {...game} />
-      ))}
-    </div>
-  )
+    <>
+      <span className=" text-text text-[14.4px] block mb-[.6rem]">
+        {quantity} Games
+      </span>
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(93.59px,1fr))] gap-x-[.5rem] gap-y-[2rem]">
+        {finalGames.map((game) => (
+            <GameCard
+              key={game.id}
+              isMenuSmall={true}
+              position={null}
+              isScore={true}
+              size='small'
+              {...game}
+            />
+        ))}
+      </div>
+    </>
+  );
 }

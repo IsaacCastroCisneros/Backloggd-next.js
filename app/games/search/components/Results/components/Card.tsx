@@ -24,15 +24,15 @@ export default function Card(props:props)
     date,
     cover,
     user,
-    id,
-    platforms
+    slug,
+    id
   }=props
 
   const{setPopup}=useContext(global)
  
   return (
     <div className="flex gap-[1rem] mob1:gap-[.5rem] items-start pb-[.5rem] border-b-[1px] border-border">
-      <Link href="/">
+      <Link href={`/games/${slug}`}>
         <CardPic
           className="mob1:hidden"
           notFoundStyles="mob1:hidden"
@@ -48,7 +48,7 @@ export default function Card(props:props)
       </Link>
       <span className="font-medium flex gap-[.5rem] items-start mob1:min-w-[130px] mob1:w-[130px] mob1:flex-col mob1:gap-0">
         <Link
-          href="/"
+          href={`/games/${slug}`}
           className="text-[#fff] text-[28px] hover:text-text leading-[2rem] pb-[.5rem] mob1:pb-[0rem] line-clamp-2 max-w-[700px] mob:text-[20px] mob1:leading-[normal] mob1:text-[16px]"
         >
           {name}
@@ -57,7 +57,7 @@ export default function Card(props:props)
           {date || "TBD"}
         </span>
       </span>
-      <div className="flex flex-col ml-auto">
+      <div className="flex flex-col ml-auto items-center gap-[.5rem]">
         {user && <Score size="normal" user={user} id={id} />}
         {user && (
           <Button

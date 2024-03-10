@@ -1,5 +1,6 @@
 "use server"
 
+import igdbResponse from '@/interfaces/igdbResponse';
 import axios from 'axios';
 
 interface props
@@ -8,7 +9,7 @@ interface props
     query?:string
 }
 
-export default async function igdb({type,query=""}:props):Promise<{res:Array<Record<any,any>>,err:null|unknown}> 
+export default async function igdb({type,query=""}:props):Promise<{res:Array<igdbResponse>,err:null|unknown}> 
 {
    const headers = 
    {
@@ -16,7 +17,7 @@ export default async function igdb({type,query=""}:props):Promise<{res:Array<Rec
      {
         'Accept': 'application/json',
         'Client-ID' : 'h8j1a9qs3atk4blop7oiz3yvouv5py',
-        'Authorization' :  'Bearer db37kmv9da1d1wau56gxj9ukjmr4d2', 
+        'Authorization' :  'Bearer syao9v4yc0ch5e1kpywklfm3bawauo', 
      }
    }
    try

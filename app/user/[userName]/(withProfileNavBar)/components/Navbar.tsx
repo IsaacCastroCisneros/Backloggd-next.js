@@ -18,7 +18,7 @@ export default function Navbar()
   }
 
   return (
-    <nav className='bg-border2 py-[3px] rounded-[.3rem]'>
+    <nav className='bg-border2 py-[3px] rounded-[.3rem] mb-[1rem]'>
         <ul className='flex'>
             <Option href={`/user/${pathSplitted[2]}`} label="profile" isActive={isActive.profile} />
             <Option href={`${path}/games`} label="games" isActive={isActive.games} />

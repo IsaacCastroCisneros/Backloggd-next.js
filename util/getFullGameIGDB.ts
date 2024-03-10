@@ -61,6 +61,7 @@ export default async function getFullGameIGDB(props:props):Promise<Array<gameCar
       {
         id:gcd.id,
         name:gcd.name,
+        slug:gcd.slug,
         platforms:gcd.platforms||[]
       }
   
