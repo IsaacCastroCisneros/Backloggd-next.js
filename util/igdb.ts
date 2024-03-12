@@ -9,7 +9,7 @@ interface props
     query?:string
 }
 
-export default async function igdb({type,query=""}:props):Promise<{res:Array<igdbResponse>,err:null|unknown}> 
+export default async function igdb({type,query=""}:props):Promise<{res:Array<any>,err:null|unknown}> 
 {
    const headers = 
    {
