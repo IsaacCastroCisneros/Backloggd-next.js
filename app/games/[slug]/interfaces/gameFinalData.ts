@@ -6,7 +6,7 @@ export default interface gameFinalData
     platforms:Array<string>,
     genres:Array<string>,
     screenshot:string,
-    dates:string,
-    publiser:string,
+    date:string,
+    publisher:string,
     developer:string
   }

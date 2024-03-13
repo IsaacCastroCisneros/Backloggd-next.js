@@ -1,16 +1,12 @@
 import igdb from '@/util/igdb'
 import choosingImgSize from '../search/components/Results/util/choosingImgSize'
 import randomizer from '@/util/randomizer'
-import GradientBanner from './components/GradientBanner'
 import gameFinalData from './interfaces/gameFinalData'
 import igdbResponse from '@/interfaces/igdbResponse'
-import RiteContainer from './components/RiteContainer'
 import gettingCompanies from './util/gettingCompanies'
+import request from './util/request'
+import ClientContent from './ClientContent/ClientContent'
 
-const request =async({type,id,fields}:{type:string,id:string,fields:string})=>
-{
-  return await igdb({type,query:`where id=(${id}); fields ${fields};`})
-}
 
 export default async function page({params}:any) 
 {
@@ -77,17 +73,10 @@ export default async function page({params}:any)
     platforms:platforms.map(platform=>platform.name),
     genres:genres.map(genre=>genre.name),
     screenshot:finalScreenshot,
-    dates:finalDate,
-    publiser:publisher[0].name,
+    date:finalDate,
+    publisher:publisher[0].name,
     developer:developer[0].name,
   }
 
-  return (
-    <>
-      <GradientBanner {...gameFinalData} />
-      <div className='flex'>
-         <RiteContainer {...gameFinalData} />
-      </div>
-    </>
-  );
+  return <ClientContent gameFinalData={gameFinalData} />
 }
