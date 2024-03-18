@@ -11,7 +11,9 @@ export default function RiteContainer(props:props)
 {
 
   return (
-    <Header/>
+    <div className='pl-[3.5rem] flex-1'>
+      <Header/>
+    </div>
   )
 }
 

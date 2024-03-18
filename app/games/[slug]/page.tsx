@@ -8,6 +8,9 @@ import request from './util/request'
 import ClientContent from './ClientContent/ClientContent'
 
 
+const TBD = "TBD"
+
+
 export default async function page({params}:any) 
 {
   const{slug}=params
@@ -19,7 +22,8 @@ export default async function page({params}:any)
     platforms: platformsIds=[],
     screenshots: screenshotsIds=[],
     release_dates: release_datesIds=[],
-    involved_companies:involved_companiesIds=[]
+    involved_companies:involved_companiesIds=[],
+    genres:genresIds=[]
   } = generalData;
 
   const [
@@ -43,7 +47,7 @@ export default async function page({params}:any)
     }),
     request({
       type: "genres",
-      id: `${generalData.genres.join(",")}`,
+      id: `${genresIds.join(",")}`,
       fields: "name",
     }),
     request({type:"release_dates",id:`${release_datesIds.join(",")}`,fields:"human"}),
@@ -62,7 +66,7 @@ export default async function page({params}:any)
 
   const finalCover = cover.length>0 ? choosingImgSize({url:cover[0].url,size:"cover_big"}):""
   const finalScreenshot = screenshots.length>0 ? choosingImgSize({url:screenshots[0].url,size:"1080p"}):""
-  const finalDate = date.length>0 ? date[0].human : ""
+  const finalDate = date.length>0 ? date[0].human : TBD
 
 
   const gameFinalData:gameFinalData=
@@ -74,9 +78,10 @@ export default async function page({params}:any)
     genres:genres.map(genre=>genre.name),
     screenshot:finalScreenshot,
     date:finalDate,
-    publisher:publisher[0].name,
-    developer:developer[0].name,
+    publisher:publisher[0] ? publisher[0].name:TBD,
+    developer:developer[0] ? developer[0].name:TBD,
   }
+
 
   return <ClientContent gameFinalData={gameFinalData} />
 }

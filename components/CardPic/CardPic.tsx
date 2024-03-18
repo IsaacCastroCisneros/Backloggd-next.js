@@ -13,7 +13,7 @@ export default function CardPic(myProps:props)
 {
 
    const{src,height=123,width=90,notFoundStyles}=myProps
-   const imgSrc=src ?  choosingImgSize({url:src,size:"cover_big"}):undefined
+   const imgSrc=src && choosingImgSize({url:src,size:"cover_big"})
 
   return (
     <>
