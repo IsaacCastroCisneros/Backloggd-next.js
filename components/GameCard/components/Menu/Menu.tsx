@@ -24,6 +24,8 @@ export default function Menu(props:props)
   useQuery(["data",{game_id,user_id}],gettingGameDataDB)
   const[hightLigth,setHightLigth]=useState<gameStatus>("none")
 
+  /* lol */
+
   async function statusUpdate(status:gameStatus) 
   { 
     const {err} = JSON.parse(await gameLogin({game_id,user_id,status})) 
