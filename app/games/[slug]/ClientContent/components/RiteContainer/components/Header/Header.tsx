@@ -24,10 +24,8 @@ export default function Header()
     setShow(prev=>!prev)
   }
 
-  console.log(developer)
-
   return (
-    <div className="mt-[21rem] flex flex-col">
+    <div className="flex flex-col">
       <section>
         <h1 className="text-[2.5rem] text-[#fff] font-medium">{name}</h1>
         <p className="text-text7 text-[20px] block mb-[.8rem]">

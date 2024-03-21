@@ -1,6 +1,6 @@
 "use client"
 
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import React, { Dispatch, FormEvent, SetStateAction, useContext, useEffect, useState } from 'react'
 import Star from './components/Star'
 import score from './types/score'
 import user from '@/interfaces/user'
@@ -9,10 +9,12 @@ import gameLogin from '@/server/gameLogin'
 import config from '../LogForm/interfaces/config'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
+import size from './types/size'
+import { global } from '@/app/context/GlobalContext'
 
 interface props 
 {
-  size:"big"|"normal"|"small" 
+  size:size 
   user:user|null
   id:string
   setConfig?:Dispatch<SetStateAction<config>>
@@ -23,6 +25,7 @@ export default function Score(props:props)
   const{size,user,id,setConfig}=props
   const[score,setScore]=useState<score>(0)
   const[highligth,setHighligth]=useState<score>(0)
+  const{setMsg}=useContext(global)
 
   
   useEffect(()=>
@@ -44,20 +47,25 @@ export default function Score(props:props)
   }
     
   if (user === null) return null;
+  
+  const submittingForm =async(e:FormEvent<HTMLFormElement>) => 
+  {
+    e.preventDefault();
+    if (setConfig) {
+      return setConfig((prev) => {
+        return { ...prev, values: { ...prev.values, score } };
+      });
+    }
+
+    await gameLogin({ score, user_id: user.id, game_id: id });
+    setMsg({msg:"Log Updated",type:"success",show:true})
+
+  }
 
   return (
     <form
       className='w-fit'
-      onSubmit={async (e) => {
-        e.preventDefault();
-        if (setConfig) {
-          return setConfig((prev) => {
-            return { ...prev, values: { ...prev.values, score } };
-          });
-        }
-
-        await gameLogin({ score, user_id: user.id, game_id: id });
-      }}
+      onSubmit={submittingForm}
     >
       <div className="flex text-gray w-fit justify-center relative items-center">
         <button

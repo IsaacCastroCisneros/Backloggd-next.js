@@ -4,13 +4,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { Dispatch, SetStateAction,useEffect,useState } from 'react'
 import score from '@/components/Score/types/score'
 import { SizeProp } from '@fortawesome/fontawesome-svg-core'
+import size from '../types/size'
 
 interface props
 {
   score:score
   setScore:Dispatch<SetStateAction<score>>
   myScore:Array<score>
-  size?:"big"|"normal"|"small" 
+  size?:size
   highligth:score
   setHighligth:Dispatch<SetStateAction<score>>
 }
@@ -29,9 +30,10 @@ export default function Star(props:props)
 
   const sizes=
   {
-    big:{w:"24.73px",icon:"xl"},
-    normal:{w:"17.99px",icon:undefined},
-    small:{w:"15.75px",icon:"sm"}
+    big:{w:"27px",icon:"xl"},
+    bigger:{w:"36px",icon:"2xl"},
+    normal:{w:"18px",icon:undefined},
+    small:{w:"16px",icon:"sm"}
   }
 
   const{w,icon}=sizes[size]

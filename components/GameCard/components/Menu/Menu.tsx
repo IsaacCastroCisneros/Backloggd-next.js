@@ -34,7 +34,6 @@ export default function Menu(props:props)
     }
   }
 
-
   async function gettingGameDataDB({queryKey}:any)
   {
     const[_key,{game_id,user_id}]=queryKey
@@ -42,7 +41,6 @@ export default function Menu(props:props)
     if(err)return"none" 
     setHightLigth(res[0].status) 
   }
-
 
   return (
     <div

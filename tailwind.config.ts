@@ -32,6 +32,7 @@ const config: Config = {
      border:"#a2b1e533",
      border2:"#242832",
      border3:"#454a6470",
+     border4:"#3d4356",
      myPink:"#ea377a",
      myPink2:"#fc6399",
      gray2:"#262c3c",
