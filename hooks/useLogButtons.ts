@@ -38,6 +38,6 @@ export default function useLogButtons({game_id,user_id}:props)
 
   return{
     statusUpdate,
-    
+    hightLigth
   }
 }
