@@ -6,6 +6,7 @@ import igdbResponse from '@/interfaces/igdbResponse'
 import gettingCompanies from './util/gettingCompanies'
 import request from './util/request'
 import ClientContent from './ClientContent/ClientContent'
+import gettingGameDbData from './server/gettingGameDbData'
 
 
 const TBD = "TBD"
@@ -16,6 +17,7 @@ export default async function page({params}:any)
   const {res} = await igdb({type:"games",query:`where slug="${slug}"; fields *;`}) as {res:Array<igdbResponse>} 
   const generalData= res[0]
 
+  
   const {
     cover: coverId="",
     platforms: platformsIds=[],
@@ -25,6 +27,8 @@ export default async function page({params}:any)
     genres:genresIds=[],
     id
   } = generalData;
+  
+  const {res:gameDbData} = JSON.parse(await gettingGameDbData([id,id,id]))
 
   const [
     { res: cover },
@@ -80,6 +84,14 @@ export default async function page({params}:any)
     developer:developer[0] ? developer[0].name:TBD,
   }
 
+  const gameFinalDbData:gameDbData=
+  {
+     playing:gameDbData[0] ? gameDbData[0].playing :0,
+     plays:gameDbData[0] ? gameDbData[0].plays :0,
+     listed:gameDbData[0] ? gameDbData[0].listed :0
+  }
+  
 
-  return <ClientContent gameFinalData={gameFinalData} />
+
+  return <ClientContent gameFinalData={gameFinalData} gameDbData={gameFinalDbData} />
 }

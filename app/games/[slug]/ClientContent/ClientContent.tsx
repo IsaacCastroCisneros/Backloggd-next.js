@@ -6,7 +6,13 @@ import RiteContainer from './components/RiteContainer/RiteContainer'
 import gameFinalData from '../interfaces/gameFinalData'
 import LeftContainer from './components/LeftContainer/LeftContainer'
 
-export const context = React.createContext<{gameFinalData:gameFinalData}>(
+interface values {
+  gameFinalData: gameFinalData;
+  gameDbData: gameDbData;
+}
+
+
+export const context = React.createContext<values>(
   {
     gameFinalData:
     {
@@ -20,19 +26,21 @@ export const context = React.createContext<{gameFinalData:gameFinalData}>(
       date:"",
       publisher:"",
       developer:"",
+    },
+    gameDbData:
+    {
+      playing:0,
+      plays:0,
+      listed:0
     }
   })
 
-interface props
-{
-  gameFinalData:gameFinalData
-}
 
-export default function ClientContent({gameFinalData}:props) 
+export default function ClientContent({gameFinalData,gameDbData}:values) 
 {
 
   return (
-    <context.Provider value={{gameFinalData}}>
+    <context.Provider value={{gameFinalData,gameDbData}}>
     <GradientBanner screenshot={gameFinalData.screenshot} />
       <div className='flex mt-[21rem]'>
          <LeftContainer/>

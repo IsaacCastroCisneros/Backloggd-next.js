@@ -1,14 +1,10 @@
 import { faEllipsisH, faGamepad, faPlay } from '@fortawesome/free-solid-svg-icons'
-import React, { HtmlHTMLAttributes, useContext, useState } from 'react'
+import React, { HtmlHTMLAttributes, useContext } from 'react'
 import Button from './components/Button/Button';
 import { gameCard } from '../../GameCard';
-import gameLogin from '@/server/gameLogin';
-import gameStatus from '@/types/gameStatus';
 import gameCardData from '@/interfaces/gameCardData';
-import { useQuery } from 'react-query';
-import getGame from '@/server/getGame';
 import { twMerge } from 'tailwind-merge';
-import { global } from '@/app/context/GlobalContext';
+import useLogButtons from '@/hooks/useLogButtons/useLogButtons';
 
 interface props extends HtmlHTMLAttributes<HTMLDivElement>
 {
@@ -18,30 +14,9 @@ interface props extends HtmlHTMLAttributes<HTMLDivElement>
 export default function Menu(props:props) 
 {
   const{gameCardData,user,isMenuSmall}=useContext(gameCard)
-  const{setMsg}=useContext(global)
   const{id:game_id}=gameCardData as gameCardData || {id:""}
   const{id:user_id}=user || {id:""}
-  useQuery(["data",{game_id,user_id}],gettingGameDataDB)
-  const[hightLigth,setHightLigth]=useState<gameStatus>("none")
-
-  async function statusUpdate(status:gameStatus) 
-  { 
-    const {err} = JSON.parse(await gameLogin({game_id,user_id,status})) 
-    if(!err)
-    {
-      setHightLigth(status)
-      setMsg({show:true,msg:"Updated",type:"success"})
-    }
-  }
-
-  async function gettingGameDataDB({queryKey}:any)
-  {
-    const[_key,{game_id,user_id}]=queryKey
-    const{res,err}=JSON.parse(await getGame(game_id,user_id))
-    if(err)return"none" 
-    setHightLigth(res[0].status) 
-  }
-
+  const{hightLigth,statusUpdate}=useLogButtons({game_id,user_id})
 
   return (
     <div
