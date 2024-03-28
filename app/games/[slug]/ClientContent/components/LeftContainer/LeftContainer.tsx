@@ -12,15 +12,17 @@ import ButtonLog from './components/ButtonLog'
 import useLogButtons from '@/hooks/useLogButtons/useLogButtons'
 import StatisticItem from './components/StatisticItem'
 import { twMerge } from 'tailwind-merge'
-
+import { global } from '@/app/context/GlobalContext'
+import LogForm from '@/components/LogForm/LogForm'
 
 
 export default function LeftContainer() 
 {
   const{gameFinalData,gameDbData}=useContext(context)
+  const{setPopup}=useContext(global)
   const data = useSession().data
   const user = data ? data.user as user : null 
-  const{cover,id}=gameFinalData
+  const{cover,id,name,date}=gameFinalData
   const{playing,plays,listed}=gameDbData
 
   const {statusUpdate,hightLigth}=useLogButtons({game_id:id,user_id:user?.id||""})
@@ -29,8 +31,35 @@ export default function LeftContainer()
 
   return (
     <div className="w-[198px] flex flex-col gap-[1rem]">
-      <div className={twMerge(container,"relative w-full mt-[4rem] flex flex-col items-center pt-[2.5rem]")}>
-        <Button className="capitalize w-full mb-[.5rem]">edit your log</Button>
+      <div
+        className={twMerge(
+          container,
+          "relative w-full mt-[4rem] flex flex-col items-center pt-[2.5rem]"
+        )}
+      >
+        {/* {user && (
+          <Button
+            className="capitalize w-full mb-[.5rem]"
+            onClick={() =>
+              setPopup({
+                show: true,
+                content: (
+                  <LogForm
+                    id={id}
+                    cover={cover}
+                    name={name}
+                    date={date}
+                    user={user}
+                    platforms={}
+                  />
+                ),
+                clickOutside: false,
+              })
+            }
+          >
+            edit your log
+          </Button>
+        )} */}
         <CardPic
           className="absolute top-[0] translate-y-[-88%] translate-x-[-50%] left-[50%]"
           src={cover}

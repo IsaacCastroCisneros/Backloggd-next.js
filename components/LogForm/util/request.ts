@@ -71,4 +71,4 @@ export default async function request(props:props)
       } catch (err) {
         setConfig(prev=>({...prev,err:true}))
       }
-    }
+}

@@ -35,7 +35,7 @@ export default function LogForm(props:props)
       status: "none",
       score: 0,
       review: "",
-      platform: "",
+      platform: "", 
     },
     platformsIgdb: [],
     firstTime: true,
@@ -49,11 +49,12 @@ export default function LogForm(props:props)
   const { platforms, name, date, cover, id, user } = props;
   const { values, platformsIgdb,firstTime,loading,firstValue,err } = config;
 
+
   const noChanges = JSON.stringify(firstValue) === JSON.stringify(values)
 
   useEffect(() => {
     request({platforms,userId:user.id,gameId:id,setConfig,values})
-  }, [props]);
+  }, []);
 
 
   function clossingPopup() {
