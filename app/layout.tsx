@@ -6,9 +6,7 @@ import Msg from './components/Msg'
 import Navbar from './components/Navbar/Navbar'
 import Popup from './components/Popup'
 import '@fortawesome/fontawesome-svg-core/styles.css';
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/pages/api/auth/[...nextauth]'
-import user from '@/interfaces/user'
+
 
 const inter = Inter({ subsets: ['latin'] })
 

@@ -1,7 +1,7 @@
 "use server"
 
 import igdb from "@/util/igdb"
-import platform from "../interfaces/platform"
+import platform from "../../../interfaces/platform"
 
 export default async function getPlatforms(ids:Array<string>):Promise<{res:Array<platform>,err:null|unknown}> 
 {

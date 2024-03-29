@@ -14,10 +14,13 @@ import config from './interfaces/config'
 import CancelingLog from './components/CancelingLog/CancelingLog'
 import request from './util/request'
 import Textarea from '../Textarea'
+import logGameData from '@/interfaces/logGameData'
 
-interface props extends gameCardData
+interface props extends Omit<gameCardData,"platforms"> 
 {
   user:user
+  logGameData?:logGameData|null
+  platforms?:Array<string>
 }
 
 export default function LogForm(props:props) 
@@ -46,13 +49,26 @@ export default function LogForm(props:props)
   const [config, setConfig] = useState<config>(myDefault);
   const[showAdvice,setShowAdvice]=useState<boolean>(false)
 
-  const { platforms, name, date, cover, id, user } = props;
+  const { platforms=[], name, date, cover, id, user,logGameData } = props;
   const { values, platformsIgdb,firstTime,loading,firstValue,err } = config;
-
 
   const noChanges = JSON.stringify(firstValue) === JSON.stringify(values)
 
   useEffect(() => {
+    if(logGameData)
+    {
+      const{platformsIGDB,...values}=logGameData
+
+      setConfig((prev) => ({
+        ...prev,
+        firstValue: values,
+        values: values,
+        platformsIgdb: platformsIGDB,
+        firstTime: false,
+        loading: false,
+      }));
+      return
+    }
     request({platforms,userId:user.id,gameId:id,setConfig,values})
   }, []);
 

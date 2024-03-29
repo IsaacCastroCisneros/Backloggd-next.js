@@ -12,4 +12,5 @@ export default interface gameFinalData
     date:string
     publisher:string
     developer:string
+    slug:string
   }

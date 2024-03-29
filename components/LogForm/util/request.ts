@@ -43,7 +43,8 @@ export default async function request(props:props)
             ));
         }
 
-        if (gameArr.length > 0) {
+        if (gameArr.length > 0) 
+        {
           const gameDb = gameArr[0];
    
           const firstValue={

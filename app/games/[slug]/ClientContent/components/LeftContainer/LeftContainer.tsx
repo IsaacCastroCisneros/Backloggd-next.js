@@ -18,11 +18,11 @@ import LogForm from '@/components/LogForm/LogForm'
 
 export default function LeftContainer() 
 {
-  const{gameFinalData,gameDbData}=useContext(context)
+  const{gameFinalData,gameDbData,logGameData}=useContext(context)
   const{setPopup}=useContext(global)
   const data = useSession().data
   const user = data ? data.user as user : null 
-  const{cover,id,name,date}=gameFinalData
+  const{cover,id,name,date,slug}=gameFinalData
   const{playing,plays,listed}=gameDbData
 
   const {statusUpdate,hightLigth}=useLogButtons({game_id:id,user_id:user?.id||""})
@@ -37,7 +37,7 @@ export default function LeftContainer()
           "relative w-full mt-[4rem] flex flex-col items-center pt-[2.5rem]"
         )}
       >
-        {/* {user && (
+        {user && (
           <Button
             className="capitalize w-full mb-[.5rem]"
             onClick={() =>
@@ -45,12 +45,13 @@ export default function LeftContainer()
                 show: true,
                 content: (
                   <LogForm
-                    id={id}
-                    cover={cover}
-                    name={name}
-                    date={date}
+                    slug={slug}
                     user={user}
-                    platforms={}
+                    logGameData={logGameData}
+                    cover={cover}
+                    id={id}
+                    name={name}
+                    date={Number(date)}
                   />
                 ),
                 clickOutside: false,
@@ -59,7 +60,7 @@ export default function LeftContainer()
           >
             edit your log
           </Button>
-        )} */}
+        )}
         <CardPic
           className="absolute top-[0] translate-y-[-88%] translate-x-[-50%] left-[50%]"
           src={cover}
