@@ -42,11 +42,18 @@ export default function GameCard(props:props)
     isMenuSmall
   }
 
-  const stylesBySizeOptions=
-  {
-    "small":{name:"text-[12px]",LoginForLogLinkStyles:"text-[13px] px-[.5rem] py-[.2rem]"},
-    "normal":{name:"text-[14px]",LoginForLogLinkStyles:""},
-  }
+  const stylesBySizeOptions = {
+    small: {
+      name: "text-[12px]",
+      LoginForLogLinkStyles:
+        "text-[13px] px-[.5rem] py-[.2rem] absolute left-[50%] translate-x-[-50%] bottom-[.4rem]",
+    },
+    normal: {
+      name: "text-[14px]",
+      LoginForLogLinkStyles:
+        "absolute left-[50%] translate-x-[-50%] bottom-[.4rem]",
+    },
+  };
 
   const {name:nameBySize,LoginForLogLinkStyles}=stylesBySizeOptions[size]
 

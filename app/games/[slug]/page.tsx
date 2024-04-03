@@ -11,8 +11,8 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
 import getGame from '@/server/getGame'
 import user from '@/interfaces/user'
-import gameLog from '@/interfaces/gameLog'
 import logGameData from '@/interfaces/logGameData'
+import getReviews from './server/getReviews'
 
 
 const TBD = "TBD"
@@ -46,6 +46,7 @@ export default async function page({params}:any)
     { res: date },
     { res: involved_companies },
     gameByUser ,
+    {res:reviews}
   ] = await Promise.all([
     request({ type: "covers", id: `${coverId}`, fields: "url" }),
     request({
@@ -63,9 +64,10 @@ export default async function page({params}:any)
       id: `${genresIds.join(",")}`,
       fields: "name",
     }),
-    request({type:"release_dates",id:`${release_datesIds.join(",")}`,fields:"human"}),
+    request({type:"release_dates",id:`${release_datesIds.join(",")}`,fields:"human, y"}),
     request({type:"involved_companies",id:`${involved_companiesIds.join(",")}`,fields:"*"}),
-    session ? getGame(`${id}`,user.id) : "null"
+    session ? getGame(`${id}`,user.id) : "null",
+    getReviews({gameId:`${id}`})
   ]);
 
   const [{res:developer},{res:publisher}] = await Promise.all([request({
@@ -90,6 +92,7 @@ export default async function page({params}:any)
     genres:genres.map(genre=>genre.name),
     screenshot:finalScreenshot,
     date:date[0] ? date[0].human : TBD,
+    dateYear:date[0] ? date[0].y : TBD,
     publisher:publisher[0] ? publisher[0].name:TBD,
     developer:developer[0] ? developer[0].name:TBD,
     slug
@@ -102,13 +105,17 @@ export default async function page({params}:any)
      listed:gameDbData[0] ? gameDbData[0].listed :0
   }
 
-  const gameData = JSON.parse(gameByUser).res[0] as gameLog
+  const gameData = JSON.parse(gameByUser)
 
-  const logGameData:logGameData=
+  const logGameData:logGameData|null=
+  gameData ?
   {
-    ...gameData,
+    ...gameData.res[0],
     platformsIGDB:platforms.map(platform=>({id:platform.id,name:platform.name})),
-  }
+  }:
+  null
+
+  console.log(reviews)
 
   return (
     <ClientContent

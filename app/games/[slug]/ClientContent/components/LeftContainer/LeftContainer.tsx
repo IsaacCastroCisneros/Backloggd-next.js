@@ -14,6 +14,7 @@ import StatisticItem from './components/StatisticItem'
 import { twMerge } from 'tailwind-merge'
 import { global } from '@/app/context/GlobalContext'
 import LogForm from '@/components/LogForm/LogForm'
+import LoginForLogLink from '@/components/LoginForLogLink/LoginForLogLink'
 
 
 export default function LeftContainer() 
@@ -22,7 +23,7 @@ export default function LeftContainer()
   const{setPopup}=useContext(global)
   const data = useSession().data
   const user = data ? data.user as user : null 
-  const{cover,id,name,date,slug}=gameFinalData
+  const{cover,id,name,dateYear,slug}=gameFinalData
   const{playing,plays,listed}=gameDbData
 
   const {statusUpdate,hightLigth}=useLogButtons({game_id:id,user_id:user?.id||""})
@@ -47,11 +48,11 @@ export default function LeftContainer()
                   <LogForm
                     slug={slug}
                     user={user}
-                    logGameData={logGameData}
+                    logGameData={logGameData || undefined}
                     cover={cover}
                     id={id}
                     name={name}
-                    date={Number(date)}
+                    date={Number(dateYear)}
                   />
                 ),
                 clickOutside: false,
@@ -61,6 +62,7 @@ export default function LeftContainer()
             edit your log
           </Button>
         )}
+        {!user && <LoginForLogLink />}
         <CardPic
           className="absolute top-[0] translate-y-[-88%] translate-x-[-50%] left-[50%]"
           src={cover}
@@ -68,21 +70,25 @@ export default function LeftContainer()
           height={223}
         />
         {user && <Score size="bigger" id={`${id}`} user={user} />}
-        <p className="border-b-[1px] border-border4 block w-full my-[.6rem]"></p>
-        <div className="flex w-full justify-evenly">
-          <ButtonLog
-            icon={faGamepad}
-            label="played"
-            isActive={"played" === hightLigth}
-            onClick={() => statusUpdate("played")}
-          />
-          <ButtonLog
-            icon={faPlay}
-            label="Playing"
-            isActive={"playing" === hightLigth}
-            onClick={() => statusUpdate("playing")}
-          />
-        </div>
+        {user && (
+          <>
+            <p className="border-b-[1px] border-border4 block w-full my-[.6rem]"></p>
+            <div className="flex w-full justify-evenly">
+              <ButtonLog
+                icon={faGamepad}
+                label="played"
+                isActive={"played" === hightLigth}
+                onClick={() => statusUpdate("played")}
+              />
+              <ButtonLog
+                icon={faPlay}
+                label="Playing"
+                isActive={"playing" === hightLigth}
+                onClick={() => statusUpdate("playing")}
+              />
+            </div>
+          </>
+        )}
       </div>
       <div className={container}>
         <ul className="flex flex-col">

@@ -10,6 +10,7 @@ export default interface gameFinalData
     genres:Array<string>
     screenshot:string
     date:string
+    dateYear:string
     publisher:string
     developer:string
     slug:string

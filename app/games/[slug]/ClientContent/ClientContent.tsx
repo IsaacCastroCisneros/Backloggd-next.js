@@ -10,7 +10,7 @@ import logGameData from '@/interfaces/logGameData'
 interface values {
   gameFinalData: gameFinalData;
   gameDbData: gameDbData;
-  logGameData:logGameData
+  logGameData:logGameData|null
 }
 
 
@@ -24,6 +24,7 @@ export const context = React.createContext<values>({
     genres: [],
     screenshot: "",
     date: "",
+    dateYear:"",
     publisher: "",
     developer: "",
     slug:""
