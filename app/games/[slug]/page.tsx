@@ -46,7 +46,7 @@ export default async function page({params}:any)
     { res: date },
     { res: involved_companies },
     gameByUser ,
-    {res:reviews}
+    reviews
   ] = await Promise.all([
     request({ type: "covers", id: `${coverId}`, fields: "url" }),
     request({
@@ -115,13 +115,12 @@ export default async function page({params}:any)
   }:
   null
 
-  console.log(reviews)
-
   return (
     <ClientContent
       gameFinalData={gameFinalData}
       gameDbData={gameFinalDbData}
       logGameData={logGameData}
+      reviews={reviews.res}
     />
   );
 }

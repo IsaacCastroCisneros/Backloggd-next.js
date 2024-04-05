@@ -6,11 +6,13 @@ import RiteContainer from './components/RiteContainer/RiteContainer'
 import gameFinalData from '../interfaces/gameFinalData'
 import LeftContainer from './components/LeftContainer/LeftContainer'
 import logGameData from '@/interfaces/logGameData'
+import review from '../interfaces/review'
 
 interface values {
   gameFinalData: gameFinalData;
   gameDbData: gameDbData;
   logGameData:logGameData|null
+  reviews:Array<review>
 }
 
 
@@ -41,14 +43,16 @@ export const context = React.createContext<values>({
     score: 0,
     platformsIGDB:[]
   },
+  reviews:[]
 });
 
 
-export default function ClientContent({gameFinalData,gameDbData,logGameData}:values) 
+export default function ClientContent(props:values) 
 {
+  const { gameFinalData, gameDbData, logGameData, reviews } = props;
 
   return (
-    <context.Provider value={{gameFinalData,gameDbData,logGameData}}>
+    <context.Provider value={{gameFinalData,gameDbData,logGameData,reviews}}>
     <GradientBanner screenshot={gameFinalData.screenshot} />
       <div className='flex mt-[21rem]'>
          <LeftContainer/>

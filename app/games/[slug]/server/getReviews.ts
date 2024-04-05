@@ -1,7 +1,7 @@
 "use server"
 
 import get from "@/server/get"
-import reviewResponse from "../ClientContent/components/RiteContainer/components/Reviews/interfaces/reviewResponse"
+import reviewResponse from "../interfaces/reviewResponse"
 
 export default async function getReviews({gameId}:{gameId:string}) 
 {
