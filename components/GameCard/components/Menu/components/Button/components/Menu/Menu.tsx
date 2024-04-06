@@ -17,11 +17,11 @@ interface props
 export default function Menu({show}:props) 
 {
   const{setPopup}=useContext(global)
-  const{gameCardData,user}=useContext(gameCard)
+  const{gameCardData,user,initialScore}=useContext(gameCard)
 
   function isGameCardData():ReactNode
   {
-    if(gameCardData)return <LogForm {...gameCardData} user={user as user}/>
+    if(gameCardData)return <LogForm initialScore={initialScore} {...gameCardData} user={user as user}/>
     return <></>
   }
   

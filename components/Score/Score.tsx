@@ -30,7 +30,7 @@ export default function Score(props:props)
   
   useEffect(()=>
   {
-      setHighligth(initialScore)
+    setHighligth(initialScore)
   },[initialScore])
 
   function handleToDefault()

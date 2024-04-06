@@ -11,12 +11,16 @@ import favoritePosition from '@/types/favoritePosition'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCrown } from '@fortawesome/free-solid-svg-icons/faCrown'
 import Score from '../Score/Score'
+import useScoreByUser from '@/hooks/useScoreByUser'
+import score from '../Score/types/score'
+import { StaticScore } from '../StaticScore/StaticScore'
 
 export const gameCard = React.createContext<{
   gameCardData: gameCardData | null;
   user: user | null;
   isMenuSmall: boolean;
-}>({ gameCardData: null, user: null, isMenuSmall: false });
+  initialScore: score;
+}>({ gameCardData: null, user: null, isMenuSmall: false, initialScore: 0 });
 
 interface props extends gameCardData
 {
@@ -34,12 +38,14 @@ export default function GameCard(props:props)
   const {data}=useSession()
   const {user}=data||{user:null}
 
+  const initialScore = useScoreByUser({gameId:id,user:user as user})
 
   const value=
   {
     gameCardData:props,
     user:user as user,
-    isMenuSmall
+    isMenuSmall,
+    initialScore
   }
 
   const stylesBySizeOptions = {
@@ -106,7 +112,7 @@ export default function GameCard(props:props)
         </div>
         {user && isScore && (
           <div className="absolute left-[50%] translate-x-[-50%] translate-y-[100%] bottom-0">
-            <Score user={user as user} id={id} size="small" />
+            <StaticScore score={initialScore}/>
           </div>
         )}
       </div>

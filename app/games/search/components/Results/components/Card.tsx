@@ -12,18 +12,11 @@ import LogForm from '@/components/LogForm/LogForm'
 import LoginForLogLink from '@/components/LoginForLogLink/LoginForLogLink'
 import { useQuery } from 'react-query'
 import getScore from '@/server/getScore'
+import useScoreByUser from '@/hooks/useScoreByUser'
 
 interface props extends gameCardData
 {
  user:user|null
-}
-
-const request=async({queryKey}:any)=>
-{
-  const{gameId,userId}=queryKey[1]
-  const {res} = await getScore(gameId,userId)
-  if(res.length===0)return 0
-  return res[0].score
 }
 
 export default function Card(props:props) 
@@ -39,7 +32,8 @@ export default function Card(props:props)
   }=props
 
   const{setPopup}=useContext(global)
-  const{data:initialScore}=useQuery(["score",{gameId:id,userId:user?.id}],request)
+  
+  const initialScore = useScoreByUser({gameId:id,user:user})
 
   return (
     <div className="flex gap-[1rem] mob1:gap-[.5rem] items-start pb-[.5rem] border-b-[1px] border-border">

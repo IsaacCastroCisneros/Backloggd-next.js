@@ -5,6 +5,8 @@ import React, { Dispatch, SetStateAction,useEffect,useState } from 'react'
 import score from '@/components/Score/types/score'
 import { SizeProp } from '@fortawesome/fontawesome-svg-core'
 import size from '../types/size'
+import { HalfStar } from '@/components/HalfStar/HalfStar'
+import { StarContainer } from '@/components/StarContainer/StarContainer'
 
 interface props
 {
@@ -30,13 +32,13 @@ export default function Star(props:props)
 
   const sizes=
   {
-    big:{w:"27px",icon:"xl"},
-    bigger:{w:"36px",icon:"2xl"},
-    normal:{w:"18px",icon:undefined},
-    small:{w:"16px",icon:"sm"}
+    big:{w:"27px",iconSize:"xl"},
+    bigger:{w:"36px",iconSize:"2xl"},
+    normal:{w:"18px",iconSize:undefined},
+    small:{w:"16px",iconSize:"sm"}
   }
 
-  const{w,icon}=sizes[size]
+  const{w,iconSize}=sizes[size]
 
   function markingScore(myScore:score):string
   {
@@ -50,30 +52,25 @@ export default function Star(props:props)
   }
 
   return (
-    <div
-      className={`text-gray3 flex justify-between items-center hover:cursor-pointer`}
-      style={{ width: w }}
-    >
-      <div
-        className={`w-[calc(${w}_/_2)] overflow-hidden ${markingScore(myScore[0])}`}
+    <StarContainer width={w}>
+      <HalfStar
+        width={w}
+        side="left"
+        iconSize={iconSize as SizeProp}
+        className={`${markingScore(myScore[0])}`}
         onMouseEnter={() => setScore(myScore[0])}
-        onClick={()=>setHighligth(myScore[0])}
+        onClick={() => setHighligth(myScore[0])}
         onMouseLeave={() => setScore(0)}
-      >
-        <button>
-          <FontAwesomeIcon icon={faStar} size={icon as SizeProp | undefined} />
-        </button>
-      </div>
-      <div
-        className={`w-[calc(${w}_/_2)] overflow-hidden scale-x-[-1] ${markingScore(myScore[1])}`}
+      />
+      <HalfStar
+        width={w}
+        side="rite"
+        iconSize={iconSize as SizeProp}
+        className={`${markingScore(myScore[1])}`}
         onMouseEnter={() => setScore(myScore[1])}
-        onClick={()=>setHighligth(myScore[1])}
+        onClick={() => setHighligth(myScore[1])}
         onMouseLeave={() => setScore(0)}
-      >
-        <button>
-          <FontAwesomeIcon icon={faStar} size={icon as SizeProp | undefined} />
-        </button>
-      </div>
-    </div>
+      />
+    </StarContainer>
   );
 }
