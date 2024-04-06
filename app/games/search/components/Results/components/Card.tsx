@@ -10,10 +10,20 @@ import user from '@/interfaces/user'
 import { global } from '@/app/context/GlobalContext'
 import LogForm from '@/components/LogForm/LogForm'
 import LoginForLogLink from '@/components/LoginForLogLink/LoginForLogLink'
+import { useQuery } from 'react-query'
+import getScore from '@/server/getScore'
 
 interface props extends gameCardData
 {
  user:user|null
+}
+
+const request=async({queryKey}:any)=>
+{
+  const{gameId,userId}=queryKey[1]
+  const {res} = await getScore(gameId,userId)
+  if(res.length===0)return 0
+  return res[0].score
 }
 
 export default function Card(props:props) 
@@ -29,7 +39,8 @@ export default function Card(props:props)
   }=props
 
   const{setPopup}=useContext(global)
- 
+  const{data:initialScore}=useQuery(["score",{gameId:id,userId:user?.id}],request)
+
   return (
     <div className="flex gap-[1rem] mob1:gap-[.5rem] items-start pb-[.5rem] border-b-[1px] border-border">
       <Link href={`/games/${slug}`}>
@@ -58,14 +69,14 @@ export default function Card(props:props)
         </span>
       </span>
       <div className="flex flex-col ml-auto items-center gap-[.5rem]">
-        {user && <Score size="normal" user={user} id={id} />}
+        {user &&<Score size="normal" user={user} id={id} initialScore={initialScore} />}
         {user && (
           <Button
             className="whitespace-nowrap"
             onClick={() =>
               setPopup({
                 show: true,
-                content: <LogForm {...props} user={user} />,
+                content: <LogForm {...props} initialScore={initialScore} user={user} />,
                 clickOutside: false,
               })
             }

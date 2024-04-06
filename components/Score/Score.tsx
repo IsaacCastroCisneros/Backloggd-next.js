@@ -4,7 +4,6 @@ import React, { Dispatch, FormEvent, SetStateAction, useContext, useEffect, useS
 import Star from './components/Star'
 import score from './types/score'
 import user from '@/interfaces/user'
-import getScore from './server/getScore'
 import gameLogin from '@/server/gameLogin'
 import config from '../LogForm/interfaces/config'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -16,13 +15,14 @@ interface props
 {
   size:size 
   user:user|null
+  initialScore:score
   id:string
   setConfig?:Dispatch<SetStateAction<config>>
 }
 
 export default function Score(props:props) 
 {
-  const{size,user,id,setConfig}=props
+  const{size,user,id,setConfig,initialScore}=props
   const[score,setScore]=useState<score>(0)
   const[highligth,setHighligth]=useState<score>(0)
   const{setMsg}=useContext(global)
@@ -30,16 +30,8 @@ export default function Score(props:props)
   
   useEffect(()=>
   {
-    async function request()
-     {
-       if(user===null)return
-       const {res,err} = await getScore(id,user.id)
-       if(err||res.length===0)return
-       setHighligth(res[0].score)
-      }
-      
-      request()
-  },[])
+      setHighligth(initialScore)
+  },[initialScore])
 
   function handleToDefault()
   {

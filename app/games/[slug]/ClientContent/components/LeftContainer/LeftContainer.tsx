@@ -29,6 +29,7 @@ export default function LeftContainer()
   const {statusUpdate,hightLigth}=useLogButtons({game_id:id,user_id:user?.id||""})
 
   const container="rounded-[.3rem] p-[.8rem] bg-border2"
+  const{score}=logGameData
 
   return (
     <div className="w-[198px] flex flex-col gap-[1rem]">
@@ -47,6 +48,7 @@ export default function LeftContainer()
                 content: (
                   <LogForm
                     slug={slug}
+                    initialScore={score}
                     user={user}
                     logGameData={logGameData || undefined}
                     cover={cover}
@@ -69,7 +71,7 @@ export default function LeftContainer()
           width={165}
           height={223}
         />
-        {user && <Score size="bigger" id={`${id}`} user={user} />}
+        {user && <Score size="bigger" id={`${id}`} user={user}  initialScore={score}/>}
         {user && (
           <>
             <p className="border-b-[1px] border-border4 block w-full my-[.6rem]"></p>

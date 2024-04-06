@@ -15,11 +15,13 @@ import CancelingLog from './components/CancelingLog/CancelingLog'
 import request from './util/request'
 import Textarea from '../Textarea'
 import logGameData from '@/interfaces/logGameData'
+import score from '../Score/types/score'
 
 interface props extends Omit<gameCardData,"platforms"> 
 {
   user:user
   logGameData?:logGameData|null
+  initialScore:score
   platforms?:Array<string>
 }
 
@@ -49,7 +51,7 @@ export default function LogForm(props:props)
   const [config, setConfig] = useState<config>(myDefault);
   const[showAdvice,setShowAdvice]=useState<boolean>(false)
 
-  const { platforms=[], name, date, cover, id, user,logGameData } = props;
+  const { platforms=[], name, date, cover, id, user,logGameData,initialScore } = props;
   const { values, platformsIgdb,firstTime,loading,firstValue,err } = config;
 
   const noChanges = JSON.stringify(firstValue) === JSON.stringify(values)
@@ -154,6 +156,7 @@ export default function LogForm(props:props)
                     </span>
                     <Score
                       size="big"
+                      initialScore={initialScore}
                       id={id}
                       user={user as user}
                       setConfig={setConfig}

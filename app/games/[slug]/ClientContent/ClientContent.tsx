@@ -11,7 +11,7 @@ import review from '../interfaces/review'
 interface values {
   gameFinalData: gameFinalData;
   gameDbData: gameDbData;
-  logGameData:logGameData|null
+  logGameData:logGameData
   reviews:Array<review>
 }
 
@@ -41,7 +41,8 @@ export const context = React.createContext<values>({
     review: "",
     platform: "0",
     score: 0,
-    platformsIGDB:[]
+    platformsIGDB:[],
+    isActive:false
   },
   reviews:[]
 });

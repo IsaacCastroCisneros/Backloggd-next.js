@@ -13,6 +13,7 @@ import getGame from '@/server/getGame'
 import user from '@/interfaces/user'
 import logGameData from '@/interfaces/logGameData'
 import getReviews from './server/getReviews'
+import { logGameDataDefault } from './util/logGameDataDefault'
 
 
 const TBD = "TBD"
@@ -107,13 +108,13 @@ export default async function page({params}:any)
 
   const gameData = JSON.parse(gameByUser)
 
-  const logGameData:logGameData|null=
+  const logGameData:logGameData=
   gameData ?
   {
     ...gameData.res[0],
+    isActive:true,
     platformsIGDB:platforms.map(platform=>({id:platform.id,name:platform.name})),
-  }:
-  null
+  }:logGameDataDefault
 
   return (
     <ClientContent
