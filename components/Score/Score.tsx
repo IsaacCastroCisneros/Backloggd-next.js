@@ -2,7 +2,7 @@
 
 import React, { Dispatch, FormEvent, SetStateAction, useContext, useEffect, useState } from 'react'
 import Star from './components/Star'
-import score from './types/score'
+import score from '../../types/score'
 import user from '@/interfaces/user'
 import gameLogin from '@/server/gameLogin'
 import config from '../LogForm/interfaces/config'

@@ -15,7 +15,7 @@ import CancelingLog from './components/CancelingLog/CancelingLog'
 import request from './util/request'
 import Textarea from '../Textarea'
 import logGameData from '@/interfaces/logGameData'
-import score from '../Score/types/score'
+import score from '../../types/score'
 
 interface props extends Omit<gameCardData,"platforms"> 
 {

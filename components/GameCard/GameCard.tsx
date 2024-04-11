@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCrown } from '@fortawesome/free-solid-svg-icons/faCrown'
 import Score from '../Score/Score'
 import useScoreByUser from '@/hooks/useScoreByUser'
-import score from '../Score/types/score'
+import score from '../../types/score'
 import { StaticScore } from '../StaticScore/StaticScore'
 
 export const gameCard = React.createContext<{

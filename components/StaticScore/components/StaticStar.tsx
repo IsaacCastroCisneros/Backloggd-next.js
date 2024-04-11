@@ -1,5 +1,5 @@
 import { HalfStar } from '@/components/HalfStar/HalfStar'
-import score from '@/components/Score/types/score'
+import score from '@/types/score'
 import { StarContainer } from '@/components/StarContainer/StarContainer'
 import React from 'react'
 

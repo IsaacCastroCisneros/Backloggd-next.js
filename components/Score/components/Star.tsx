@@ -2,7 +2,7 @@
 import { faStar } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { Dispatch, SetStateAction,useEffect,useState } from 'react'
-import score from '@/components/Score/types/score'
+import score from '@/types/score'
 import { SizeProp } from '@fortawesome/fontawesome-svg-core'
 import size from '../types/size'
 import { HalfStar } from '@/components/HalfStar/HalfStar'

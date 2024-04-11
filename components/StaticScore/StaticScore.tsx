@@ -1,6 +1,6 @@
 import React from 'react'
 import { StaticStar } from './components/StaticStar'
-import score from '../Score/types/score'
+import score from '../../types/score'
 
 interface props
 {
@@ -11,11 +11,11 @@ export const StaticScore = ({score}:props) =>
 {
   return (
     <div className='flex text-gray w-fit justify-center relative items-center'>
-        <StaticStar myScore={[0,1]}  highligth={score}/>
-        <StaticStar myScore={[2,3]}  highligth={score}/>
-        <StaticStar myScore={[4,5]}  highligth={score}/>
-        <StaticStar myScore={[6,7]}  highligth={score}/>
-        <StaticStar myScore={[8,9]}  highligth={score}/>
+        <StaticStar myScore={[1,2]}  highligth={score}/>
+        <StaticStar myScore={[3,4]}  highligth={score}/>
+        <StaticStar myScore={[5,6]}  highligth={score}/>
+        <StaticStar myScore={[7,8]}  highligth={score}/>
+        <StaticStar myScore={[9,10]}  highligth={score}/>
     </div>
   )
 }

@@ -1,8 +1,9 @@
-import score from "@/components/Score/types/score"
+import score from "@/types/score"
+import gameStatus from "@/types/gameStatus"
 
 export default interface gameLog
 {
-  status:"played"|"shelved"|"completed"|"retired"|"abandoned"|"playing"|"none"
+  status:gameStatus
   review:string
   platform:string
   score:score

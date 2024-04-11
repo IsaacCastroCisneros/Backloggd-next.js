@@ -6,7 +6,7 @@ import getFullGameIGDB from '@/util/getFullGameIGDB'
 import GameCard from '@/components/GameCard/GameCard'
 import getGamesByPage from '@/server/getGamesByPage'
 import gameCardData from '@/interfaces/gameCardData'
-import score from '@/components/Score/types/score'
+import score from '@/types/score'
 
 interface finalGame extends gameCardData
 {
