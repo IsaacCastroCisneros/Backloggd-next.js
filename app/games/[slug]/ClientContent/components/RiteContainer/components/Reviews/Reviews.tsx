@@ -4,7 +4,7 @@ import Review from './components/Review';
 
 export default function Reviews() 
 {
-  const {gameFinalData,reviews}=useContext(context)                                                
+  const {reviews}=useContext(context)                                                
 
 
   return (

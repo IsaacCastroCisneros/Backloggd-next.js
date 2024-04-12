@@ -112,7 +112,6 @@ export default async function page({params}:any)
   gameData ?
   {
     ...gameData.res[0],
-    isActive:true,
     platformsIGDB:platforms.map(platform=>({id:platform.id,name:platform.name})),
   }:logGameDataDefault
 

@@ -7,6 +7,5 @@ export const logGameDataDefault:logGameData=
     platform:"",
     score:0,
     platformsIGDB:[],
-    isActive:false
 }
 

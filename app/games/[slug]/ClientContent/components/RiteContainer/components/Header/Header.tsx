@@ -3,26 +3,14 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { context } from '../../../../ClientContent'
 import PlatformGenres from './components/PlatformGenres'
+import useTextToggle from '@/hooks/useTextToggle'
 
 export default function Header() 
 {
   const{gameFinalData}=useContext(context)
   const{name,date,developer,publisher,summary}=gameFinalData
-  const ref = useRef(null)
-  const[showButton,setShowButton]=useState<boolean>(false)
-  const[show,setShow]=useState<boolean>(false)
 
-  useEffect(()=>
-  {
-    if(ref.current===null)return
-    const h = (ref.current as HTMLElement).offsetHeight
-    if(h>120)setShowButton(true)
-  },[])
-
-  const toggleShowHandle=()=>
-  {
-    setShow(prev=>!prev)
-  }
+  const{ref,toggleShowHandle,lineClamp,showButton,buttonLabel}=useTextToggle({height:120})
 
   return (
     <div className="flex flex-col">
@@ -38,7 +26,7 @@ export default function Header()
         <div className='flex-1'>
           <p
             className={`text-text4 ${
-              showButton && !show ? "line-clamp-5" : ""
+              lineClamp
             }`}
             ref={ref}
           >
@@ -51,7 +39,7 @@ export default function Header()
                 className="text-text3 hover:text-[#fff] font-medium"
                 onClick={toggleShowHandle}
               >
-                {show ? "Show Less" : "Show More"}
+                {buttonLabel}
               </button>
             </div>
           )}

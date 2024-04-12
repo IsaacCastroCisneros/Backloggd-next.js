@@ -42,7 +42,6 @@ export const context = React.createContext<values>({
     platform: "0",
     score: 0,
     platformsIGDB:[],
-    isActive:false
   },
   reviews:[]
 });
