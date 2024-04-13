@@ -9,7 +9,7 @@ export default function Reviews()
 
   return (
     <>
-      <h2 className="text-[1.3rem] text-text">Reviews</h2>
+      <h2 className="text-[1.3rem] text-text block mb-[1rem]">Reviews</h2>
       {
         reviews.map(review=>
           (

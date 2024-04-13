@@ -4,6 +4,7 @@ import StatusLabel from '@/components/StatusLabel/StatusLabel'
 import useTextToggle from '@/hooks/useTextToggle'
 import Link from 'next/link'
 import React, { useState } from 'react'
+import { twMerge } from 'tailwind-merge'
 
 interface props extends review
 {
@@ -30,7 +31,7 @@ export default function Review(props:review)
       </div>
       <p
         ref={ref}
-        className={`text-text4 text-[14px] mt-[.8rem] whitespace-pre-line max-w-[854px] ${lineClamp}`}
+        className={twMerge("text-text4 text-[14px] mt-[.8rem] whitespace-pre-line max-w-[854px]",lineClamp)}
         style={{ wordWrap: "break-word" }}
       >
         {review}

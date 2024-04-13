@@ -1,16 +1,17 @@
 "use client"
 
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useContext } from 'react'
 import { context } from '../../../../ClientContent'
 import PlatformGenres from './components/PlatformGenres'
 import useTextToggle from '@/hooks/useTextToggle'
+import { twMerge } from 'tailwind-merge'
 
 export default function Header() 
 {
   const{gameFinalData}=useContext(context)
   const{name,date,developer,publisher,summary}=gameFinalData
 
-  const{ref,toggleShowHandle,lineClamp,showButton,buttonLabel}=useTextToggle({height:120})
+  const{ref,toggleShowHandle,lineClamp,showButton,buttonLabel}=useTextToggle({height:120}) 
 
   return (
     <div className="flex flex-col">
@@ -25,9 +26,7 @@ export default function Header()
       <section className='flex gap-[1.4rem] items-start'>
         <div className='flex-1'>
           <p
-            className={`text-text4 ${
-              lineClamp
-            }`}
+            className={twMerge("text-text4",lineClamp)}
             ref={ref}
           >
             {summary}
