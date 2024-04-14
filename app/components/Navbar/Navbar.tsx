@@ -45,6 +45,7 @@ export default  function Navbar()
   return (
     <header>
       <nav className="custom-container flex justify-end gap-[1rem] py-[.8rem] items-center">
+        <Link href="/lel">lel</Link>
         {path !== "/" && (
           <Link
             className="block mr-auto text-[#fff] text-[26px] font-bold"
