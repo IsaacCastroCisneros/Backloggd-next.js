@@ -1,5 +1,5 @@
 import gameLog from "@/interfaces/gameLog"
-import platform from "../../../interfaces/platform"
+import platform from "./platform"
 
 export default interface config
 {

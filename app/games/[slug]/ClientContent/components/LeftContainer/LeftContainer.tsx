@@ -32,7 +32,7 @@ export default function LeftContainer()
   const{score}=logGameData
 
   return (
-    <div className="w-[198px] flex flex-col gap-[1rem]">
+    <div className="w-[198px] flex flex-col gap-[1rem] mob:hidden">
       <div
         className={twMerge(
           container,
@@ -48,10 +48,10 @@ export default function LeftContainer()
                 content: (
                   <LogForm
                     slug={slug}
-                    initialScore={score}
                     user={user}
-                    logGameData={logGameData || undefined}
                     cover={cover}
+                    platforms={logGameData.platformsIGDB}
+                    state="byPlatforms"
                     id={id}
                     name={name}
                     date={Number(dateYear)}

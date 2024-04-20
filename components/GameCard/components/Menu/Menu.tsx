@@ -21,7 +21,12 @@ export default function Menu(props:props)
   return (
     <div
       {...props}
-      className={twMerge(`rounded-[5px] bg-border2 border-gray border-[1px] ${isMenuSmall ? "px-[.5rem]":"px-[1rem]"} flex justify-between gap-[.5rem] z-[9] mob:hidden`,props.className)} 
+      className={twMerge(
+        `rounded-[5px] bg-border2 border-gray border-[1px] ${
+          isMenuSmall ? "px-[.5rem]" : "px-[1rem]"
+        } flex justify-between gap-[.5rem] z-[9] mob:hidden`,
+        props.className
+      )}
     >
       <Button
         isActive={"played" === hightLigth}

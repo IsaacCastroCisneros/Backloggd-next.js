@@ -7,6 +7,7 @@ import gameFinalData from '../interfaces/gameFinalData'
 import LeftContainer from './components/LeftContainer/LeftContainer'
 import logGameData from '@/interfaces/logGameData'
 import review from '../interfaces/review'
+import HeaderMobile from './components/HeaderMobile/HeaderMobile'
 
 interface values {
   gameFinalData: gameFinalData;
@@ -52,12 +53,15 @@ export default function ClientContent(props:values)
   const { gameFinalData, gameDbData, logGameData, reviews } = props;
 
   return (
-    <context.Provider value={{gameFinalData,gameDbData,logGameData,reviews}}>
-    <GradientBanner screenshot={gameFinalData.screenshot} />
-      <div className='flex mt-[21rem]'>
-         <LeftContainer/>
-         <RiteContainer {...gameFinalData} />
+    <context.Provider
+      value={{ gameFinalData, gameDbData, logGameData, reviews }}
+    >
+      <GradientBanner screenshot={gameFinalData.screenshot} />
+      <HeaderMobile/>
+      <div className="flex mt-[21rem] mob:mt-0">
+        <LeftContainer />
+        <RiteContainer {...gameFinalData} />
       </div>
     </context.Provider>
-  )
+  );
 }

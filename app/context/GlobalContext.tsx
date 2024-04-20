@@ -1,6 +1,6 @@
 "use client"
 
-import React,{ReactNode,Dispatch,SetStateAction,useState} from 'react'
+import React,{ReactNode,Dispatch,SetStateAction,useState, Suspense} from 'react'
 import { SessionProvider } from 'next-auth/react'
 import { QueryClient,QueryClientProvider } from 'react-query'
 
@@ -46,7 +46,9 @@ export default function GlobalContext({children}:{children:ReactNode})
   return (
     <global.Provider value={values}>
       <QueryClientProvider client={queryClient}>
-        <SessionProvider>{children}</SessionProvider>
+        <SessionProvider>
+          <Suspense>{children}</Suspense>
+        </SessionProvider>
       </QueryClientProvider>
     </global.Provider>
   );

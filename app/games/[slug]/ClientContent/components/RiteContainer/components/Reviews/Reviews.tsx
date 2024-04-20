@@ -9,12 +9,15 @@ export default function Reviews()
 
   return (
     <>
-      <h2 className="text-[1.3rem] text-text block mb-[1rem]">Reviews</h2>
+      <h2 className="text-[1.3rem] text-text block mb-[1rem] mt-[.6rem]">Reviews</h2>
       {
         reviews.map(review=>
           (
             <Review key={review.user_id} {...review} />
           ))
+      }
+      {
+        reviews.length===0&&<span className="capitalize text-text2 block text-center text-[1.5rem]">there is no reviews yet</span>
       }
     </>
   );

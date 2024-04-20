@@ -10,10 +10,10 @@ import user from '@/interfaces/user'
 import favoritePosition from '@/types/favoritePosition'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCrown } from '@fortawesome/free-solid-svg-icons/faCrown'
-import Score from '../Score/Score'
 import useScoreByUser from '@/hooks/useScoreByUser'
 import score from '../../types/score'
 import { StaticScore } from '../StaticScore/StaticScore'
+import Link from 'next/link'
 
 export const gameCard = React.createContext<{
   gameCardData: gameCardData | null;
@@ -32,7 +32,7 @@ interface props extends gameCardData
 
 export default function GameCard(props:props) 
 {
-  const{cover,name,position,isMenuSmall=false,size="normal",id,isScore=false}=props
+  const{cover,name,position,isMenuSmall=false,size="normal",id,isScore=false,slug}=props
   const src = choosingImgSize({ url: cover || "", size: "cover_big" })
   const[hover,setHover]=useState<boolean>(false)
   const {data}=useSession()
@@ -70,41 +70,39 @@ export default function GameCard(props:props)
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
         >
-          {position === "king" && (
-            <div className="absolute top-0 translate-y-[calc(-100%_-_.2rem)] text-myYellow w-full flex justify-center">
-              <FontAwesomeIcon icon={faCrown} />
-            </div>
-          )}
-          <img
-            width={173.8}
-            height={234}
-            className={`max-h-[2341px] object-cover rounded-[4px] ${
-              hover ? "brightness-[45%]" : ""
-            } duration-200`}
-            src={src}
-            alt="game card"
-          />
-          {hover && (
-            <>
-              <div className="flex absolute w-full h-full top-0 left-0 justify-center items-center">
-                <span
-                  className={`text-[#fff] font-bold ${nameBySize} pointer-events-none text-center mob:text-[12px] mob1:text-[9px]`}
-                >
-                  {name}
-                </span>
+          <Link href={`/games/${slug}`}>
+            {position === "king" && (
+              <div className="absolute top-0 translate-y-[calc(-100%_-_.2rem)] text-myYellow w-full flex justify-center">
+                <FontAwesomeIcon icon={faCrown} />
               </div>
-            </>
-          )}
+            )}
+            <img
+              width={173.8}
+              height={234}
+              className={`max-h-[2341px] object-cover rounded-[4px] ${
+                hover ? "brightness-[45%]" : ""
+              } duration-200`}
+              src={src}
+              alt="game card"
+            />
+            {hover && (
+              <>
+                <div className="flex absolute w-full h-full top-0 left-0 justify-center items-center">
+                  <span
+                    className={`text-[#fff] font-bold ${nameBySize} pointer-events-none text-center mob:text-[12px] mob1:text-[9px]`}
+                  >
+                    {name}
+                  </span>
+                </div>
+              </>
+            )}
+          </Link>
           {user && (
-            <div
-              className={`absolute bottom-[.5rem] left-0 w-full flex justify-center items-center ${
-                hover
-                  ? "opacity-1 pointer-events-auto"
-                  : "opacity-0 pointer-events-none"
-              }`}
-            >
-              <Menu />
-            </div>
+            <Menu className={`absolute bottom-[.5rem] left-[50%] translate-x-[-50%] w-fit flex justify-center items-center ${
+              hover
+                ? "opacity-1 pointer-events-auto"
+                : "opacity-0 pointer-events-none"
+            }`} />
           )}
           {!user && hover && (
             <LoginForLogLink className={LoginForLogLinkStyles} />
@@ -112,7 +110,7 @@ export default function GameCard(props:props)
         </div>
         {user && isScore && (
           <div className="absolute left-[50%] translate-x-[-50%] translate-y-[100%] bottom-0">
-            <StaticScore score={initialScore}/>
+            <StaticScore score={initialScore} />
           </div>
         )}
       </div>

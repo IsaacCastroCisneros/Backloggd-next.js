@@ -1,7 +1,6 @@
 "use client"
 
 import React, { useContext, useEffect, useState } from 'react'
-import gameCardData from '@/interfaces/gameCardData'
 import Button from '@/components/Button'
 import { global } from '@/app/context/GlobalContext'
 import CardPic from '@/components/CardPic/CardPic'
@@ -10,22 +9,16 @@ import user from '@/interfaces/user'
 import Select from '@/components/Select'
 import StatusSwitcher from './components/StatusSwitcher/StatusSwitcher'
 import gameLogin from '@/server/gameLogin'
-import config from './interfaces/config'
+import config from '../../interfaces/config'
 import CancelingLog from './components/CancelingLog/CancelingLog'
 import request from './util/request'
 import Textarea from '../Textarea'
-import logGameData from '@/interfaces/logGameData'
-import score from '../../types/score'
+import getPlatforms from './server/getPlatforms'
+import logFormProps from './interfaces/logFormProps'
 
-interface props extends Omit<gameCardData,"platforms"> 
-{
-  user:user
-  logGameData?:logGameData|null
-  initialScore:score
-  platforms?:Array<string>
-}
 
-export default function LogForm(props:props) 
+
+export default function LogForm(props:logFormProps) 
 {
   const { setPopup,setMsg } = useContext(global);
 
@@ -51,27 +44,30 @@ export default function LogForm(props:props)
   const [config, setConfig] = useState<config>(myDefault);
   const[showAdvice,setShowAdvice]=useState<boolean>(false)
 
-  const { platforms=[], name, date, cover, id, user,logGameData,initialScore } = props;
+  const { name, date, cover, id, user,state } = props;
   const { values, platformsIgdb,firstTime,loading,firstValue,err } = config;
+  const{review,score,status,platform}=values
 
   const noChanges = JSON.stringify(firstValue) === JSON.stringify(values)
 
-  useEffect(() => {
-    if(logGameData)
+  useEffect(() => 
+  { 
+    if(state==="byPlatforms")
     {
-      const{platformsIGDB,...values}=logGameData
-
-      setConfig((prev) => ({
-        ...prev,
-        firstValue: values,
-        values: values,
-        platformsIgdb: platformsIGDB,
-        firstTime: false,
-        loading: false,
-      }));
+      request({
+        userId: user.id,
+        gameId: id,
+        setConfig,
+        platformsFunc: () => JSON.stringify({ res: props.platforms }),
+      });
       return
     }
-    request({platforms,userId:user.id,gameId:id,setConfig,values})
+    request({
+      userId: user.id,
+      gameId: id,
+      setConfig,
+      platformsFunc: () => getPlatforms(props.platformsId),
+    });
   }, []);
 
 
@@ -91,8 +87,7 @@ export default function LogForm(props:props)
   {
       if(noChanges)return clossingPopup();
 
-      const myStatus= values.status==="none" ? "played":values.status
-   
+      const myStatus= status==="none" ? "played":status
       const { err } = JSON.parse(await gameLogin({
         game_id: id,
         user_id: user.id,
@@ -156,7 +151,7 @@ export default function LogForm(props:props)
                     </span>
                     <Score
                       size="big"
-                      initialScore={initialScore}
+                      initialScore={score}
                       id={id}
                       user={user as user}
                       setConfig={setConfig}
@@ -169,7 +164,7 @@ export default function LogForm(props:props)
                     {!loading && (
                       <Select
                         className="w-full"
-                        value={values.platform}
+                        value={platform}
                         onChange={(e) =>
                           setConfig((prev) => ({
                             ...prev,
@@ -197,7 +192,7 @@ export default function LogForm(props:props)
                 </span>
                 <Textarea
                   maxLength={3000}
-                  value={values.review}
+                  value={review}
                   onChange={(e) =>
                     setConfig((prev) => ({
                       ...prev,

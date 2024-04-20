@@ -9,7 +9,7 @@ export default function GradientBanner({screenshot}:props)
 {
   return (
     <div
-        className={`w-[100%] absolute h-[450px] left-0 top-0 z-[-2] bg-no-repeat bg-cover `}
+        className={`w-[100%] absolute h-[450px] left-0 top-0 z-[-2] bg-no-repeat bg-cover mob:opacity-[.3]`}
         style={{
           backgroundPosition: "center",
           backgroundImage: `url(${screenshot})`,

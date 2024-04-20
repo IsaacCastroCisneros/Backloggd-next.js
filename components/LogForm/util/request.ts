@@ -1,58 +1,39 @@
+
 import getGame from "@/server/getGame";
-import getPlatforms from "../server/getPlatforms";
 import { Dispatch, SetStateAction } from "react";
-import config from "../interfaces/config";
-import gameLog from "@/interfaces/gameLog";
+import config from "../../../interfaces/config";
 
 interface props
 {
-   platforms:Array<string>
    gameId:string
    userId:string
    setConfig:Dispatch<SetStateAction<config>>
-   values:gameLog
+   platformsFunc:()=>string|Promise<string>
 }
 
 export default async function request(props:props) 
 {
-    const{platforms,gameId,userId,setConfig,values}=props
-
+    const{gameId,userId,setConfig,platformsFunc}=props
+    
       try 
       {
         const results =  await Promise.all([
-          getPlatforms(platforms),
           getGame(gameId, userId),
+          platformsFunc()
         ]);
 
-        const { res: platformsIgdb } = results[0];
-        const { res: gameArr } = JSON.parse(results[1]);
+        const { res: gameData } = JSON.parse(results[0]);
+        const { res: finalPlatforms } = JSON.parse(results[1]);
 
-        if (platformsIgdb.length > 0) 
+        if (gameData.length > 0) 
         {
-          const platform="none"
-
-          setConfig(prev=>
-            (
-              {
-                ...prev,
-                values: { ...values, platform},
-                platformsIgdb,
-                loading:false,
-                firstValue:{...prev.firstValue,platform}
-              }
-            ));
-        }
-
-        if (gameArr.length > 0) 
-        {
-          const gameDb = gameArr[0];
-   
+          const gameDb = gameData[0];
           const firstValue={
             status: gameDb.status,
             score: gameDb.score,
             review: gameDb.review,
             platform:
-              gameDb.platform !== "" ? gameDb.platform : platformsIgdb[0].id,
+              gameDb.platform !== "" ? gameDb.platform : "0" ,
           }
 
           setConfig(prev=>
@@ -62,12 +43,13 @@ export default async function request(props:props)
                 values:firstValue,
                 firstValue,
                 firstTime:false,
-                platformsIgdb,
+                platformsIgdb:finalPlatforms,
                 loading:false
               }
             ) );
           return;
         }
+        setConfig(prev=>({...prev,platformsIgdb:finalPlatforms,loading:false}))
 
       } catch (err) {
         setConfig(prev=>({...prev,err:true}))

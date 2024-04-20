@@ -14,8 +14,8 @@ export default function Header()
   const{ref,toggleShowHandle,lineClamp,showButton,buttonLabel}=useTextToggle({height:120}) 
 
   return (
-    <div className="flex flex-col">
-      <section>
+    <div className="flex flex-col mob:mb-[3rem]">
+      <section className='mob:hidden'>
         <h1 className="text-[2.5rem] text-[#fff] font-medium">{name}</h1>
         <p className="text-text7 text-[20px] block mb-[.8rem]">
           released on <span className="font-medium text-text2">{date}</span> by{" "}
@@ -23,8 +23,8 @@ export default function Header()
           <span className="font-medium text-text2">{publisher}</span>
         </p>
       </section>
-      <section className='flex gap-[1.4rem] items-start'>
-        <div className='flex-1'>
+      <section className='flex gap-[1.4rem] items-start mob:flex-col mob:gap-0'>
+        <div className='flex-1 mob:mb-[.8rem]'>
           <p
             className={twMerge("text-text4",lineClamp)}
             ref={ref}

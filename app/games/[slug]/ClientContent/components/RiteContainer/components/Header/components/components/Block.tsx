@@ -11,7 +11,7 @@ export default function Block({children,title}:props) {
   return (
     <div>
       <span className="text-text text-[14.4px] block mb-[.2rem]">{title}</span>
-      <div className="flex flex-wrap items-start w-[calc(298px_-_30px)] gap-[.5rem]">
+      <div className="flex flex-wrap items-start w-[calc(298px_-_30px)] mob:w-auto gap-[.5rem]">
         {children}
       </div>
     </div>

@@ -11,7 +11,7 @@ export default function PlatformGenres()
   
 
   return (
-    <div className="flex flex-col gap-[.5rem]">
+    <div className="flex flex-col gap-[.5rem] mob:gap-[.8rem]">
       <Block title="Released on">
         {platforms.map((platform, key) => (
           <Platform key={key} label={platform} />

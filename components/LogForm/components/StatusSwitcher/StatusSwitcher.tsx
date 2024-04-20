@@ -7,7 +7,7 @@ import useClickOutside from '@/hooks/useClickOutside'
 import statusManager from './interfaces/statusManger'
 import StatusOption from './components/StatusOption'
 import myStatus from './types/myStatus'
-import config from '../../interfaces/config'
+import config from '../../../../interfaces/config'
 import { twMerge } from 'tailwind-merge'
 
 

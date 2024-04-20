@@ -1,4 +1,4 @@
-import React, { FormEvent } from 'react'
+import React from 'react'
 import ClientContent from './components/ClientContent';
 
 

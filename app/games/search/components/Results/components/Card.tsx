@@ -10,8 +10,6 @@ import user from '@/interfaces/user'
 import { global } from '@/app/context/GlobalContext'
 import LogForm from '@/components/LogForm/LogForm'
 import LoginForLogLink from '@/components/LoginForLogLink/LoginForLogLink'
-import { useQuery } from 'react-query'
-import getScore from '@/server/getScore'
 import useScoreByUser from '@/hooks/useScoreByUser'
 
 interface props extends gameCardData
@@ -28,8 +26,9 @@ export default function Card(props:props)
     cover,
     user,
     slug,
-    id
-  }=props
+    id,
+    platforms
+  }=props 
 
   const{setPopup}=useContext(global)
   
@@ -70,7 +69,7 @@ export default function Card(props:props)
             onClick={() =>
               setPopup({
                 show: true,
-                content: <LogForm {...props} initialScore={initialScore} user={user} />,
+                content: <LogForm {...props} platformsId={platforms} state="byPlatformsIds" user={user} />,
                 clickOutside: false,
               })
             }

@@ -13,7 +13,7 @@ const request=async({queryKey}:any)=>
     const{gameId,user}=queryKey[1]
     if(user===null) return 0
 
-    const {res} = await getScore(gameId,user.id)
+    const {res} = JSON.parse(await getScore(gameId,user.id)) 
     if(res.length===0)return 0
     return res[0].score
 }
