@@ -6,6 +6,7 @@ import PlatformGenres from './components/PlatformGenres'
 import useTextToggle from '@/hooks/useTextToggle'
 import { twMerge } from 'tailwind-merge'
 import HeaderInformation from '../../../HeaderInformation/HeaderInformation'
+import Separator from '@/components/Separator/Separator'
 
 export default function Header() 
 {
@@ -29,21 +30,22 @@ export default function Header()
           <p className={twMerge("text-text4", lineClamp)} ref={ref}>
             {summary}
           </p>
-          {showButton && (
-            <div className="flex items-center gap-[1rem]">
-              <span className="border-b-[1px] text-[#323644] flex-1"></span>
+          <div className="flex items-center gap-[1rem] h-[24px]">
+            <Separator className='flex-1' />
+            {showButton && (
               <button
                 className="text-text3 hover:text-[#fff] font-medium"
                 onClick={toggleShowHandle}
               >
                 {buttonLabel}
               </button>
-            </div>
-          )}
+            )}
+          </div>
         </div>
         <PlatformGenres />
       </section>
     </div>
   );
 }
+
 
