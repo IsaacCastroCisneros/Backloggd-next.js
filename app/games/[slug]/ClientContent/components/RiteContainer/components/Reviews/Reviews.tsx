@@ -6,7 +6,6 @@ export default function Reviews()
 {
   const {reviews}=useContext(context)                                                
 
-
   return (
     <>
       <h2 className="text-[1.3rem] text-text block mb-[1rem] mt-[.6rem]">Reviews</h2>

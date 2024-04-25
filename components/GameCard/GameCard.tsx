@@ -65,55 +65,65 @@ export default function GameCard(props:props)
 
   return (
     <gameCard.Provider value={value}>
-      <div className="relative rounded-[4px] border-[1px] border-field hover:border-gray flex items-center">
-        <div
-          onMouseEnter={() => setHover(true)}
-          onMouseLeave={() => setHover(false)}
-        >
-          <Link href={`/games/${slug}`}>
-            {position === "king" && (
-              <div className="absolute top-0 translate-y-[calc(-100%_-_.2rem)] text-myYellow w-full flex justify-center">
-                <FontAwesomeIcon icon={faCrown} />
-              </div>
-            )}
+      <div
+        className="relative rounded-[4px] border-[1px] border-field hover:border-gray flex items-center"
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+      >
+        <Link href={`/games/${slug}`}>
+          {position === "king" && (
+            <div className="absolute top-0 translate-y-[calc(-100%_-_.2rem)] text-myYellow w-full flex justify-center">
+              <FontAwesomeIcon icon={faCrown} />
+            </div>
+          )}
+          <img
+            width={173.8}
+            height={234}
+            className={`max-h-[2341px] object-cover opacity-0 pointer-events-none`}
+            src="https://images.igdb.com/igdb/image/upload/t_cover_big/co4ahr.jpg"
+            alt="game card"
+          />
+          <div className="absolute top-0 left-0 right-0 bottom-0 flex items-center">
             <img
               width={173.8}
               height={234}
-              className={`max-h-[2341px] object-cover rounded-[4px] ${
+              className={`object-cover rounded-[4px] ${
                 hover ? "brightness-[45%]" : ""
               } duration-200`}
               src={src}
               alt="game card"
             />
-            {hover && (
-              <>
-                <div className="flex absolute w-full h-full top-0 left-0 justify-center items-center">
-                  <span
-                    className={`text-[#fff] font-bold ${nameBySize} pointer-events-none text-center mob:text-[12px] mob1:text-[9px]`}
-                  >
-                    {name}
-                  </span>
-                </div>
-              </>
-            )}
-          </Link>
-          {user && (
-            <Menu className={`absolute bottom-[.5rem] left-[50%] translate-x-[-50%] w-fit flex justify-center items-center ${
+          </div>
+          {hover && (
+            <>
+              <div className="flex absolute w-full h-full top-0 left-0 justify-center items-center">
+                <span
+                  className={`text-[#fff] font-bold ${nameBySize} pointer-events-none text-center mob:text-[12px] mob1:text-[9px]`}
+                >
+                  {name}
+                </span>
+              </div>
+            </>
+          )}
+        </Link>
+        {user && (
+          <Menu
+            className={`absolute bottom-[.5rem] left-[50%] translate-x-[-50%] w-fit flex justify-center items-center ${
               hover
                 ? "opacity-1 pointer-events-auto"
                 : "opacity-0 pointer-events-none"
-            }`} />
-          )}
-          {!user && hover && (
-            <LoginForLogLink className={LoginForLogLinkStyles} />
-          )}
-        </div>
-        {user && isScore && (
-          <div className="absolute left-[50%] translate-x-[-50%] translate-y-[100%] bottom-0">
-            <StaticScore score={initialScore} />
-          </div>
+            }`}
+          />
+        )}
+        {!user && hover && (
+          <LoginForLogLink className={LoginForLogLinkStyles} />
         )}
       </div>
+      {user && isScore && (
+        <div className="absolute left-[50%] translate-x-[-50%] translate-y-[100%] bottom-0">
+          <StaticScore score={initialScore} />
+        </div>
+      )}
     </gameCard.Provider>
   );
 }

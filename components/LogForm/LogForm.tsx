@@ -88,10 +88,13 @@ export default function LogForm(props:logFormProps)
       if(noChanges)return clossingPopup();
 
       const myStatus= status==="none" ? "played":status
+      const myPlatfrom= platform==="none" ? platformsIgdb[0].id:platform
+
       const { err } = JSON.parse(await gameLogin({
         game_id: id,
         user_id: user.id,
         ...values,
+        platform:myPlatfrom,
         status:myStatus,
       }));
       
@@ -164,6 +167,7 @@ export default function LogForm(props:logFormProps)
                     {!loading && (
                       <Select
                         className="w-full"
+                        defaultValue={0}
                         value={platform}
                         onChange={(e) =>
                           setConfig((prev) => ({
