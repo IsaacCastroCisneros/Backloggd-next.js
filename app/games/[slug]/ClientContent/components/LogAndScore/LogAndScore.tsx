@@ -66,12 +66,9 @@ export default function LogAndScore({className,...props}:props)
         </Button>
       )}
       {!user && <LoginForLogLink />}
-      <CardPic
-        className="absolute top-[0] translate-y-[-88%] translate-x-[-50%] left-[50%] mob:hidden"
-        src={cover}
-        width={165}
-        height={223}
-      />
+      <div className="absolute flex w-full justify-center translate-y-[-88%] top-0 mob:hidden">
+        <CardPic src={cover} width={165} height={223} />
+      </div>
       {user && (
         <Score size="bigger" id={`${id}`} user={user} initialScore={score} />
       )}

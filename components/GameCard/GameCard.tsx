@@ -14,6 +14,7 @@ import useScoreByUser from '@/hooks/useScoreByUser'
 import score from '../../types/score'
 import { StaticScore } from '../StaticScore/StaticScore'
 import Link from 'next/link'
+import { faGamepad } from '@fortawesome/free-solid-svg-icons'
 
 export const gameCard = React.createContext<{
   gameCardData: gameCardData | null;
@@ -70,7 +71,7 @@ export default function GameCard(props:props)
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
-        <Link href={`/games/${slug}`}>
+        <Link href={`/games/${slug}`} className=" overflow-hidden">
           {position === "king" && (
             <div className="absolute top-0 translate-y-[calc(-100%_-_.2rem)] text-myYellow w-full flex justify-center">
               <FontAwesomeIcon icon={faCrown} />
@@ -83,16 +84,21 @@ export default function GameCard(props:props)
             src="https://images.igdb.com/igdb/image/upload/t_cover_big/co4ahr.jpg"
             alt="game card"
           />
-          <div className="absolute top-0 left-0 right-0 bottom-0 flex items-center">
+          <div className="absolute top-0 left-0 right-0 bottom-0 flex items-center overflow-hidden">
             <img
               width={173.8}
               height={234}
               className={`object-cover rounded-[4px] ${
                 hover ? "brightness-[45%]" : ""
               } duration-200`}
-              src={src}
+              src={src || "/img/no_image-eee1d555ae021e9cf0ca691c0e9ec60a.jpg"}
               alt="game card"
             />
+            {!src && (
+              <span className="absolute left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%] text-gray3">
+                <FontAwesomeIcon icon={faGamepad} />
+              </span>
+            )}
           </div>
           {hover && (
             <>
@@ -118,12 +124,12 @@ export default function GameCard(props:props)
         {!user && hover && (
           <LoginForLogLink className={LoginForLogLinkStyles} />
         )}
+        {user && isScore && (
+          <div className="absolute left-[50%] translate-x-[-50%] translate-y-[100%] bottom-0">
+            <StaticScore score={initialScore} />
+          </div>
+        )}
       </div>
-      {user && isScore && (
-        <div className="absolute left-[50%] translate-x-[-50%] translate-y-[100%] bottom-0">
-          <StaticScore score={initialScore} />
-        </div>
-      )}
     </gameCard.Provider>
   );
 }

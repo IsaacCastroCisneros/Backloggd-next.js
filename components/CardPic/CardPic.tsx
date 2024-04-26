@@ -38,18 +38,27 @@ export default function CardPic(myProps:props)
 function Pic(myProps:props)
 {
 
-  const{className="",height=134.28,width=90,...props}=myProps
+  const{className="",height=134.28,width=90,src,...props}=myProps
+
 
   return (
-    <img
-      {...props}
-      alt="game cover"
-      height={height}
-      width={width}
-      className={twMerge(
-        `object-cover rounded-[4px] min-h-[134.28px] min-w-[90px] border-field border-[1px] hover:border-gray`,
-        className
-      )}
-    />
+    <div {...props} className={twMerge("relative rounded-[4px] border-field border-[1px] hover:border-gray bg-bg overflow-hidden",className)}>
+      <img
+        height={height}
+        width={width}
+        className={`object-cover opacity-0 min-h-[134.28px] min-w-[90px]`}
+        src="https://images.igdb.com/igdb/image/upload/t_cover_big/co4ahr.jpg"
+        alt=""
+      />
+      <div className="absolute left-0 top-0 h-full w-full flex items-center">
+        <img
+          alt="game cover"
+          height={height}
+          width={width}
+          src={src}
+          className="object-cover"
+        />
+      </div>
+    </div>
   );
 }

@@ -7,6 +7,7 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import Option from './components/Option'
 import user from '@/interfaces/user'
 import Link from 'next/link'
+import UserMenu from './components/UserMenu'
 
 
 export default  function Navbar() 
@@ -54,15 +55,7 @@ export default  function Navbar()
           </Link>
         )}
         {session && (
-          <>
-            <Option href={`/user/${username}`}>{username}</Option>
-            <button
-              className="text-text2 text-[14px] hover:text-[#fff] font-medium"
-              onClick={handleSingOut}
-            >
-              Log Out
-            </button>
-          </>
+          <UserMenu username={username} handleSingOut={handleSingOut} />
         )}
         {session === null && (
           <ul className="flex items-center gap-[1rem]">
