@@ -1,11 +1,10 @@
 import Link, { LinkProps } from 'next/link'
-import React, { HtmlHTMLAttributes, ReactNode } from 'react'
+import React, { AnchorHTMLAttributes, ReactNode } from 'react'
 import { twMerge } from 'tailwind-merge'
 
-interface props extends LinkProps
+interface props extends LinkProps,Omit<AnchorHTMLAttributes<HTMLAnchorElement>,"href"> 
 {
    children:ReactNode
-   className?:string
 }
 
 export default function Option({children,className="",...props}:props) 

@@ -40,6 +40,7 @@ export default function Card(props:props)
         <CardPic
           className="mob1:hidden"
           notFoundStyles="mob1:hidden"
+          isResponsive={false}
           src={cover}
         />
         <CardPic
@@ -47,6 +48,7 @@ export default function Card(props:props)
           height={85.25}
           width={57.39}
           notFoundStyles="mob1:block hidden"
+          isResponsive={false}
           src={cover}
         />
       </Link>
