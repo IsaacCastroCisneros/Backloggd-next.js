@@ -37,10 +37,24 @@ export default async function page()
     {
       const favIdArr=favorites.map(fav=>fav.game_id)  
       const{res:coversIds}=await igdb({type:"games",query:`where id=(${favIdArr.join(",")}); fields cover;`})
-      const coverIdsArr=coversIds.map(cov=>cov.cover)
+      const coverIdsArr=coversIds.filter(cov=>cov.cover).map(cov=>cov.cover)
       const{res:covers}=await igdb({type:"covers",query:`where id=(${coverIdsArr.join(",")}); fields url,game;`})
+
+      let finalCovers = covers
+
+      if(favorites.length!==covers.length)
+      {
+        const withNoCover = coversIds
+          .filter((cov) => !cov.cover)
+          .map((cov) => ({
+            game: cov.id,
+            url: null,
+          }));
+        
+       finalCovers = [...finalCovers,...withNoCover]
+      }
   
-      initialFavorites = covers.map(cov=>
+      initialFavorites = finalCovers.map(cov=>
         {
           const pos = favorites.find(fav=>fav.game_id===cov.game) || {favorite_position:"0"}
   

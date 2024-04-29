@@ -4,7 +4,7 @@ import { ButtonHTMLAttributes, useContext, useState } from "react";
 import { context } from "../../context/context";
 import favorite from "../../interfaces/favorite";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowsRotate, faCrown } from "@fortawesome/free-solid-svg-icons";
+import { faArrowsRotate, faCrown, faGamepad } from "@fortawesome/free-solid-svg-icons";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons/faPlusCircle";
 
 interface props extends ButtonHTMLAttributes<HTMLButtonElement>
@@ -38,7 +38,7 @@ export default function Favorite(props:props)
 
   const imgFavorite=
   {
-    backgroundImage: isIn ? `url(${cover})` : "",
+    backgroundImage: isIn ? `url(${cover||"/img/no_image-eee1d555ae021e9cf0ca691c0e9ec60a.jpg"})` : "",
     backgroundRepeat: "none",
     backgroundSize: "cover",
     backgroundPosition: "center",
@@ -61,7 +61,7 @@ export default function Favorite(props:props)
         </span>
       )}
       <div
-        className="w-[100%] h-[100%]"
+        className="w-[100%] h-[100%] relative"
         onMouseEnter={() => handleHover(true)}
         onMouseLeave={() => handleHover(false)}
       >
@@ -88,6 +88,12 @@ export default function Favorite(props:props)
             </div>
           </div>
         )}
+        {
+          !cover&&isIn&&
+          <div className="w-full h-full flex justify-center items-center text-text absolute left-0 top-0 pointer-events-none">
+             <FontAwesomeIcon icon={faGamepad} size="2xl" />
+          </div>
+        }
       </div>
       {isIn && (
         <button
