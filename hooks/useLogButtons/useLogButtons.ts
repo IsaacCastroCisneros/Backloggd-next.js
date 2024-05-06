@@ -1,5 +1,5 @@
 import { global } from '@/app/context/GlobalContext'
-import gameLogin from '@/server/gameLogin'
+import gameLogin from '@/server/gameLogin/gameLogin'
 import getGame from '@/server/getGame'
 import  { useContext, useState } from 'react'
 import { useQuery } from 'react-query'
@@ -28,7 +28,7 @@ export default function useLogButtons({game_id,user_id}:props)
 
   async function statusUpdate(status:status) 
   { 
-    const {err} = JSON.parse(await gameLogin({game_id,user_id,status})) 
+    const {err} = JSON.parse(await gameLogin({game_id,user_id,status,type:"status"})) 
     if(!err)
     {
       setHightLigth(status)

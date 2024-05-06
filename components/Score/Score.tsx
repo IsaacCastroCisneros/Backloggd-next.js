@@ -4,7 +4,7 @@ import React, { Dispatch, FormEvent, SetStateAction, useContext, useEffect, useS
 import Star from './components/Star'
 import score from '../../types/score'
 import user from '@/interfaces/user'
-import gameLogin from '@/server/gameLogin'
+import gameLogin from '@/server/gameLogin/gameLogin'
 import config from '../../interfaces/config'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
@@ -25,6 +25,7 @@ export default function Score(props:props)
   const{size,user,id,setConfig,initialScore}=props
   const[score,setScore]=useState<score>(0)
   const[highligth,setHighligth]=useState<score>(0)
+  const[showCancel,setShowCancel]=useState<boolean>(false)
   const{setMsg}=useContext(global)
 
   
@@ -49,23 +50,26 @@ export default function Score(props:props)
       });
     }
 
-    await gameLogin({ score, user_id: user.id, game_id: id });
+    await gameLogin({ score, user_id: user.id, game_id: id,type:"score"});
     setMsg({msg:"Log Updated",type:"success",show:true})
 
   }
 
   return (
-    <form
-      className='w-fit'
-      onSubmit={submittingForm}
-    >
-      <div className="flex text-gray w-fit justify-center relative items-center">
-        <button
-          className=" text-text hover:text-myPink absolute left-0 translate-x-[-100%] top-[50%] translate-y-[-50%]"
-          onClick={handleToDefault}
-        >
-          <FontAwesomeIcon icon={faXmark} size='sm' />
-        </button>
+    <form className="w-fit" onSubmit={submittingForm}>
+      <div
+        className="flex text-gray w-fit justify-center relative items-center"
+        onMouseEnter={() => setShowCancel(true)}
+        onMouseLeave={() => setShowCancel(false)}
+      >
+        {showCancel && (
+          <button
+            className=" text-text hover:text-myPink absolute left-0 translate-x-[-100%] top-[50%] translate-y-[-50%]"
+            onClick={handleToDefault}
+          >
+            <FontAwesomeIcon icon={faXmark} size="sm" />
+          </button>
+        )}
         <Star
           myScore={[1, 2]}
           size={size}

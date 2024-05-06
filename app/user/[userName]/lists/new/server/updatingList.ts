@@ -14,7 +14,6 @@ export default async function updatingList(props:props):Promise<string>
 {
    try
    {
-     
      await pool.query<Array<RowDataPacket>>("insert into gameList set ?",props)
      return JSON.stringify({res:[props],err:null})
    }

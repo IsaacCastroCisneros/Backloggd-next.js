@@ -8,15 +8,21 @@ import Score from '@/components/Score/Score'
 import user from '@/interfaces/user'
 import Select from '@/components/Select'
 import StatusSwitcher from './components/StatusSwitcher/StatusSwitcher'
-import gameLogin from '@/server/gameLogin'
+import gameLogin from '@/server/gameLogin/gameLogin'
 import config from '../../interfaces/config'
 import CancelingLog from './components/CancelingLog/CancelingLog'
 import request from './util/request'
 import Textarea from '../Textarea'
 import getPlatforms from './server/getPlatforms'
 import logFormProps from './interfaces/logFormProps'
+import deletingLog from '@/server/deletingLog'
 
-
+const defaultValues=
+{
+  status: "none",
+  score: 0,
+  review: "",
+}
 
 export default function LogForm(props:logFormProps) 
 {
@@ -27,13 +33,13 @@ export default function LogForm(props:logFormProps)
       status: "none",
       score: 0,
       review: "",
-      platform: "",
+      platform: "none",
     },
     firstValue: {
       status: "none",
       score: 0,
       review: "",
-      platform: "", 
+      platform: "none", 
     },
     platformsIgdb: [],
     firstTime: true,
@@ -87,23 +93,35 @@ export default function LogForm(props:logFormProps)
   {
       if(noChanges)return clossingPopup();
 
-      const myStatus= status==="none" ? "played":status
+      const myStatus= status==="none" ? "completed":status
       const myPlatfrom= platform==="none" ? platformsIgdb[0].id:platform
 
-      const { err } = JSON.parse(await gameLogin({
-        game_id: id,
-        user_id: user.id,
-        ...values,
-        platform:myPlatfrom,
-        status:myStatus,
-      }));
-      
-      if(err)
+      console.log(platform)
+
+      const{platform:alias,...finalValues}=values
+
+      if(JSON.stringify(defaultValues)===JSON.stringify(finalValues))
       {
-        setMsg({show:true,msg:"An error was occured",type:"fail"})
-        return
+        await deletingLog({userId:user.id,gameId:id})
       }
-  
+      else
+      {
+        const { err } = JSON.parse(await gameLogin({
+          game_id: id,
+          user_id: user.id,
+          ...values,
+          platform:myPlatfrom,
+          status:myStatus,
+          type:"fullGame"
+        }));
+        
+        if(err)
+        {
+          setMsg({show:true,msg:"An error was occured",type:"fail"})
+          return
+        }
+      }
+
       const msg= firstTime ? "Log Created!":"Log Updated!"
 
       setMsg({show:true,msg,type:"success"})
@@ -144,6 +162,7 @@ export default function LogForm(props:logFormProps)
                 setConfig={setConfig}
                 currentStatus={values.status}
               />
+
             </div>
             <div className="pl-[2rem] mob:pl-[1rem] flex-1 mob1:px-0">
               <div className="flex flex-col">
@@ -167,7 +186,6 @@ export default function LogForm(props:logFormProps)
                     {!loading && (
                       <Select
                         className="w-full"
-                        defaultValue={0}
                         value={platform}
                         onChange={(e) =>
                           setConfig((prev) => ({
@@ -179,7 +197,7 @@ export default function LogForm(props:logFormProps)
                           }))
                         }
                       >
-                        <option value="none">Choose a platform...</option>
+                        <option value="none" disabled>Choose a platform...</option>
                         {platformsIgdb.map((plat, pos) => (
                           <option key={pos} value={plat.id}>
                             {plat.name}

@@ -1,6 +1,6 @@
 "use client"
 
-import { faChevronDown, faGamepad, faPlay } from '@fortawesome/free-solid-svg-icons'
+import { faChevronDown, faGamepad, faPlay, faXmarkCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { Dispatch, HtmlHTMLAttributes, SetStateAction, useEffect, useState } from 'react'
 import useClickOutside from '@/hooks/useClickOutside'
