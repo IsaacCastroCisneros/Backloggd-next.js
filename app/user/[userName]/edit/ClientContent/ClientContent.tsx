@@ -19,12 +19,12 @@ import defaulFavorites from './util/defaultFavorites'
 import updatingFavoritesByIndex from './util/updatingFavoritesByIndex'
 import loginFavorite from './server/loginFavorite'
 import favoritePosition from '../../../../../types/favoritePosition'
+import removingEmptyLogs from './server/removingEmptyLogs'
 
 interface props extends user
 {
   initialFavorites:Array<favorite>
 }
-
 
 
 export default function ClientContent(props:props) 
@@ -49,12 +49,17 @@ export default function ClientContent(props:props)
     async function submittingForm(e:FormEvent<HTMLFormElement>)
     {
        e.preventDefault();
+
        const formData= new FormData(e.currentTarget)
        const data=Object.fromEntries(formData)
 
        const{err}=JSON.parse(await updateUser({...props,...data})) 
        const thereIsFavorites = favorites.filter(fav=>fav.id!=="")
 
+
+       const lol = JSON.parse(await removingEmptyLogs({userId:idUser})) 
+
+       console.log(lol)
 
        if(thereIsFavorites.length>0)
        {
@@ -66,6 +71,8 @@ export default function ClientContent(props:props)
             if(thereIs)return thereIs
             return {pos:entry,isIn:false,id:""}
           })
+        
+          console.log(final)
          
          const favoritesToDB = final.map((fav) =>
            loginFavorite({
@@ -86,7 +93,6 @@ export default function ClientContent(props:props)
            });
          }
        }
-
 
        if(err)return setMsg({msg:"an error was occurred",type:"fail",show:true})
 

@@ -28,7 +28,6 @@ export default async function loginFavorite(favorite:props)
       ]);
       return
     }
-    console.log(favorite)
 
     try
     {  
