@@ -11,6 +11,12 @@ export default async function handler(
 {
   const {game} = req.query
 
+  if(game==="")
+  {
+    res.status(200).json({res:[]})
+    return
+  }
+  
   if(isArray(game))return
   const games = await getFullGameIGDB({game})
 

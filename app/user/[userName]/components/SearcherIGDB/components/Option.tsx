@@ -1,9 +1,10 @@
-import React, { MutableRefObject, useContext } from 'react'
+import React, { useContext } from 'react'
 import favorite from '../../../edit/ClientContent/interfaces/favorite'
 import cardPosition from '../../../../../../types/favoritePosition'
 import gameCardData from '@/interfaces/gameCardData'
 import choosingImgSize from '@/app/games/search/components/Results/util/choosingImgSize'
 import { global } from '@/app/context/GlobalContext'
+import InputSearcherOption from '@/components/InputSearcherOption'
 
 interface props extends gameCardData
 {
@@ -19,21 +20,12 @@ export default function Option(props:props)
   async function handleUpadteFavorite()
   {
     const myCover=cover ? choosingImgSize({url:cover,size:"cover_big"}) : ""
-    console.log(cover)
     updateFavorites({id,cover:myCover,pos,isIn:true})
     setPopup(prev=>({...prev,show:false}))
   }
 
   
   return (
-    <button
-      className="bg-border2 hover:bg-bg w-full px-[.3rem] py-[.2rem] text-text4 text-left border-b-[1px] border-border"
-      onClick={handleUpadteFavorite}
-    >
-      {name}&nbsp;
-      {
-        date&&`(${date})`
-      }
-    </button>
+    <InputSearcherOption label={name} date={date}  onClick={handleUpadteFavorite}/>
   );
 }

@@ -1,4 +1,3 @@
-
 "use client"
 
 import LabedInput from '@/components/LabedInput/LabedInput'
@@ -26,7 +25,6 @@ interface props extends user
   initialFavorites:Array<favorite>
 }
 
-
 export default function ClientContent(props:props) 
 {
     const{setMsg,setPopup}=useContext(global)
@@ -43,7 +41,6 @@ export default function ClientContent(props:props)
       {
         setFavorites(initialFavorites)
       }
-
     },[])
 
     async function submittingForm(e:FormEvent<HTMLFormElement>)
@@ -55,11 +52,8 @@ export default function ClientContent(props:props)
 
        const{err}=JSON.parse(await updateUser({...props,...data})) 
        const thereIsFavorites = favorites.filter(fav=>fav.id!=="")
-
-
-       const lol = JSON.parse(await removingEmptyLogs({userId:idUser})) 
-
-       console.log(lol)
+        
+       await removingEmptyLogs({userId:idUser})
 
        if(thereIsFavorites.length>0)
        {
