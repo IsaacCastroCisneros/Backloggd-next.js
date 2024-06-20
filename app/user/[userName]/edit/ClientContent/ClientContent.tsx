@@ -1,7 +1,7 @@
 "use client"
 
-import LabedInput from '@/components/LabedInput/LabedInput'
-import LabedTextarea from '@/components/LabedTextarea/LabedTextarea'
+import LabedInput from '@/components/LabedInput'
+import LabedTextarea from '@/components/LabedTextarea'
 import user from '@/interfaces/user'
 import React, { FormEvent, useContext, useEffect, useState } from 'react'
 import updateUser from './server/updateUser'

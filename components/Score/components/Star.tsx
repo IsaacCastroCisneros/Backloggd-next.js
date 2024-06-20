@@ -5,8 +5,8 @@ import React, { Dispatch, SetStateAction,useEffect,useState } from 'react'
 import score from '@/types/score'
 import { SizeProp } from '@fortawesome/fontawesome-svg-core'
 import size from '../types/size'
-import { HalfStar } from '@/components/HalfStar/HalfStar'
-import { StarContainer } from '@/components/StarContainer/StarContainer'
+import { HalfStar } from '@/components/HalfStar'
+import { StarContainer } from '@/components/StarContainer'
 
 interface props
 {

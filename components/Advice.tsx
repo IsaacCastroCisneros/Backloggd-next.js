@@ -1,7 +1,7 @@
 import { faWarning } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, {HtmlHTMLAttributes} from 'react'
-import Button from '../Button'
+import Button from './Button'
 import { twMerge } from 'tailwind-merge'
 
 interface props extends HtmlHTMLAttributes<HTMLElement>

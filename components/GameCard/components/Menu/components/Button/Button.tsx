@@ -1,6 +1,6 @@
 "use client"
 
-import HoverMsg from '@/components/HoverMsg/HoverMsg'
+import HoverMsg from '@/components/HoverMsg'
 import { FontAwesomeIcon, FontAwesomeIconProps } from '@fortawesome/react-fontawesome'
 import React, { ButtonHTMLAttributes, useContext, useState } from 'react'
 import Menu from './components/Menu/Menu'

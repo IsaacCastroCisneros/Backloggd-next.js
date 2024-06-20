@@ -1,6 +1,7 @@
 import React, {HtmlHTMLAttributes, InputHTMLAttributes, LabelHTMLAttributes, ReactNode, SelectHTMLAttributes, TextareaHTMLAttributes } from 'react'
-import Input from '../Input'
+import Input from './Input'
 import { twMerge } from 'tailwind-merge';
+import Label from './Label';
 
 interface props 
 {
@@ -18,9 +19,7 @@ export default function LabedField({label,children,props}:props)
 
   return (
     <div className={twMerge('flex flex-col',container?.className)} >
-      <label {...labelProps} className={twMerge("text-[#fff] text-[16px] block",labelProps?.className)} >
-         {label}
-      </label>
+      <Label {...labelProps}>{label}</Label>
       {
         children
       }

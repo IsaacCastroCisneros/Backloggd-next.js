@@ -1,7 +1,7 @@
 import React, {HtmlHTMLAttributes, InputHTMLAttributes, LabelHTMLAttributes } from 'react'
-import Input from '../Input'
+import Input from './Input'
 import { twMerge } from 'tailwind-merge';
-import LabedField from '../LabedField/LabedField';
+import LabedField from './LabedField';
 
 interface props
 {

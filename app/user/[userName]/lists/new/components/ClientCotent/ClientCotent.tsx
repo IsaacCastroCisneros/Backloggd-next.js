@@ -1,19 +1,19 @@
 "use client"
 
-import LabedInput from '@/components/LabedInput/LabedInput'
-import LabedTextarea from '@/components/LabedTextarea/LabedTextarea'
+import LabedInput from '@/components/LabedInput'
+import LabedTextarea from '@/components/LabedTextarea'
 import user from '@/interfaces/user'
 import React, { FormEvent, useState } from 'react'
 import updatingList from '../../server/updatingList'
 import Card from './components/Card'
 import Searcher from './components/Searcher'
 import listItem from './interfaces/listItem'
-
+import Separator from '@/components/Separator'
+import Label from '@/components/Label'
 interface props
 {
   user:user
 }
-
 
 export default function ClientCotent({user}:props) 
 {
@@ -28,8 +28,6 @@ export default function ClientCotent({user}:props)
     await updatingList({...data,user_id:user.id})
   }
 
-  console.log(list)
-
   function handleDeleteItemList(id:string)
   {
     const newList = [...list]
@@ -39,15 +37,22 @@ export default function ClientCotent({user}:props)
 
   return (
     <>
+      <h1 className='text-[28px] text-text4 font-medium'>
+        Editing your list
+      </h1>
+      <Separator className='my-[.3rem]'/>
       <div>
         <form action="" onSubmit={submittingForm} className="mb-[1rem]">
-          <LabedInput label="List Name" props={{ input: { name: "name" } }} />
+          <LabedInput label="List Name" props={{ input: { name: "name" },container:{className:"mb-[.3rem]"} }} />
           <LabedTextarea
             label="Description"
             props={{ textarea: { name: "description" } }}
           />
         </form>
+        <Label>Add a game</Label>
+        <div className='max-w-[20rem]'>
         <Searcher setList={setList} list={list} />
+        </div>
       </div>
       <div className='grid grid-cols-[repeat(5,1fr)] gap-[.7rem] mob1:grid-cols-[repeat(3,1fr)]'>
         {

@@ -1,4 +1,4 @@
-import CardPic from '@/components/CardPic/CardPic'
+import CardPic from '@/components/CardPic'
 import React, { useContext } from 'react'
 import { context } from '../../ClientContent';
 import HeaderInformation from '../HeaderInformation/HeaderInformation';
@@ -7,7 +7,7 @@ import Button from '@/components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLayerGroup } from '@fortawesome/free-solid-svg-icons';
 import Item from './components/Item';
-import Separator from '@/components/Separator/Separator';
+import Separator from '@/components/Separator';
 
 export default function HeaderMobile() 
 {

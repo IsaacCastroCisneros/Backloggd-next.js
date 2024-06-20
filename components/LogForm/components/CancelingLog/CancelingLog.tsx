@@ -1,4 +1,4 @@
-import Advice from '@/components/Advice/Advice'
+import Advice from '@/components/Advice'
 import React, { Dispatch, SetStateAction } from 'react'
 
 interface props

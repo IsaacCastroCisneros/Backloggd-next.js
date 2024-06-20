@@ -6,7 +6,7 @@ import PlatformGenres from './components/PlatformGenres'
 import useTextToggle from '@/hooks/useTextToggle'
 import { twMerge } from 'tailwind-merge'
 import HeaderInformation from '../../../HeaderInformation/HeaderInformation'
-import Separator from '@/components/Separator/Separator'
+import Separator from '@/components/Separator'
 
 export default function Header() 
 {

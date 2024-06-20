@@ -29,6 +29,7 @@ const config: Config = {
      field:"#30394c",
      gray:"#3b4760",
      placeholder:"#7d8a96",
+     separator:"#323644",
      border:"#a2b1e533",
      border2:"#242832",
      border3:"#454a6470",

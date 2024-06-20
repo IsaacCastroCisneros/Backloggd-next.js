@@ -1,6 +1,6 @@
-import { HalfStar } from '@/components/HalfStar/HalfStar'
+import { HalfStar } from '@/components/HalfStar'
 import score from '@/types/score'
-import { StarContainer } from '@/components/StarContainer/StarContainer'
+import { StarContainer } from '@/components/StarContainer'
 import React from 'react'
 
 interface props

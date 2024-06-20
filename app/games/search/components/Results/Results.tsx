@@ -1,6 +1,5 @@
 "use client"
 import React from 'react'
-import Link from 'next/link'
 import gameCardData from '../../../../../interfaces/gameCardData'
 import Card from './components/Card'
 import {useSession} from "next-auth/react"

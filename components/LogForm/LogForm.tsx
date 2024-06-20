@@ -3,7 +3,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Button from '@/components/Button'
 import { global } from '@/app/context/GlobalContext'
-import CardPic from '@/components/CardPic/CardPic'
+import CardPic from '@/components/CardPic'
 import Score from '@/components/Score/Score'
 import user from '@/interfaces/user'
 import Select from '@/components/Select'
