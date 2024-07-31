@@ -29,7 +29,7 @@ interface gameFavorite extends defaultProps
     type:"favorite"
 }
 
-interface gameNoId extends Omit<game, 'id'|'list_id'>
+interface gameNoId extends Omit<game, 'id'>
 {
    type:"fullGame"
 }
