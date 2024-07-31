@@ -27,10 +27,13 @@ export default function UserMenu({username,handleSingOut}:props)
       >
         <Option
           href={`/user/${username}`}
-          onClick={()=>setShow(false)}
-          className="flex items-center gap-[.2rem] p-[.4rem]"
+          onClick={() => setShow(false)}
+          className="flex items-center gap-[.2rem] p-[.4rem] min-w-[5.3rem] justify-between"
         >
-          {username} <FontAwesomeIcon icon={faChevronDown} />
+          <span className="max-w-[12rem] overflow-hidden whitespace-nowrap text-ellipsis">
+           {username}
+          </span>
+          <FontAwesomeIcon icon={faChevronDown} />
         </Option>
         {show && (
           <ul
@@ -40,35 +43,35 @@ export default function UserMenu({username,handleSingOut}:props)
           >
             <Option
               href={`/user/${username}`}
-              onClick={()=>setShow(false)}
+              onClick={() => setShow(false)}
               className={optionStyle}
             >
               profile
             </Option>
             <Option
               href={`/user/${username}/edit`}
-              onClick={()=>setShow(false)}
+              onClick={() => setShow(false)}
               className={optionStyle}
             >
               edit profile
             </Option>
             <Option
               href={`/user/${username}/games`}
-              onClick={()=>setShow(false)}
+              onClick={() => setShow(false)}
               className={optionStyle}
             >
               games
             </Option>
             <Option
               href={`/user/${username}/lists`}
-              onClick={()=>setShow(false)}
+              onClick={() => setShow(false)}
               className={optionStyle}
             >
               lists
             </Option>
             <Option
               href={`/user/${username}/reviews`}
-              onClick={()=>setShow(false)}
+              onClick={() => setShow(false)}
               className={optionStyle}
             >
               reviews
