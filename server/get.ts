@@ -7,10 +7,10 @@ import { RowDataPacket } from "mysql2"
 interface props
 {
   query:string
-  data:any
+  data?:any
 }
 
-export default async function get({query,data}:props):Promise<string>
+export default async function get({query,data=""}:props):Promise<string>
 {
     try
     {
