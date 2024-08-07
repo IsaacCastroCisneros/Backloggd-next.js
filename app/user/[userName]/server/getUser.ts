@@ -15,12 +15,12 @@ export default async function getUser({userName}:props):Promise<string>
    {
 
        const[results]= await pool.query<Array<RowDataPacket>>("select * from users where username=?",userName)
-
        if(results.length===0)return JSON.stringify({res:results,err:true}) 
        return JSON.stringify({res:results,err:null}) 
    }
    catch(err)
    {
+       console.log(err)
        return JSON.stringify({res:[],err}) 
    }
 

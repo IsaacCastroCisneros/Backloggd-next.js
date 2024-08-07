@@ -11,6 +11,7 @@ export default async function page({params}:any)
 {
   const{userName}= params
   const {res:userRes} = JSON.parse(await getUser({userName})) 
+
   const{id}=userRes[0] as user
   const {res,err} =JSON.parse(await get({query:"select * from gameList where user_id=?",data:id})) 
 
