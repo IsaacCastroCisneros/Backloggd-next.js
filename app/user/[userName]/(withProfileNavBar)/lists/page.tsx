@@ -5,7 +5,7 @@ import React from 'react'
 import getUser from '../../server/getUser'
 import user from '@/interfaces/user'
 import list from './interfaces/list'
-import List from './components/List'
+import List from './components/List/List'
 
 export default async function page({params}:any) 
 {
