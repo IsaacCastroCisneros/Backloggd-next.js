@@ -13,6 +13,7 @@ const config: Config = {
     },
     screens:
     {
+      mob0:{'max':'1125px'},
       mob:{'max':'1000px'},
       mob1:{'max':'500px'},
     },

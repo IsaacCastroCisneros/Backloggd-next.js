@@ -6,10 +6,9 @@ interface props extends HtmlHTMLAttributes<HTMLElement>
 {
   coverArr:Array<{url:string}>,
   number:number
-  children?:ReactNode
 }
 
-export default function Cover({coverArr,number,children,...props}:props) 
+export default function Cover({coverArr,number,...props}:props) 
 { 
   const isCover= coverArr[number]
   let cover:string = "radial-gradient(#242832 43%, #16181c 121%)"
@@ -29,9 +28,7 @@ export default function Cover({coverArr,number,children,...props}:props)
         backgroundSize: "cover",
       }}
     >
-      {
-        children
-      }
+    
     </div>
   );
 }
