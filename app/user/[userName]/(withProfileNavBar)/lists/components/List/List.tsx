@@ -13,7 +13,7 @@ interface props extends list
   user:user
 }
 
-export default async function List({id,name,user}:props) 
+export default async function List({id,name,user,...props}:props) 
 {
 
   const [promise1,promise2] =  await Promise.all([
@@ -66,6 +66,7 @@ export default async function List({id,name,user}:props)
   }
 
   const{res:IgdbCovers}=igdbGames
+
   
   return (
     <div className='flex flex-col'>

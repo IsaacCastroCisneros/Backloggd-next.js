@@ -13,10 +13,18 @@ export default function Cover({coverArr,number,...props}:props)
   const isCover= coverArr[number]
   let cover:string = "radial-gradient(#242832 43%, #16181c 121%)"
 
+
   if(isCover)
   {
-    cover = `url(${choosingImgSize({ url: isCover.url, size: "cover_big" })})` 
+    if(isCover.url)
+    {
+      cover = `url(${choosingImgSize({
+        url: isCover.url,
+        size: "cover_big",
+      })})`;
+    }
   }
+
 
   return (
     <div
