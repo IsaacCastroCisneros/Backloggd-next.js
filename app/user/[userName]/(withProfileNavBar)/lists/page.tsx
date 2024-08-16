@@ -26,7 +26,7 @@ export default async function page({params,searchParams}:any)
           <List key={list.id} {...list} user={userRes[0]} />
         ))}
       </div>
-      <PaginationPanel pages={37} userName={userName} page={Number(page)} />
+      <PaginationPanel pages={5} userName={userName} page={Number(page)} />
     </>
   );
 }
