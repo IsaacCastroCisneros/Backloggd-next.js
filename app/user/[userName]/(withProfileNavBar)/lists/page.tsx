@@ -16,7 +16,7 @@ export default async function page({params,searchParams}:any)
 
   const{id}=userRes[0] as user
   const {res:all} =JSON.parse(await get({query:"select count(*) from gameList where user_id=?",data:id})) 
-  const allPages = Math.trunc(all/12)
+  const allPages = Math.round(all[0]["count(*)"]/12)
   const {res,err} =JSON.parse(await get({query:"select * from gameList where user_id=? limit 12 offset ?",data:[id,getNum(page)]})) 
 
   return (
@@ -26,7 +26,7 @@ export default async function page({params,searchParams}:any)
           <List key={list.id} {...list} user={userRes[0]} />
         ))}
       </div>
-      <PaginationPanel pages={5} userName={userName} page={Number(page)} />
+      <PaginationPanel path={`/user/${userName}/lists`} pages={allPages} page={Number(page)} />
     </>
   );
 }

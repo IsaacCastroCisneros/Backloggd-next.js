@@ -4,10 +4,11 @@ import PageButton from './PageButton';
 interface props {
     page: number;
     side: "left" | "rite";
-    userName: string;
+    path:string
+    pages:number
   }
 
-export default function Side({page,side,userName}:props)
+export default function Side({page,side,path,pages}:props)
 {
 
    const myPages =
@@ -15,15 +16,15 @@ export default function Side({page,side,userName}:props)
        ? { arr: [page + 1, page + 2, page + 3], direction: "flex-row" }
        : { arr: [page - 1, page - 2, page - 3], direction: "flex-row-reverse" }; 
 
-   const finalPages = myPages.arr.filter((page) => page > 1);
+   const finalPages = myPages.arr.filter((page) => page > 1&&page<pages);
 
    return (
      <>
        {
         finalPages.length>0&&
-         <div className={`flex ${myPages.direction} gap-[.5rem]`}>
+         <div className={`flex ${myPages.direction} mob:gap-[.2rem] gap-[.5rem]`}>
            {finalPages.map((page, key) => (
-             <PageButton key={key} num={page} userName={userName} />
+             <PageButton key={key} num={page} path={path} />
            ))}
          </div>
        }

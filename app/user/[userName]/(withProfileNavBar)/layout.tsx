@@ -44,7 +44,7 @@ export default async function layout({children,params}:{children:ReactNode,param
             </Link>
           )}
         </div>
-        <Navbar/>
+        <Navbar userName={userName} />
         {children}
       </>
     );                                                                
