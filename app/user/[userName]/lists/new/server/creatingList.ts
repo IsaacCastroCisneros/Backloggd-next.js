@@ -2,7 +2,7 @@
 
 import pool from '@/config/db'
 import { RowDataPacket } from 'mysql2'
-import listItem from '../components/ClientCotent/interfaces/listItem'
+import listItem from '../../interfaces/listItem'
 
 interface props
 {
@@ -10,14 +10,29 @@ interface props
     name:string
     description:string
     list:Array<listItem>
+    slug:string
 }
 
 
-export default async function updatingList({list,user_id,...props} :props):Promise<string> 
+export default async function creatingList({list,user_id,slug,...props}:props):Promise<string> 
 {
    try
-   {
-    const [results] =await pool.query<Array<RowDataPacket>>("insert into gameList set ?",{...props,user_id})
+   {  
+     let mySlug = slug 
+     const [nameCount] =await pool.query<Array<RowDataPacket>>("select count(*) from gameList where name=?",[props.name])
+     const count = nameCount[0]["count(*)"]
+
+     if(count>0)
+    {
+      const slugArr= mySlug.split("-")
+      
+      mySlug = [...slugArr, count].join("-");
+    }
+
+    const [results] =await pool.query<Array<RowDataPacket>>("insert into gameList set ?",{...props,user_id,slug:mySlug})
+  
+    if(list.length===0)return JSON.stringify({res:[props,mySlug],err:null})
+
     const listResults=results as any 
     const myArr = list.map(item=>[item.id,user_id])
 
@@ -28,7 +43,8 @@ export default async function updatingList({list,user_id,...props} :props):Promi
     const lisIds= list.map(item=>[item.id,rowId,user_id])
     await pool.query<Array<RowDataPacket>>("insert into game (game_id, list_id, user_id) values ? on duplicate key update list_id=values(list_id)",[lisIds]) */
 
-    return JSON.stringify({res:[props],err:null})
+    return JSON.stringify({res:[props,mySlug],err:null})
+   
    }
    catch(err)
    {

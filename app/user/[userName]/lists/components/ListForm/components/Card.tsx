@@ -2,7 +2,7 @@ import choosingImgSize from '@/app/games/search/components/Results/util/choosing
 import { faXmarkCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useState } from 'react'
-import listItem from '../interfaces/listItem'
+import listItem from '../../../interfaces/listItem'
 
 interface props extends listItem
 {

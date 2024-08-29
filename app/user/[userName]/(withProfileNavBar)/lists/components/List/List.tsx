@@ -1,7 +1,7 @@
 "use server"
 
 import React from 'react'
-import list from '../../interfaces/list'
+import list from '../../../../../../../interfaces/list'
 import get from '@/server/get'
 import igdb from '@/util/igdb'
 import Cover from './components/Cover'
@@ -10,10 +10,10 @@ import user from '@/interfaces/user'
 
 interface props extends list
 {
-  user:user
+  
 }
 
-export default async function List({id,name,user,...props}:props) 
+export default async function List({id,name,slug}:props) 
 {
 
   const [promise1,promise2] =  await Promise.all([
@@ -34,8 +34,6 @@ export default async function List({id,name,user,...props}:props)
 
   let games:{res:Array<any>,err:null|unknown} = {res:[],err:null}
   let igdbGames:{res:Array<any>}={res:[{url:""},{url:""},{url:""},{url:""},{url:""}]}
-
-/*   const loles =await igdb({type:"games",query:`where slug="super-mario-advance-4-super-mario-bros-3-e-para-beetle-challenge"; fields *; limit 25;`}) */
 
   if(coverLists.length>0)
   {
@@ -67,7 +65,6 @@ export default async function List({id,name,user,...props}:props)
 
   const{res:IgdbCovers}=igdbGames
 
-  
   return (
     <div className='flex flex-col'>
       <div className="relative h-[156px]">
@@ -97,7 +94,7 @@ export default async function List({id,name,user,...props}:props)
           className="absolute left-0 translate-x-[200%] top-0 z-[1] mob0:hidden"
         />
       </div>
-      <Link className='text-text2 text-[20.8px] font-medium hover:text-[#fff]' href={`/user/${user.username}/lists/`}>{name}</Link>
+      <Link className='text-text2 text-[20.8px] font-medium hover:text-[#fff]' href={`lists/${slug}`}>{name}</Link>
       <span className='text-text text-[12px]'>{listCount} Games</span>
     </div>
   );

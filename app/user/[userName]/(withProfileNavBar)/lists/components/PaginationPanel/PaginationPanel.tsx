@@ -19,6 +19,8 @@ export default function PaginationPanel(myProps:props)
 {
   const{pages,page,path}=myProps
 
+  if(pages<1)return null
+
 
   return (
     <div className="flex w-full justify-center relative mt-[1.5rem]">

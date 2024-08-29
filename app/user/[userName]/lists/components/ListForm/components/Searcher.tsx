@@ -2,7 +2,7 @@ import InputSearcher from '@/components/InputSearcher'
 import InputSearcherOption from '@/components/InputSearcherOption'
 import useSearchIGDB from '@/hooks/useSearchIGDB'
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
-import listItem from '../interfaces/listItem'
+import listItem from '../../../interfaces/listItem'
 import useClickOutside from '@/hooks/useClickOutside'
 import { v4 as uuidv4 } from 'uuid'
 

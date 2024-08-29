@@ -1,5 +1,3 @@
-
-
 export default interface listItem
 {
   name:string

@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-import ClientContent from "./components/ClientCotent/ClientCotent";
+import ClientContent from "./components/ClientCotent";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { notFound } from "next/navigation";
 import user from "@/interfaces/user";

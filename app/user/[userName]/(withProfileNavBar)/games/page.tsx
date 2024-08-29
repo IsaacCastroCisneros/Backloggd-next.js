@@ -7,6 +7,7 @@ import GameCard from '@/components/GameCard/GameCard'
 import getGamesByPage from '@/server/getGamesByPage'
 import gameCardData from '@/interfaces/gameCardData'
 import score from '@/types/score'
+import getFinalGames from '@/util/getFinalGames'
 
 interface finalGame extends gameCardData
 {
@@ -25,16 +26,7 @@ export default async function page({params}:any)
 
   const igdbGames = await getFullGameIGDB({ids})
 
-  let finalGames:Array<finalGame>=[]
-
-  igdbGames.forEach(igdbGame=>(games.forEach(myGame=>
-    {
-      if(igdbGame.id === myGame.game_id)
-      {
-        const finalGame:finalGame= {...igdbGame,score:myGame.score}
-        finalGames = [...finalGames,finalGame]
-      }
-    })))
+  const finalGames = getFinalGames({games,igdbGames})
 
   return (
     <>

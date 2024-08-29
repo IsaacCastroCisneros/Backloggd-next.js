@@ -1,46 +1,27 @@
-"use client"
-
+import React, { Dispatch, FormEvent, SetStateAction, useEffect, useState } from 'react'
+import listItem from '../../interfaces/listItem'
+import Separator from '@/components/Separator'
 import LabedInput from '@/components/LabedInput'
 import LabedTextarea from '@/components/LabedTextarea'
-import user from '@/interfaces/user'
-import React, { FormEvent, useState } from 'react'
-import updatingList from '../../server/updatingList'
-import Card from './components/Card'
-import Searcher from './components/Searcher'
-import listItem from './interfaces/listItem'
-import Separator from '@/components/Separator'
 import Label from '@/components/Label'
+import Searcher from './components/Searcher'
 import Button from '@/components/Button'
+import Card from './components/Card'
 
 interface props
 {
-  user:user
+    list:Array<listItem>
+    submittingForm:(e:FormEvent<HTMLFormElement>)=>void
+    setList:Dispatch<SetStateAction<Array<listItem>>>
+    handleDeleteItemList:(id:string)=>void
 }
 
-export default function ClientCotent({user}:props) 
+export default function ListForm(props:props) 
 {
-  const[list,setList]=useState<Array<listItem>>([])
+    const{list,submittingForm,setList,handleDeleteItemList}=props
 
-  
-  async function submittingForm(e:FormEvent<HTMLFormElement>)
-  {
-    e.preventDefault()
-    const formData= new FormData(e.currentTarget)
-    const data=Object.fromEntries(formData) as {description:string,name:string}
-
-    await updatingList({...data,user_id:user.id,list})
-  }
-
-  function handleDeleteItemList(id:string)
-  {
-    const newList = [...list]
-
-    setList(newList.filter(item=>item.listId!==id))
-  }
-
-
-  return (
-    <>
+    return(
+        <>
       <h1 className="text-[28px] text-text4 font-medium">Editing your list</h1>
       <Separator className="my-[.3rem]" />
       <div className="mb-[2rem]">
@@ -81,5 +62,5 @@ export default function ClientCotent({user}:props)
         ))}
       </div>
     </>
-  );
+    )
 }
