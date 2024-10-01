@@ -4,7 +4,7 @@ import listItem from '../interfaces/listItem';
 
 export default function useListFormData(initialList:Array<listItem>=[]) 
 {
-    const[list,setList]=useState<Array<listItem>>([])
+    const[lists,setList]=useState<Array<listItem>>([])
 
     useEffect(()=>
     {
@@ -17,7 +17,7 @@ export default function useListFormData(initialList:Array<listItem>=[])
  
     function handleDeleteItemList(id: string) 
     {
-      const newList = [...list];
+      const newList = [...lists];
 
       setList(newList.filter((item) => item.listId !== id));
     }
@@ -33,9 +33,9 @@ export default function useListFormData(initialList:Array<listItem>=[])
         name: string;
         slug: string;
       };
-      
+
       return {...data,slug} 
     }
 
-    return {handleDeleteItemList,setList,list,submit}
+    return {handleDeleteItemList,setList,lists,submit}
 }

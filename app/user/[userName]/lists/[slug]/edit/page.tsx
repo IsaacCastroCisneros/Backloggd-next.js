@@ -14,8 +14,17 @@ export default async function page({params}:any)
   const session = await getServerSession(authOptions)
   if(session===null)return notFound()
   const{res:list}=JSON.parse(await get({query:"select * from gameList where slug=?",data:[slug]})) 
-  const{res:gameList}=JSON.parse(await get({query:"select * from gameListItem where list_id=?",data:[list[0].id]})) 
-  const{res:games}=JSON.parse(await get({query:"select * from game where id in (?)",data:[gameList.map(game=>game.game_id)]})) 
+  const listData = list[0]
+
+  const{res:gameList}=JSON.parse(await get({query:"select * from gameListItem where list_id=?",data:[listData.id]})) 
+
+
+  const { res: games } = JSON.parse(
+    await get({
+      query: "select * from game where id in (?)",
+      data: [gameList.map((game: { game_id: string }) => game.game_id)],
+    })
+  ); 
 
 
   async function gettingGameData(id:string):Promise<listItem>
@@ -34,11 +43,14 @@ export default async function page({params}:any)
     return {name,id:igdbId,listId:uuidv4(),cover:finalCover}
   }
 
-  const lol = await Promise.all(games.map(async(game)=>gettingGameData(game.game_id)))
+  const lists = await Promise.all(
+    games.map(async (game: { game_id: string }) =>
+      gettingGameData(game.game_id)
+    )
+  );
 
-  console.log(lol)
 
   return (
-    <ClientContent/>
+    <ClientContent lists={lists} listData={listData} />
   )
 }

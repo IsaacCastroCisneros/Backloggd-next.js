@@ -14,17 +14,17 @@ interface props
 export default function ClientCotent({user}:props) 
 {
   
-  const{list,setList,handleDeleteItemList,submit}=useListFormData()
+  const{lists,setList,handleDeleteItemList,submit}=useListFormData()
 
 
   async function submittingForm(e:FormEvent<HTMLFormElement>)
   {
     const data = submit(e)
-    await creatingList({...data,user_id:user.id,list})
+    await creatingList({...data,user_id:user.id,lists})
   }
 
 
   return (
-   <ListForm submittingForm={submittingForm} list={list} setList={setList} handleDeleteItemList={handleDeleteItemList} />
+   <ListForm submittingForm={submittingForm} list={lists} setList={setList} handleDeleteItemList={handleDeleteItemList} />
   );
 }
