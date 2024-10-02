@@ -13,11 +13,11 @@ export default async function page({params}:any)
   const{slug}=params
   const session = await getServerSession(authOptions)
   if(session===null)return notFound()
-  const{res:list}=JSON.parse(await get({query:"select * from gameList where slug=?",data:[slug]})) 
+  const{res:list,err}=JSON.parse(await get({query:"select * from gameList where slug=?",data:[slug]})) 
+  if(list.length===0)return notFound()
   const listData = list[0]
 
   const{res:gameList}=JSON.parse(await get({query:"select * from gameListItem where list_id=?",data:[listData.id]})) 
-
 
   const { res: games } = JSON.parse(
     await get({
@@ -25,7 +25,6 @@ export default async function page({params}:any)
       data: [gameList.map((game: { game_id: string }) => game.game_id)],
     })
   ); 
-
 
   async function gettingGameData(id:string):Promise<listItem>
   {
