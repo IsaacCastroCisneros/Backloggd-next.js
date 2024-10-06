@@ -1,4 +1,4 @@
-interface listInf
+export default interface listInf
 {
     name: string;
     description: string;

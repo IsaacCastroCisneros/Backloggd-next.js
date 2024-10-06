@@ -21,10 +21,19 @@ export default function ClientContent({lists:initialList,listData}:props)
     async function submittingForm(e:FormEvent<HTMLFormElement>)
     {
       const data = submit(e);
-      await updatingList({oldList:listData,newList:data})
+
+      await updatingList({
+        oldList: { ...listData, list: getIdsFromList(initialList) },
+        newList: { ...data, list: getIdsFromList(lists) },
+      });
     }
 
   return (
     <ListForm listData={listData} list={lists} setList={setList} handleDeleteItemList={handleDeleteItemList} submittingForm={submittingForm} />
   )
+}
+
+function getIdsFromList(lists:Array<{id:string}>)
+{
+  return lists.map(list=>list.id)
 }
