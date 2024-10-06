@@ -5,6 +5,7 @@ import listData from "../../../interfaces/listData";
 import pool from "@/config/db";
 import listInf from "../../../interfaces/listInf";
 import listItem from "../../../interfaces/listItem";
+import insertGameAndList from "@/server/insertGameAndList";
 
 interface props 
 {
@@ -15,34 +16,31 @@ interface props
 
 interface newList extends listInf
 {
-  list:Array<string>
+  list:Array<listItem>
 }
 
 interface oldList extends listData
 {
-  list:Array<string>
+  list:Array<listItem>
 }
 
 
 export default async function updatingList(props:props)
 {
    const{oldList,newList}=props
-   const{list:oldL}=oldList
-   const{list:newL}=newList
-   console.log(oldL)
+   const{list:oldL,id,user_id}=oldList
+   const{list:newL,...finalList}=newList
+
+   console.log(newL)
 
    try
    {  
         if(JSON.stringify(oldL)!==JSON.stringify(newL))
         {
-          const goToDelete = oldL.filter(item=> !newL.includes(item))
-          const goToAdd = newL.filter(item=> !oldL.includes(item))
-
-         console.log(goToAdd)
-         console.log(goToDelete)
-          
+          await pool.query<Array<RowDataPacket>>("delete from gameListItem where list_id=?",[id])
+          await insertGameAndList({userId:`${user_id}`,list:newL,listIdFromDb:`${id}`})
         }
-    /*  await pool.query<Array<RowDataPacket>>("update gameList set ? where id=?",[newList,oldList.id]) */
+        await pool.query<Array<RowDataPacket>>("update gameList set ? where id=?",[finalList,id])
    }
    catch(err)
    {

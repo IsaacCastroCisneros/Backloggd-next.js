@@ -3,6 +3,7 @@
 import pool from '@/config/db'
 import { RowDataPacket } from 'mysql2'
 import listItem from '../../interfaces/listItem'
+import insertGameAndList from '@/server/insertGameAndList'
 
 interface props
 {
@@ -36,9 +37,7 @@ export default async function creatingList({lists,user_id,slug,...props}:props):
     const listResults=results as any 
     const myArr = lists.map(item=>[item.id,user_id])
 
-    await pool.query<Array<RowDataPacket>>("INSERT IGNORE INTO game (game_id, user_id) values ?",[myArr])
-    const [gamesJustAdded]=await pool.query<Array<RowDataPacket>>("select id from game where (game_id, user_id) in (?)",[myArr])
-    await  pool.query<Array<RowDataPacket>>("insert into gameListItem (game_id, list_id) values ?",[gamesJustAdded.map(game=>[game.id,listResults.insertId])])
+    await insertGameAndList({userId:user_id,list:lists,listIdFromDb:listResults.insertId})
 
     return JSON.stringify({res:[props,mySlug],err:null})
    
