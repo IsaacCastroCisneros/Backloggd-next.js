@@ -31,14 +31,16 @@ export default async function updatingList(props:props)
    const{list:oldL,id,user_id}=oldList
    const{list:newL,...finalList}=newList
 
-   console.log(newL)
-
    try
    {  
         if(JSON.stringify(oldL)!==JSON.stringify(newL))
         {
           await pool.query<Array<RowDataPacket>>("delete from gameListItem where list_id=?",[id])
           await insertGameAndList({userId:`${user_id}`,list:newL,listIdFromDb:`${id}`})
+          await pool.query<Array<RowDataPacket>>(
+            "delete from game where list_id=? and score=? and status=? and review=? and platform=? and favorite=? and favorite_position=?",
+            [id,0,"none","","",false,null]
+          );
         }
         await pool.query<Array<RowDataPacket>>("update gameList set ? where id=?",[finalList,id])
    }
