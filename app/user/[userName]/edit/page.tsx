@@ -11,6 +11,8 @@ import favoritePosition from '@/types/favoritePosition'
 import choosingImgSize from '@/app/games/search/components/Results/util/choosingImgSize'
 import updatingFavoritesByIndex from './ClientContent/util/updatingFavoritesByIndex'
 import defaulFavorites from './ClientContent/util/defaultFavorites'
+import pool from '@/config/db'
+import { RowDataPacket } from 'mysql2'
 
 interface values
 {
@@ -22,6 +24,7 @@ interface values
 export default async function page() 
 {
 
+  
   try
   {
     const session = await getServerSession(authOptions)
