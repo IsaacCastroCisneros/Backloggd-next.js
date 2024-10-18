@@ -17,12 +17,13 @@ interface props
   user:user|null
   initialScore:score
   id:string
+  slug:string
   setConfig?:Dispatch<SetStateAction<config>>
 }
 
 export default function Score(props:props) 
 {
-  const{size,user,id,setConfig,initialScore}=props
+  const{size,user,id,setConfig,initialScore,slug}=props
   const[score,setScore]=useState<score>(0)
   const[highligth,setHighligth]=useState<score>(0)
   const[showCancel,setShowCancel]=useState<boolean>(false)
@@ -46,11 +47,11 @@ export default function Score(props:props)
     e.preventDefault();
     if (setConfig) {
       return setConfig((prev) => {
-        return { ...prev, values: { ...prev.values, score } };
+        return { ...prev, values: { ...prev.values, score,slug:"ff" } };
       });
     }
 
-    await gameLogin({ score, user_id: user.id, game_id: id,type:"score"});
+    await gameLogin({ score, user_id: user.id, game_id: id,type:"score",slug});
     setMsg({msg:"Log Updated",type:"success",show:true})
 
   }

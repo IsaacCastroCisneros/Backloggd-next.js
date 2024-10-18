@@ -16,6 +16,7 @@ interface props
     setList:Dispatch<SetStateAction<Array<listItem>>>
     handleDeleteItemList:(id:string)=>void
     listData?:listData
+    type:"creating"|"updating"
 }
 
 export default function ListForm(props:props) 
@@ -28,14 +29,25 @@ export default function ListForm(props:props)
       slug: "",
     }
 
-    const{list,submittingForm,setList,handleDeleteItemList,listData=listDataDefault}=props
+    const {
+      list,
+      submittingForm,
+      setList,
+      handleDeleteItemList,
+      listData = listDataDefault,
+      type,
+    } = props;
 
     const{name,description}=listData
+
+    const{title,label}= type==="creating"?{title:"Creating your List",label:"Create List"}:{title:"Editing your List",label:"Edit List"}
 
     return (
       <>
         <h1 className="text-[28px] text-text4 font-medium">
-          Editing your list
+          {
+            title
+          }
         </h1>
         <Separator className="my-[.3rem]" />
         <div className="mb-[2rem]">
@@ -64,7 +76,7 @@ export default function ListForm(props:props)
             <div className="max-w-[20rem] flex-1">
               <Searcher setList={setList} list={list} />
             </div>
-            <Button form="list">Create List</Button>
+            <Button form="list">{label}</Button>
           </div>
         </div>
         <div className="grid grid-cols-[repeat(5,1fr)] gap-[.7rem] mob1:grid-cols-[repeat(3,1fr)]">

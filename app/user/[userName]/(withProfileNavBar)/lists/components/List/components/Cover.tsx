@@ -1,4 +1,4 @@
-import choosingImgSize from '@/app/games/search/components/Results/util/choosingImgSize'
+import choosingImgSize from '@/util/choosingImgSize'
 import React, { HtmlHTMLAttributes, ReactNode } from 'react'
 import { twMerge } from 'tailwind-merge'
 

@@ -1,6 +1,6 @@
 "use client"
 
-import choosingImgSize from '@/app/games/search/components/Results/util/choosingImgSize'
+import choosingImgSize from '@/util/choosingImgSize'
 import gameCardData from '@/interfaces/gameCardData'
 import React, { useState } from 'react'
 import Menu from './components/Menu/Menu'

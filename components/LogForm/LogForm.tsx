@@ -50,7 +50,7 @@ export default function LogForm(props:logFormProps)
   const [config, setConfig] = useState<config>(myDefault);
   const[showAdvice,setShowAdvice]=useState<boolean>(false)
 
-  const { name, date, cover, id, user,state } = props;
+  const { name, date, cover, id, user,state,slug } = props;
   const { values, platformsIgdb,firstTime,loading,firstValue,err } = config;
   const{review,score,status,platform}=values
 
@@ -96,8 +96,6 @@ export default function LogForm(props:logFormProps)
       const myStatus= status==="none" ? "completed":status
       const myPlatfrom= platform==="none" ? platformsIgdb[0].id:platform
 
-      console.log(platform)
-
       const{platform:alias,...finalValues}=values
 
       if(JSON.stringify(defaultValues)===JSON.stringify(finalValues))
@@ -112,8 +110,10 @@ export default function LogForm(props:logFormProps)
           ...values,
           platform:myPlatfrom,
           status:myStatus,
+          slug,
           type:"fullGame"
         }));
+
         
         if(err)
         {
@@ -173,6 +173,7 @@ export default function LogForm(props:logFormProps)
                     </span>
                     <Score
                       size="big"
+                      slug={slug}
                       initialScore={score}
                       id={id}
                       user={user as user}

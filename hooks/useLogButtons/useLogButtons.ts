@@ -26,9 +26,9 @@ export default function useLogButtons({game_id,user_id}:props)
     setHightLigth(status==="playing" ? status:"played") 
   }
 
-  async function statusUpdate(status:status) 
+  async function statusUpdate(status:status,slug:string) 
   { 
-    const {err} = JSON.parse(await gameLogin({game_id,user_id,status,type:"status"})) 
+    const {err} = JSON.parse(await gameLogin({game_id,user_id,status,type:"status",slug})) 
     if(!err)
     {
       setHightLigth(status)

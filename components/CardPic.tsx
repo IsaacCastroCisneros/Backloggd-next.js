@@ -1,4 +1,4 @@
-import choosingImgSize from '@/app/games/search/components/Results/util/choosingImgSize';
+import choosingImgSize from '@/util/choosingImgSize';
 import { faGamepad } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { ImgHTMLAttributes } from 'react'

@@ -1,5 +1,5 @@
 import igdb from '@/util/igdb'
-import choosingImgSize from '../search/components/Results/util/choosingImgSize'
+import choosingImgSize from '../../../util/choosingImgSize'
 import randomizer from '@/util/randomizer'
 import gameFinalData from './interfaces/gameFinalData'
 import igdbResponse from '@/interfaces/igdbResponse'

@@ -6,21 +6,21 @@ import getUser from '../../server/getUser'
 import user from '@/interfaces/user'
 import list from '@/interfaces/list'
 import List from './components/List/List'
-import PaginationPanel from './components/PaginationPanel/PaginationPanel'
+import PaginationPanel from '@/components/PaginationPanel/PaginationPanel'
 import Button from '@/components/Button'
 import Link from 'next/link'
+import getOffset from '@/components/PaginationPanel/util/getOffset'
 
 export default async function page({params,searchParams}:any) 
 {
   const{userName}= params
-  const page =searchParams.page||1
+  const page =Number(searchParams.page||1)
   const {res:userRes} = JSON.parse(await getUser({userName})) 
 
   const{id}=userRes[0] as user
   const {res:all} =JSON.parse(await get({query:"select count(*) from gameList where user_id=?",data:id})) 
   const allLists = all[0]["count(*)"]
-  const allPages = Math.round(allLists/12)
-  const {res,err} =JSON.parse(await get({query:"select * from gameList where user_id=? limit 12 offset ?",data:[id,getNum(page)]})) 
+  const {res,err} =JSON.parse(await get({query:"select * from gameList where user_id=? limit 12 offset ?",data:[id,getOffset(page,12)]})) 
 
   return (
     <>
@@ -37,17 +37,11 @@ export default async function page({params,searchParams}:any)
       </div>
       <PaginationPanel
         path={`/user/${userName}/lists`}
-        pages={allPages}
+        maxBypage={12}
+        allElements={allLists}
         page={Number(page)}
       />
     </>
   );
 }
 
-function getNum(n:number)
-{
-   const myN = Number(n)
-   if(myN===1)return 0
-
-   return (myN*12)-12
-}

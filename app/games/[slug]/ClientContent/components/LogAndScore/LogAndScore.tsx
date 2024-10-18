@@ -70,7 +70,7 @@ export default function LogAndScore({className,...props}:props)
         <CardPic src={cover} width={165} height={223} />
       </div>
       {user && (
-        <Score size="bigger" id={`${id}`} user={user} initialScore={score} />
+        <Score size="bigger" id={`${id}`} slug={slug} user={user} initialScore={score} />
       )}
       {user && (
         <>
@@ -80,13 +80,13 @@ export default function LogAndScore({className,...props}:props)
               icon={faGamepad}
               label="played"
               isActive={"played" === hightLigth}
-              onClick={() => statusUpdate("played")}
+              onClick={() => statusUpdate("played",slug)}
             />
             <ButtonLog
               icon={faPlay}
               label="Playing"
               isActive={"playing" === hightLigth}
-              onClick={() => statusUpdate("playing")}
+              onClick={() => statusUpdate("playing",slug)}
             />
           </div>
         </>

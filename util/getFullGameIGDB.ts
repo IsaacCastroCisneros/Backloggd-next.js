@@ -10,17 +10,18 @@ interface props
     offset?:string
     areDates?:boolean
     ids?:Array<string>|false
+    limit?:number
 }
 
 export default async function getFullGameIGDB(props:props):Promise<Array<gameCardData>> 
 {
 
-    const{game,offset,areDates=true,ids=false}=props
+    const{game,offset,areDates=true,ids=false,limit=25}=props
     let initialData:{res:Array<Record<any,any>>,err:null|unknown}|null=null
 
     if(ids)
     {
-      initialData=await igdb({type:"games",query:`where id=(${ids.join(",")}); fields *; limit 25;`})
+      initialData=await igdb({type:"games",query:`where id=(${ids.join(",")}); fields *; limit ${limit};`})
     }
     else
     {

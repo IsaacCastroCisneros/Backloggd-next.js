@@ -64,7 +64,7 @@ export default function Card(props:props)
         </span>
       </span>
       <div className="flex flex-col ml-auto items-center gap-[.5rem]">
-        {user &&<Score size="normal" user={user} id={id} initialScore={initialScore} />}
+        {user &&<Score size="normal" slug={slug} user={user} id={id} initialScore={initialScore} />}
         {user && (
           <Button
             className="whitespace-nowrap"

@@ -32,8 +32,7 @@ export default async function request(props:props)
             status: gameDb.status,
             score: gameDb.score,
             review: gameDb.review,
-            platform:
-              gameDb.platform !== "" ? gameDb.platform : "0" ,
+            platform:gameDb.platform,
           }
 
           setConfig(prev=>

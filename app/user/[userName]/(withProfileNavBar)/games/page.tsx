@@ -5,26 +5,24 @@ import { game } from '@/interfaces/game'
 import getFullGameIGDB from '@/util/getFullGameIGDB'
 import GameCard from '@/components/GameCard/GameCard'
 import getGamesByPage from '@/server/getGamesByPage'
-import gameCardData from '@/interfaces/gameCardData'
-import score from '@/types/score'
 import getFinalGames from '@/util/getFinalGames'
+import PaginationPanel from '@/components/PaginationPanel/PaginationPanel'
+import getOffset from '@/components/PaginationPanel/util/getOffset'
 
-interface finalGame extends gameCardData
-{
-  score:score
-}
 
-export default async function page({params}:any) 
+export default async function page({params,searchParams}:any) 
 {
   const {userName} = params
+  const page =Number(searchParams.page||1)
+
   const {res} =JSON.parse(await getUser({userName}))
   const user = res[0] as user
-  const {res:results} = JSON.parse(await getGamesByPage({user_id:user.id,limit:50,offset:0})) 
+  const {res:results} = JSON.parse(await getGamesByPage({user_id:user.id,limit:40,offset:getOffset(page,40)})) 
   const {games,quantity}=results as {games:Array<game>,quantity:string}
   
   const ids = games.map(game=>game.game_id)
 
-  const igdbGames = await getFullGameIGDB({ids})
+  const igdbGames = await getFullGameIGDB({ids,limit:40})
 
   const finalGames = getFinalGames({games,igdbGames})
 
@@ -45,6 +43,7 @@ export default async function page({params}:any)
             />
         ))}
       </div>
+      <PaginationPanel maxBypage={40} page={page} path='/user/lelosss/games' allElements={Number(quantity)}/>
     </>
   );
 }

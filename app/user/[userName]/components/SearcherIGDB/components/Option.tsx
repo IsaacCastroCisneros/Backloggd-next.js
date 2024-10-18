@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import favorite from '../../../edit/ClientContent/interfaces/favorite'
 import cardPosition from '../../../../../../types/favoritePosition'
 import gameCardData from '@/interfaces/gameCardData'
-import choosingImgSize from '@/app/games/search/components/Results/util/choosingImgSize'
+import choosingImgSize from '@/util/choosingImgSize'
 import { global } from '@/app/context/GlobalContext'
 import InputSearcherOption from '@/components/InputSearcherOption'
 

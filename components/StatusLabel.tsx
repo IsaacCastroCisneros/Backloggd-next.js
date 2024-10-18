@@ -25,14 +25,13 @@ export default function StatusLabel({status,platform}:props)
 
 
   return (
-    <p className='flex'>
+    <p className='flex text-text text-[14px]'>
       <Text>
         <span
           className={`w-[.5rem] h-[.5rem] ${dotSwitcher[status]} block rounded-[100%]`}
         ></span>
         {status}
-      </Text>&nbsp;
-      on&nbsp;<Text>{platform}</Text>
+      </Text>&nbsp;on&nbsp;<Text>{platform}</Text>
     </p>
   );
 }
@@ -40,7 +39,7 @@ export default function StatusLabel({status,platform}:props)
 function Text({children}:{children:ReactNode})
 {
     return(
-      <span className="text-text2 font-medium capitalize flex items-center gap-[.1rem]">
+      <span className="text-text2 font-medium capitalize flex items-center gap-[.1rem] whitespace-nowrap overflow-hidden text-ellipsis">
        {
         children
        } 

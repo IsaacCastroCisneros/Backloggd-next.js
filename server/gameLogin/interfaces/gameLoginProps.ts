@@ -5,6 +5,7 @@ interface defaultProps
 {
     game_id:string
     user_id:string
+    slug:string
 } 
 
 interface gameMinimal extends defaultProps
@@ -32,6 +33,7 @@ interface gameFavorite extends defaultProps
 interface gameNoId extends Omit<game, 'id'>
 {
    type:"fullGame"
+   slug:string
 }
 
 type gameLoginProps = gameNoId|gameMinimal|gameFavorite|gameScore|gameStatus
