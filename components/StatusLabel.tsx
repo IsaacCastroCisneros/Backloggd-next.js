@@ -25,13 +25,13 @@ export default function StatusLabel({status,platform}:props)
 
 
   return (
-    <p className='flex text-text text-[14px]'>
+    <p className='flex text-text text-[14px] overflow-hidden'>
       <Text>
         <span
           className={`w-[.5rem] h-[.5rem] ${dotSwitcher[status]} block rounded-[100%]`}
         ></span>
         {status}
-      </Text>&nbsp;on&nbsp;<Text>{platform}</Text>
+      </Text>&nbsp;<p className='mob:hidden'>on</p>&nbsp;<Text><span title={platform} className='mob1:hidden'>{platform}</span></Text>
     </p>
   );
 }

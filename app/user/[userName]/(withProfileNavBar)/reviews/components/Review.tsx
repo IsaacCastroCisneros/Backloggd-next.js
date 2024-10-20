@@ -1,9 +1,12 @@
+"use client"
+
 import { StaticScore } from '@/components/StaticScore/StaticScore';
 import Link from 'next/link';
 import React from 'react'
 import review from '../interfaces/review';
 import StatusLabel from '@/components/StatusLabel';
 import Separator from '@/components/Separator';
+import useTextToggle from '@/hooks/useTextToggle';
 
 
 
@@ -11,12 +14,17 @@ export default function Review(props:review)
 {
   const{name,releaseDate,username,slug,score,status,platform,review}=props
 
+  const {ref,showButton,toggleShowHandle,buttonLabel,lineClamp} = useTextToggle({height:96})
+
   return (
-    <div className='mt-[1rem]'>
+    <div className="mt-[1rem]">
       <div className="flex items-end gap-[1rem] mb-[1rem]">
-        <Link href={`/games/${slug}`} title={name} className='text-[1.75rem] text-[#fff] hover:text-text font-medium leading-[2.1rem] whitespace-nowrap overflow-hidden text-ellipsis'>
-          <h3
-          >
+        <Link
+          href={`/games/${slug}`}
+          title={name}
+          className="text-[1.75rem] text-[#fff] hover:text-text font-medium leading-[2.1rem] overflow-hidden"
+        >
+          <h3 className="whitespace-nowrap text-ellipsis overflow-hidden">
             {name}
           </h3>
         </Link>
@@ -28,16 +36,22 @@ export default function Review(props:review)
       >
         {username}
       </Link>
-      <div className='flex gap-[.8rem] mb-[.6rem]'>
+      <div className="flex gap-[.8rem] mb-[.6rem]">
         <StaticScore score={score} />
         <StatusLabel status={status} platform={platform} />
       </div>
-      <p className='text-text8'>
-        {
-          review
-        }
+      <p ref={ref} className={`text-text8 ${lineClamp}`}>
+        {review}
       </p>
-      <Separator className='mt-[.8rem]'/>
+      {showButton && (
+        <button
+          onClick={toggleShowHandle}
+          className="uppercase ml-auto text-text6 font-bold hover:text-[#fff] mt-[.7rem] text-[14.4px]"
+        >
+          {buttonLabel}
+        </button>
+      )}
+      <Separator className="mt-[.8rem]" />
     </div>
   );
 }
