@@ -94,7 +94,7 @@ export default function LogForm(props:logFormProps)
       if(noChanges)return clossingPopup();
 
       const myStatus= status==="none" ? "completed":status
-      const myPlatfrom= platform==="none" ? platformsIgdb[0].id:platform
+      const myPlatfrom= platform==="none"&&platformsIgdb.length>0 ? platformsIgdb[0].id:platform
 
       const{platform:alias,...finalValues}=values
 
@@ -113,7 +113,6 @@ export default function LogForm(props:logFormProps)
           slug,
           type:"fullGame"
         }));
-
         
         if(err)
         {
@@ -136,7 +135,7 @@ export default function LogForm(props:logFormProps)
 
 
   return (
-    <div className="bg-bg relative border-border2 p-[16px] w-[660px] min-h-[462px] max-w-[100%] flex flex-col border-[1px] rounded-[.2rem] mob:p-[10px]">
+    <div className="bg-bg relative border-border2 p-[16px] w-[660px] min-h-[462px] flex flex-col border-[1px] rounded-[.2rem] mob:p-[10px] mob:w-full">
       {showAdvice && (
         <CancelingLog
           setShowAdvice={setShowAdvice}

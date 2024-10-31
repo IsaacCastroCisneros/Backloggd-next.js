@@ -6,4 +6,5 @@ export default interface gameCardData
   date?:number
   platforms:Array<string>
   slug:string
+  status?:string
 }

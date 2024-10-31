@@ -4,75 +4,58 @@ import getUser from '../../server/getUser'
 import user from '@/interfaces/user'
 import { game } from '@/interfaces/game'
 import igdb from '@/util/igdb'
-import choosingImgSize from '@/util/choosingImgSize'
 import Review from './components/Review'
 import review from './interfaces/review'
+import getFullGameIGDB from '@/util/getFullGameIGDB'
+import getOffset from '@/components/PaginationPanel/util/getOffset'
+import PaginationPanel from '@/components/PaginationPanel/PaginationPanel'
 
-interface gameSlug extends game
-{
-  slug:string
-}
 
-export default async function page({params}:any) 
+export default async function page({params,searchParams}:any) 
 {
+
+  const page =Number(searchParams.page||1)
   const {userName} = params
   const {res} =JSON.parse(await getUser({userName}))
   const user = res[0] as user
-  const {res:results}=JSON.parse(await get({query:"select * from game where user_id=? and review!=? limit 20",data:[user.id,""]})) 
 
+  const {res:all}=JSON.parse(await get({query:"select count(*) from game where user_id=? and review!=?",data:[user.id,""]})) 
+  const allLists = all[0]["count(*)"]
+  const {res:results}=JSON.parse(await get({query:"select * from game where user_id=? and review!=? limit 15 offset ?",data:[user.id,"",getOffset(page,15)]})) 
 
-  const lelos =results.map(async (game:gameSlug) => {
-    const { platform, game_id, score, status,slug,review} = game;
-
-    let finalGame: review = {
-      name: "",
-      username: user.username,
-      releaseDate: 0,
-      cover: "",
-      score,
-      status,
-      platform: "none",
-      slug,
-      review
-    };
-
-     const { res,err } = await igdb({
-       type: "games",
-       query: `where id=${game_id}; fields *;`,
-     });
-        const { release_dates, cover, name } = res[0];
-     
-
-      if (release_dates) {
-        const { res: releaseDate } = await igdb({
-          type: "release_dates",
-          query: `where id=${release_dates[0]}; fields y;`,
-        });
-        finalGame = { ...finalGame, releaseDate: releaseDate[0].y };
+  const myPlatforms=results.reduce((final,plat)=>
+    {
+      if(plat.platform!=="none")
+      {
+        final.push(plat.platform)
       }
-      if (platform) {
-        const { res: platformRes } = await igdb({
-          type: "platforms",
-          query: `where id=${platform}; fields name;`,
-        });
-        finalGame = { ...finalGame, platform: platformRes[0].name };
-      }
-      if (cover) {
-        const { res: coverRes } = await igdb({
-          type: "covers",
-          query: `where id=${cover}; fields url;`,
-        });
-        finalGame = {
-          ...finalGame,
-          cover: choosingImgSize({ url: coverRes[0].url, size: "cover_big" }),
-        };
-      }
+      return final
+    },[]).join(",")
+  
+  const{res:platforms}=await igdb({type:"platforms",query:`where id=(${myPlatforms}); fields name; limit 50;`})
 
-      return { ...finalGame, name };
+  const games = await getFullGameIGDB({ids:results.map((res:any)=>(res.game_id))})
+  const reviews:Array<review> = results.map((res:game)=>
+  {
+    const{score,status,review,game_id}=res
+    let finalReview:review|{}={}
+
+
+     games.forEach((game)=>
+     {
+        if(game.id===game_id)
+        {
+          const{name,slug,date,platforms:myPlatform}=game
+          const myPltform = platforms.find(plat=>plat.id===myPlatform[0])
+          const finalPlat= myPltform||{name:"TBD"}
+          
+          finalReview={name,slug,platform:finalPlat.name,date,score,status,review}
+        }
+     })
+
+     return finalReview
   })
-  
-  const reviews: Array<review> = await Promise.all<Promise<review>>(lelos);
-  
+
 
   return (
     <div className='mt-[2rem]'>
@@ -82,6 +65,8 @@ export default async function page({params}:any)
           <Review {...review}  key={pos}/>
         ))
       }
+      <PaginationPanel allElements={allLists} path={`/user/${userName}/reviews`} page={page} maxBypage={15} />
     </div>
   )
+ return null
 }

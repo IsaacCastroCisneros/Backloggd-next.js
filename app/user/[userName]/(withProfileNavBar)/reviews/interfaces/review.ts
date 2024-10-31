@@ -5,7 +5,7 @@ export default interface review
 {
     name: string,
     username: string,
-    releaseDate: number,
+    date: number,
     cover: string,
     score: score,
     status: gameStatus,

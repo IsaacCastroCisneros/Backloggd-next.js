@@ -1,3 +1,5 @@
+"use server"
+
 import listItem from '@/app/user/[userName]/lists/interfaces/listItem'
 import pool from '@/config/db'
 import { RowDataPacket } from 'mysql2'
@@ -7,7 +9,7 @@ interface props
 
 export default async function insertGameAndList({userId,list,listIdFromDb}:props) 
 {
-    const myArr = list.map(item=>[item.id,userId])
+    const myArr = list.map(game=>[game.id,userId])
 
     try
     {

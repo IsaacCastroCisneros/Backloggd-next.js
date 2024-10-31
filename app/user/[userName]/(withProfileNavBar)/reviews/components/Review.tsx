@@ -12,7 +12,7 @@ import useTextToggle from '@/hooks/useTextToggle';
 
 export default function Review(props:review) 
 {
-  const{name,releaseDate,username,slug,score,status,platform,review}=props
+  const{name,date:releaseDate,username,slug,score,status,platform,review}=props
 
   const {ref,showButton,toggleShowHandle,buttonLabel,lineClamp} = useTextToggle({height:96})
 
@@ -28,7 +28,7 @@ export default function Review(props:review)
             {name}
           </h3>
         </Link>
-        <span className=" font-medium text-text">{releaseDate}</span>
+        <span className=" font-medium text-text">{releaseDate||"TBD"}</span>
       </div>
       <Link
         href={`/user/${username}/`}

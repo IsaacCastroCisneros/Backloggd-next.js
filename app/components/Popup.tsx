@@ -69,7 +69,7 @@ export default function Popup()
       ></div>
       <div
         className={twMerge(
-          "duration-200 w-[100%] flex justify-center",
+          "duration-200 w-fit flex justify-center",
           hiddenShowing().popup
         )}
       >
