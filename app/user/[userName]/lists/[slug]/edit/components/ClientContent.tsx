@@ -7,6 +7,7 @@ import listItem from '../../../interfaces/listItem'
 import listData from '../../../interfaces/listData'
 import updatingList from '../server/updatingList'
 import  { global } from '@/app/context/GlobalContext'
+import { useRouter } from 'next/navigation'
 
 interface props
 {
@@ -18,6 +19,7 @@ export default function ClientContent({lists:initialList,listData}:props)
 {
     const{lists,setList,handleDeleteItemList,submit}=useListFormData(initialList)
     const{setMsg}=useContext(global)
+    const router = useRouter()
 
     async function submittingForm(e:FormEvent<HTMLFormElement>)
     {
@@ -30,6 +32,8 @@ export default function ClientContent({lists:initialList,listData}:props)
           oldList: { ...listData, list:initialList },
           newList: { ...data, list:lists },
         });
+        
+        router.back()
         setMsg({msg:"List Updated",type:"success",show:true})
       }
       catch(err)

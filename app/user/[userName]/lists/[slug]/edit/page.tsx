@@ -19,12 +19,21 @@ export default async function page({params}:any)
 
   const{res:gameList}=JSON.parse(await get({query:"select * from gameListItem where list_id=?",data:[listData.id]})) 
 
-  const { res: games } = JSON.parse(
+  const { res: temGames } = JSON.parse(
     await get({
       query: "select * from game where id in (?)",
       data: [gameList.map((game: { game_id: string }) => game.game_id)],
     })
   ); 
+
+  let games = temGames
+  
+  if(gameList.length!==temGames.length)
+  {
+    const resultMap = new Map(temGames.map((row:any) => [row.id, row]))
+    games= gameList.map((item:any) => resultMap.get(item.game_id))
+  }
+  
 
   async function gettingGameData(id:string):Promise<listItem>
   {
