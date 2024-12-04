@@ -12,6 +12,7 @@ import { RowDataPacket } from 'mysql2'
 import { getServerSession } from 'next-auth'
 import Link from 'next/link'
 import React from 'react'
+import getAllGames from './util/getAllGames'
 
 export default async function page({params}:any) 
 {
@@ -29,12 +30,14 @@ export default async function page({params}:any)
         data: [id],
       })
     ); 
-    const { res: games } = JSON.parse(
+    const { res: temmpGames } = JSON.parse(
       await get({
-        query: "select game_id from game where id in (?)",
+        query: "select game_id, id from game where id in (?)",
         data: [gameIds.map((game: { game_id: string }) => game.game_id)],
       })
     ); 
+
+    const games = getAllGames({ogGameList:gameIds,temmpGames})
 
     const igdbGames = await getFullGameIGDB({
       ids: games.map((game: { game_id: string }) => game.game_id),

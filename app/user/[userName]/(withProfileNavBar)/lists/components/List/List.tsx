@@ -40,7 +40,7 @@ export default async function List({id,name,slug}:props)
     games = JSON.parse(
       await get({
         query: "select game_id from game where id in (?)",
-        data: [coverLists.map((item) => item.game_id)],
+        data: [coverLists.map((item:any) => item.game_id)],
       })
     );
 

@@ -7,6 +7,7 @@ import get from '@/server/get'
 import igdb from '@/util/igdb'
 import listItem from '../../interfaces/listItem'
 import { v4 as uuidv4 } from 'uuid'
+import getAllGames from '../util/getAllGames'
 
 export default async function page({params}:any) 
 {
@@ -26,14 +27,9 @@ export default async function page({params}:any)
     })
   ); 
 
-  let games = temGames
-  
-  if(gameList.length!==temGames.length)
-  {
-    const resultMap = new Map(temGames.map((row:any) => [row.id, row]))
-    games= gameList.map((item:any) => resultMap.get(item.game_id))
-  }
-  
+  const games = getAllGames({temmpGames:temGames,ogGameList:gameList})  
+
+  console.log(games)
 
   async function gettingGameData(id:string):Promise<listItem>
   {

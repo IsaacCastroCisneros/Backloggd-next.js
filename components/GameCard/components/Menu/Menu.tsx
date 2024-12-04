@@ -14,7 +14,7 @@ interface props extends HtmlHTMLAttributes<HTMLDivElement>
 export default function Menu(props:props) 
 {
   const{gameCardData,user,isMenuSmall}=useContext(gameCard)
-  const{id:game_id}=gameCardData as gameCardData || {id:""}
+  const{id:game_id,slug}=gameCardData as gameCardData || {id:""}
   const{id:user_id}=user || {id:""}
   const{hightLigth,statusUpdate}=useLogButtons({game_id,user_id})
 
@@ -32,13 +32,13 @@ export default function Menu(props:props)
         isActive={"played" === hightLigth}
         label="Played"
         icon={faGamepad}
-        onClick={() => statusUpdate("played")}
+        onClick={() => statusUpdate("played",slug)}
       />
       <Button
         isActive={"playing" === hightLigth}
         label="Playing"
         icon={faPlay}
-        onClick={() => statusUpdate("playing")}
+        onClick={() => statusUpdate("playing",slug)}
       />
       <Button isActive={false} label="more" icon={faEllipsisH} isMenu />
     </div>

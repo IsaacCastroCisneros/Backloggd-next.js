@@ -5,7 +5,7 @@ import pool from '@/config/db'
 import { RowDataPacket } from 'mysql2'
 
 interface props
-{userId:string,list:Array<listItem>,listIdFromDb:string}
+{userId:string,list:Array<listItem>|Array<{id:string}>,listIdFromDb:string}
 
 export default async function insertGameAndList({userId,list,listIdFromDb}:props) 
 {
@@ -18,6 +18,7 @@ export default async function insertGameAndList({userId,list,listIdFromDb}:props
         
         if(gamesJustAdded.length!==myArr.length)
         {
+          console.log("lolol")
           const arr1 = myArr.map((item) => item[0]);
           const arr2 = [...gamesJustAdded];
 

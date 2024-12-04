@@ -2,8 +2,10 @@ import list from '@/interfaces/list'
 import user from '@/interfaces/user'
 import React, { FormEvent } from 'react'
 import { useQuery } from 'react-query'
-import getList from './server/getList'
+import getList from '../server/getList'
 import insertGameAndList from '@/server/insertGameAndList'
+import Button from '@/components/Button'
+import LIstOption from './components/LIstOption'
 
 interface props
 {
@@ -21,30 +23,37 @@ export default function AddToListSelector({user,gameId}:props)
     return res
   }
 
+
   async function submit(e:FormEvent<HTMLFormElement>)
   {
      e.preventDefault()
 
      const formData = new FormData(e.currentTarget)
-     const data=Object.fromEntries(formData)
+     const data=Object.values(Object.fromEntries(formData)) 
 
-     /* await insertGameAndList({userId:user.id,list:[{id:gameId}],listIdFromDb:"154"}) */
+     const requestArr=data.map(async(listId)=>
+    {
+      const id = listId as string
+      await insertGameAndList({userId:user.id,list:[{id:gameId}],listIdFromDb:id})
+    })
+
+    await Promise.all(requestArr)
   }
 
   return (
-    <div className="bg-border2 w-[400px] p-[16px]">
+    <div className="bg-border2 w-[400px] p-[16px] rounded-[.4rem]">
       <span className="text-[1.25rem] font-bold text-[#fff]">
         Select lists to add this game to
       </span>
       <form onSubmit={submit}>
-        {!isFetching &&
-          data.map((list:list) =>
-          (
-            <input key={list.id} type="checkbox" name={list.name} value={list.id} />
-          ))}
-          <button className='bg-[#fff]'>
-            go
-          </button>
+        <ul className='flex flex-col'>
+          {!isFetching &&
+            data.map((list:list) => (
+              
+                <LIstOption key={list.id} {...list} />
+            ))}
+        </ul>
+        <Button>Add to List</Button>
       </form>
     </div>
   );
