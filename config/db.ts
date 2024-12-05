@@ -1,12 +1,19 @@
 import {createPool} from 'mysql2/promise';
 
+const host = process.env.DB_HOST 
+const user = process.env.DB_USER 
+const password=process.env.DB_PASSWORD 
+const port =Number(process.env.DB_PORT) 
+const database= process.env.DB_DATABASE 
+
+
 const pool = createPool(
     {
-        host:'backloggd-nextjs-production.up.railway.app',
-        user:'root',
-        password:'UaRFWktUQCjmrrmDhIVtyPnIujBzOwlG',
-        port:24065,
-        database:'railway'
+        host,
+        user,
+        password,
+        port,
+        database,
     }
 )
 
