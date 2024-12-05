@@ -6,6 +6,8 @@ import Msg from './components/Msg'
 import Navbar from './components/Navbar/Navbar'
 import Popup from './components/Popup'
 import '@fortawesome/fontawesome-svg-core/styles.css';
+import "reflect-metadata";
+
 
 
 const inter = Inter({ subsets: ['latin'] })
