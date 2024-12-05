@@ -1,4 +1,4 @@
-import get from "@/server/get";
+
 
 
 export default async function Home() {
