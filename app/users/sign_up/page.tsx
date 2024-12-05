@@ -8,9 +8,14 @@ export default async function page()
 {
   const {res}= JSON.parse( await get({query:"select * from users"})) 
 
-  console.log(res)
+
 
   return (
+    <>
+    {
+      JSON.stringify(res)
+    }
     <ClientContent/>
+    </>
   );
 }
