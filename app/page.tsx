@@ -5,8 +5,6 @@ export default async function Home() {
 
   const {res}= JSON.parse( await get({query:"select * from users"})) 
 
-  console.log(res[0].username)
-
   return (
     <article className="mt-[4rem]">
       
