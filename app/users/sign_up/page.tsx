@@ -6,7 +6,7 @@ import get from '@/server/get';
 
 export default async function page() 
 {
-  const {res}= JSON.parse( await get({query:"select * from users"})) 
+  const {res,err}= JSON.parse( await get({query:"select * from users"})) 
 
 
 
@@ -14,6 +14,9 @@ export default async function page()
     <>
     {
       JSON.stringify(res)
+    }
+    {
+      JSON.stringify(err)
     }
     <ClientContent/>
     </>

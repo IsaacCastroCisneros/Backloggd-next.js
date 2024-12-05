@@ -18,6 +18,7 @@ export default async function get({query,data=""}:props):Promise<string>
     }
     catch(err)
     {
+        console.log(err)
         return JSON.stringify({res:[],err})     
     }
 }
