@@ -1,6 +1,6 @@
 import {createPool} from 'mysql2/promise';
 
-const pool = createPool(
+/* const pool = createPool(
     {
         host:'junction.proxy.rlwy.ne',
         user:'root',
@@ -8,9 +8,9 @@ const pool = createPool(
         port:24065,
         database:'railway'
     }
-)
+) */
 
-/* const pool = createPool(
+const pool = createPool(
     {
         host:'localhost',
         user:'root',
@@ -18,6 +18,6 @@ const pool = createPool(
         port:3306,
         database:'backloggd'
     }
-) */
+)
 
 export default pool
