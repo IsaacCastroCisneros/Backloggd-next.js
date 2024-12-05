@@ -6,7 +6,7 @@ const pool = createPool(
         user:'root',
         password:'UaRFWktUQCjmrrmDhIVtyPnIujBzOwlG',
         port:24065,
-        database:'backloggd'
+        database:'railway'
     }
 )
 
