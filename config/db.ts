@@ -2,7 +2,7 @@ import {createPool} from 'mysql2/promise';
 
 const pool = createPool(
     {
-        host:'junction.proxy.rlwy.ne',
+        host:'backloggd-nextjs-production.up.railway.app',
         user:'root',
         password:'UaRFWktUQCjmrrmDhIVtyPnIujBzOwlG',
         port:24065,
