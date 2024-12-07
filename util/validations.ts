@@ -2,8 +2,9 @@ import Joi, { ObjectSchema } from 'joi'
 
 
 export const signUp:ObjectSchema = Joi.object({
-    userName: Joi.string().required().messages({
+    userName: Joi.string().required().regex(/^(?!.*@).*/).messages({
       "string.empty": `user name field cant be blank`,
+      "string.pattern.base": `@ is not permitted`,
       "any.required": `user name is require`,
     }),
     email: Joi.string().email({ tlds: { allow: false } }).required().messages({

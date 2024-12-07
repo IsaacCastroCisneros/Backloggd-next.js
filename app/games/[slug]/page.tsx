@@ -115,7 +115,7 @@ export default async function page({params}:any)
     platformsIGDB:platforms.map(platform=>({id:platform.id,name:platform.name})),
   }:logGameDataDefault
 
-  return (
+  return  (
     <ClientContent
       gameFinalData={gameFinalData}
       gameDbData={gameFinalDbData}
@@ -123,4 +123,5 @@ export default async function page({params}:any)
       reviews={reviews.res}
     />
   );
+
 }

@@ -110,7 +110,7 @@ export default function ClientContent(props:props)
       setPopup({
         show: true,
         content: (
-          <div className="w-[50rem] max-w-full top-[-10rem] absolute">
+          <div className="w-[50rem] max-w-full top-[-10rem] absolute right-[50%] translate-x-[50%]">
             <SearcherIGDB updateFavorites={updateFavorites} pos={pos} />
           </div>
         ),

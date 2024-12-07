@@ -73,11 +73,12 @@ export default function Popup()
           hiddenShowing().popup
         )}
       >
-        {myShow && <>{content}</>}
+        <div className='w-fit'>{myShow && <>{content}</>}</div>
       </div>
     </div>
   );
 }
+
 
 async function bump()
 {

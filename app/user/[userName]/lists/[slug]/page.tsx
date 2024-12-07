@@ -13,6 +13,7 @@ import { getServerSession } from 'next-auth'
 import Link from 'next/link'
 import React from 'react'
 import getAllGames from './util/getAllGames'
+import DeleteList from './components/DeleteList'
 
 export default async function page({params}:any) 
 {
@@ -77,10 +78,11 @@ export default async function page({params}:any)
             <Separator className="my-[.5rem]" />
             <Link
               href={`${slug}/edit`}
-              className="bg-gray3 text-[#fff] rounded-[4px] hover:bg-gray font-medium block text-center px-[12px] py-[6px]"
+              className="bg-gray3 text-[#fff] rounded-[4px] hover:bg-gray font-medium block text-center px-[12px] py-[6px] mb-[.6rem]"
             >
               Edit List
             </Link>
+            <DeleteList/>
           </section>
         </div>
       </div>

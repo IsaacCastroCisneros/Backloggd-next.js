@@ -8,7 +8,7 @@ const gettingGameDbData =async(data:Array<number>):Promise<string>=>
     {
       query:`SELECT 
       COUNT(CASE WHEN status = 'playing' THEN 1 END) AS playing,
-      COUNT(CASE WHEN status != 'NULL' THEN 1 END) AS plays,
+      COUNT(CASE WHEN status != 'NULL' THEN 1 END) AS plays
       FROM game
       WHERE game_id = ?`,data}))
   
@@ -21,7 +21,6 @@ const gettingGameDbData =async(data:Array<number>):Promise<string>=>
         data,
       })
     ) 
-  console.log(byGameListItem)
 
   return JSON.stringify({...byGameTB,listed:0}) 
 }
