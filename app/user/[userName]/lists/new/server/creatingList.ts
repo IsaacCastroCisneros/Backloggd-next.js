@@ -35,7 +35,6 @@ export default async function creatingList({lists,user_id,slug,...props}:props):
     if(lists.length===0)return JSON.stringify({res:[props,mySlug],err:null})
 
     const listResults=results as any 
-/*     const myArr = lists.map(item=>[item.id,user_id]) */
 
     await insertGameAndList({userId:user_id,list:lists,listIdFromDb:listResults.insertId})
 

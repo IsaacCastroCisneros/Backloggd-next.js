@@ -50,7 +50,7 @@ export default async function page({params}:any)
       <div>
         <h1 className="text-[40px] text-[#fff] font-semibold">{name}</h1>
         <p className="text-text4 mb-[.8rem]">{description}</p>
-        <div className="flex gap-[2rem]">
+        <div className="flex gap-[2rem] mob0:gap-[1.2rem]">
           <section className="flex-1">
             <span className="text-text text-[14px]">
               {gameIds.length}&nbsp; Games
@@ -68,21 +68,21 @@ export default async function page({params}:any)
               ))}
             </div>
           </section>
-          <section className="w-[285px]">
+          <section className="w-[285px] mob0:w-[150px] mob1:w-[100px]">
             <Link
-              className="text-text2 font-medium hover:text-[#fff]"
+              className="text-text2 font-medium hover:text-[#fff] line-clamp-2 mob0:text-[14px] mob1:text-[12px]"
               href={`/user/${user.username}`}
             >
-              {user.username}
+               {user.username}
             </Link>
             <Separator className="my-[.5rem]" />
             <Link
               href={`${slug}/edit`}
-              className="bg-gray3 text-[#fff] rounded-[4px] hover:bg-gray font-medium block text-center px-[12px] py-[6px] mb-[.6rem]"
+              className="bg-gray3 text-[#fff] rounded-[4px] hover:bg-gray font-medium block text-center px-[12px] py-[6px] mb-[.6rem] mob0:px-[9px] mob0:py-[4px] mob0:text-[14px]"
             >
               Edit List
             </Link>
-            <DeleteList/>
+            <DeleteList listId={id} userId={user.id}/>
           </section>
         </div>
       </div>

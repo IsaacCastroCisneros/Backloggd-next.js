@@ -1,7 +1,7 @@
 import { global } from '@/app/context/GlobalContext'
 import gameLogin from '@/server/gameLogin/gameLogin'
 import getGame from '@/server/getGame'
-import  { useContext, useState } from 'react'
+import  { useContext, useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 
 interface props
@@ -13,8 +13,14 @@ interface props
 export default function useLogButtons({game_id,user_id}:props) 
 {
   const[hightLigth,setHightLigth]=useState<status>("none")
-  useQuery(["data",{game_id,user_id}],gettingGameDataDB)
+  const {data} = useQuery(["data",{game_id,user_id}],gettingGameDataDB)
+
   const{setMsg}=useContext(global)
+
+  useEffect(()=>
+  {
+    setHightLigth(data as status)
+  },[data])
 
   async function gettingGameDataDB({queryKey}:any)
   {
@@ -23,7 +29,8 @@ export default function useLogButtons({game_id,user_id}:props)
     if(err)return"none" 
     const status = res[0].status
     if(status==="none")return
-    setHightLigth(status==="playing" ? status:"played") 
+    return status
+    
   }
 
   async function statusUpdate(status:status,slug:string) 

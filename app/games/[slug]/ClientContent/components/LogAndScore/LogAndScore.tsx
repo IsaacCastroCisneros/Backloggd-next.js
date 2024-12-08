@@ -33,7 +33,6 @@ export default function LogAndScore({className,...props}:props)
 
   const {statusUpdate,hightLigth}=useLogButtons({game_id:id,user_id:user?.id||""})
 
-
   return (
     <div
       {...props}
