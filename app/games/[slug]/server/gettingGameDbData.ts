@@ -12,15 +12,15 @@ const gettingGameDbData =async(data:Array<number>):Promise<string>=>
       FROM game
       WHERE game_id = ?`,data}))
   
-  const byGameListItem = 
+  /* const byGameListItem = 
     JSON.parse(
       await get({
         query: `SELECT COUNT(DISTINCT list_id)
                 FROM gameListItem
-                WHERE game_id = ?;`,
-        data,
+                WHERE game_id = ?`,
+        data:data[0],
       })
-    ) 
+    )  */
 
   return JSON.stringify({...byGameTB,listed:0}) 
 }

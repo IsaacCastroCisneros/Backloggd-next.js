@@ -16,7 +16,7 @@ export default function Reviews()
           ))
       }
       {
-        reviews.length===0&&<span className="capitalize text-text2 block text-center text-[1.5rem]">there is no reviews yet</span>
+        reviews.length===0&&<span className="capitalize text-text2 block text-center text-[1.5rem]">there are no reviews yet</span>
       }
     </>
   );

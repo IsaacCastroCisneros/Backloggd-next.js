@@ -8,13 +8,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLayerGroup } from '@fortawesome/free-solid-svg-icons';
 import Item from './components/Item';
 import Separator from '@/components/Separator';
+import { global } from '@/app/context/GlobalContext';
+import AddToListSelector from '../AddToListSelector/AddToListSelector';
+import { useSession } from 'next-auth/react';
+import user from '@/interfaces/user';
 
 export default function HeaderMobile() 
 {
   const{gameFinalData,gameDbData}=useContext(context)
+  const{setPopup}=useContext(global)
 
-  const{date,publisher,developer,name}=gameFinalData
-  const{playing,plays,listed}=gameDbData
+  const data = useSession().data
+  const user = data ? data.user as user : null 
+
+  const{date,publisher,developer,name,id}=gameFinalData
+  const{playing,plays}=gameDbData
 
   return (
     <div className="mt-[50px] hidden mob:block">
@@ -36,18 +44,26 @@ export default function HeaderMobile()
       </div>
       <div className="flex gap-[.3rem] items-start">
         <LogAndScore className="max-w-[198px]" />
-        <Button className='bg-[transparent] border-field border-[1px] text-text2'>
-          <FontAwesomeIcon icon={faLayerGroup} />
-          <span className='ml-[.5rem] inline-block'>
-          Add to a List
-          </span>
-        </Button>
+        {user && (
+          <Button
+            className="bg-[transparent] border-field border-[1px] text-text2"
+            onClick={() =>
+              setPopup({
+                show: true,
+                content: <AddToListSelector user={user} gameId={id} />,
+                clickOutside: true,
+              })
+            }
+          >
+            <FontAwesomeIcon icon={faLayerGroup} />
+            <span className="ml-[.5rem] inline-block">Add to a List</span>
+          </Button>
+        )}
       </div>
-      <Separator className='my-[.8rem] w-full'/>
-      <ul className='flex justify-around mb-[2rem]'>
-        <Item number={plays} label='Plays' />
-        <Item number={playing} label='Playing' />
-        <Item number={listed} label='lists' />
+      <Separator className="my-[.8rem] w-full" />
+      <ul className="flex justify-around mb-[2rem]">
+        <Item number={plays} label="Plays" />
+        <Item number={playing} label="Playing" />
       </ul>
     </div>
   );

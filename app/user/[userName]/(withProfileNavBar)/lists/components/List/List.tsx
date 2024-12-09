@@ -65,9 +65,11 @@ export default async function List({id,name,slug}:props)
 
   const{res:IgdbCovers}=igdbGames
 
+  const listUrl = `lists/${slug}` 
+
   return (
     <div className='flex flex-col'>
-      <div className="relative h-[156px]">
+      <Link href={listUrl} className="relative h-[156px]">
         <Cover
           coverArr={IgdbCovers}
           number={0}
@@ -93,8 +95,8 @@ export default async function List({id,name,slug}:props)
           number={4}
           className="absolute left-0 translate-x-[200%] top-0 z-[1] mob0:hidden"
         />
-      </div>
-      <Link className='text-text2 text-[20.8px] font-medium hover:text-[#fff]' href={`lists/${slug}`}>{name}</Link>
+      </Link>
+      <Link className='text-text2 text-[20.8px] font-medium hover:text-[#fff]' href={listUrl}>{name}</Link>
       <span className='text-text text-[12px]'>{listCount} Games</span>
     </div>
   );

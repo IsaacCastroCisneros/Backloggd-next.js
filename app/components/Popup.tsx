@@ -46,6 +46,27 @@ export default function Popup()
     get()
   })
 
+  useEffect(()=>
+  {
+    const body = document.querySelector("body");
+
+    if (body&&show) {
+      body.style.overflowY = "hidden";
+    }
+    else if(body)
+    {
+      body.style.overflowY = "auto";
+    }
+
+
+    return () => {
+      if (body) {
+        body.style.backgroundColor = "auto";
+      }
+    };
+
+  },[show])
+
   async function showSwitcher()
   {
     if(show)return show

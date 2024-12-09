@@ -35,7 +35,7 @@ export default function Results({results,offset,game}:props)
         )}
       </div>
       {results.length < 25 && (
-          <span className="font-bold block w-full text-center text-text2 text-[2rem]">There is results no more</span>
+          <span className="font-bold block w-full text-center text-text2 text-[2rem]">There are no more results</span>
         )}
     </>
   );

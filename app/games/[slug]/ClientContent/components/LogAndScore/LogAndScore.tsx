@@ -13,7 +13,8 @@ import ButtonLog from '../LeftContainer/components/ButtonLog'
 import { faChevronDown, faGamepad, faPlay } from '@fortawesome/free-solid-svg-icons'
 import useLogButtons from '@/hooks/useLogButtons/useLogButtons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import AddToListSelector from './components/AddToListSelector/AddToListSelector'
+import AddToListSelector from '../AddToListSelector/AddToListSelector'
+
 
 interface props extends HtmlHTMLAttributes<HTMLElement>
 {
@@ -96,7 +97,7 @@ export default function LogAndScore({className,...props}:props)
               onClick={() => statusUpdate("playing", slug)}
             />
           </div>
-          <button className="text-[#cbd4dc] mt-[.5rem] justify-between hover:border-[#badefc] hover:text-[#fff] rounded-[.3rem] duration-200 flex text-[16px] py-[.2rem] border-[#30394c] border-[1px] w-[100%] px-[.5rem] items-center"
+          <button className="text-[#cbd4dc] mt-[.5rem] justify-between hover:border-[#badefc] hover:text-[#fff] rounded-[.3rem] duration-200 flex text-[16px] py-[.2rem] border-[#30394c] border-[1px] w-[100%] px-[.5rem] items-center mob:hidden"
            onClick={()=>setPopup({show:true,content:<AddToListSelector user={user} gameId={id} />,clickOutside:true})}
           >
             <span className="font-medium mx-auto">Add to Lists</span>

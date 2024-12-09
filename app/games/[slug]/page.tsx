@@ -37,7 +37,7 @@ export default async function page({params}:any)
     id,
   } = generalData;
   
-  const {res:gameDbData} = JSON.parse(await gettingGameDbData([id,id,id]))
+  const {res:gameDbData} = JSON.parse(await gettingGameDbData([id,id]))
 
   const [
     { res: cover },

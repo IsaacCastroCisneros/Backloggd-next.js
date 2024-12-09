@@ -10,7 +10,8 @@ import LogAndScore from '../LogAndScore/LogAndScore'
 export default function LeftContainer() 
 {
   const{gameDbData}=useContext(context)
-  const{playing,plays,listed}=gameDbData
+  const{playing,plays}=gameDbData
+
 
   return (
     <div className="w-[198px] flex flex-col gap-[1rem] mob:hidden">
@@ -19,7 +20,6 @@ export default function LeftContainer()
         <ul className="flex flex-col">
           <StatisticItem label="plays" num={plays} icon={faGamepad} />
           <StatisticItem label="Playing" num={playing} icon={faPlay} />
-          <StatisticItem label="Lists" num={listed} icon={faList} />
         </ul>
       </div>
     </div>
