@@ -2,8 +2,6 @@ import React from 'react'
 
 export default function  getAllGames({temmpGames,ogGameList}:{temmpGames:Array<any>,ogGameList:Array<any>}) 
 {
-   console.log(temmpGames)
-   console.log(ogGameList)
 
     if(ogGameList.length!==temmpGames.length)
     {

@@ -12,6 +12,8 @@ interface values
   setMsg:Dispatch<SetStateAction<msg>>
   popup:popupProps
   setPopup:Dispatch<SetStateAction<popupProps>>
+  setloadSpinner:Dispatch<SetStateAction<boolean>>
+  loadSpinner:boolean
 }
 interface popupProps
 {
@@ -31,6 +33,7 @@ interface msg {
 export default function GlobalContext({children}:{children:ReactNode}) 
 {
   const[msg,setMsg]=useState<msg>({show:false,msg:"",type:"fail"})
+  const[loadSpinner,setloadSpinner]=useState<boolean>(false)
   const[popup,setPopup]=useState<popupProps>({show:false,content:<></>,clickOutside:true})
 
   const values:values =
@@ -38,10 +41,10 @@ export default function GlobalContext({children}:{children:ReactNode})
     msg,
     setMsg,
     popup,
-    setPopup
+    setPopup,
+    setloadSpinner,
+    loadSpinner
   }
-
-    
 
   return (
     <global.Provider value={values}>

@@ -1,7 +1,7 @@
 "use client"
 import React,{useContext,useState,useEffect} from 'react'
 import { global } from '../context/GlobalContext'
-import { faCheck, faCheckCircle, faExclamationCircle, faXmarkCircle } from '@fortawesome/free-solid-svg-icons'
+import { faCheckCircle, faExclamationCircle, faXmarkCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default function Msg() 

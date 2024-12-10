@@ -21,10 +21,15 @@ export default function ClientContent({lists:initialList,listData,user}:props)
 {
     const{lists,setList,handleDeleteItemList,submit}=useListFormData(initialList)
     const{setMsg}=useContext(global)
+    const router = useRouter()
 
     async function submittingForm(e:FormEvent<HTMLFormElement>)
     {
       const data = submit(e);
+      if(data.name==="")
+        {
+          return  setMsg({msg:"List's name is needed",type:"fail",show:true})
+        }
      
       const{err}=JSON.parse(await updatingList({
         oldList: { ...listData, list:initialList },
@@ -33,10 +38,9 @@ export default function ClientContent({lists:initialList,listData,user}:props)
 
       if(err) return  setMsg({msg:"An Error was Occurred",type:"fail",show:true})
 
-        
-        window.location.href = `/user/${user.username}/lists`
-        setMsg({msg:"List Updated",type:"success",show:true})
- 
+      setMsg({msg:"List Updated",type:"success",show:true})
+      router.push(`/user/${user.username}/lists`)
+      router.refresh()
     }
 
   return (

@@ -60,14 +60,14 @@ export default function ListForm(props:props)
             <LabedInput
               label="List Name"
               props={{
-                input: { name: "name", defaultValue: name },
+                input: { name: "name", defaultValue: name,maxLength:50 },
                 container: { className: "mb-[.3rem]" },
               }}
             />
             <LabedTextarea
               label="Description"
               props={{
-                textarea: { name: "description", defaultValue: description },
+                textarea: { name: "description", defaultValue: description,maxLength:2000 },
               }}
             />
           </form>

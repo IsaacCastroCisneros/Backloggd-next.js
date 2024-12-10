@@ -20,10 +20,10 @@ export default async function page({params,searchParams}:any)
   const{id}=userRes[0] as user
   const {res:all} =JSON.parse(await get({query:"select count(*) from gameList where user_id=?",data:id})) 
   const allLists = all[0]["count(*)"]
-  const {res,err} =JSON.parse(await get({query:"select * from gameList where user_id=? order by id desc limit 12 offset ?",data:[id,getOffset(page,12)]})) 
+  const {res} =JSON.parse(await get({query:"select * from gameList where user_id=? order by id desc limit 12 offset ?",data:[id,getOffset(page,12)]})) 
 
   return (
-    <>
+    <>      
       <Button>
         <Link className='px-[2.3rem]' href={`/user/${userName}/lists/new`}>Create List</Link>
       </Button>

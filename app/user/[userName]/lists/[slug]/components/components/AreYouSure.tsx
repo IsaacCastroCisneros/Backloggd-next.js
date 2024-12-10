@@ -3,14 +3,13 @@ import deleteList from './server/deleteList'
 import props from '../interfaces/props'
 import Button from '@/components/Button'
 import { global } from '@/app/context/GlobalContext'
-import { useSession } from 'next-auth/react'
-import user from '@/interfaces/user'
+import {useRouter} from 'next/navigation'
 import useMyUseSession from '@/hooks/useMyUseSession'
 
 export default function AreYouSure({listId,userId}:props) 
 {
-   const{setMsg,setPopup}=useContext(global)
-
+   const{setMsg,setPopup,setloadSpinner}=useContext(global)
+   const router = useRouter()
    const user = useMyUseSession()
 
    function handleClosePopup()
@@ -21,12 +20,15 @@ export default function AreYouSure({listId,userId}:props)
    async function deletingList(e:FormEvent<HTMLFormElement>)
    {
      e.preventDefault()
+     setloadSpinner(true)
      await deleteList({listId,userId})
+     setloadSpinner(false)
+
      handleClosePopup()
      setMsg({type:"success",show:true,msg:"The list was deleted"})
      
-     window.location.href = `/user/${user?.username}`
-      
+     router.push(`/user/${user?.username}/lists`)
+     router.refresh()
    }
 
   return (

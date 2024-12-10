@@ -7,6 +7,7 @@ import Navbar from './components/Navbar/Navbar'
 import Popup from './components/Popup'
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import "reflect-metadata";
+import LoadSpinner from './components/LoadSpinner'
 
 
 
@@ -31,6 +32,7 @@ export default async function RootLayout({
           <Popup />
           <Msg />
           <Navbar/>
+          <LoadSpinner/>
           <main className="custom-container pb-[1rem] block">{children}</main>
         </GlobalContext>
       </body>

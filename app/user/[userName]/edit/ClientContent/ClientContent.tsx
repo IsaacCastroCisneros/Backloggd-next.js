@@ -3,7 +3,7 @@
 import LabedInput from '@/components/LabedInput'
 import LabedTextarea from '@/components/LabedTextarea'
 import user from '@/interfaces/user'
-import React, { FormEvent, useContext, useEffect, useState } from 'react'
+import React, { FormEvent, use, useContext, useEffect, useState } from 'react'
 import updateUser from './server/updateUser'
 import { SignInResponse, signIn, useSession } from 'next-auth/react'
 import { global } from '@/app/context/GlobalContext'
@@ -19,6 +19,7 @@ import updatingFavoritesByIndex from './util/updatingFavoritesByIndex'
 import loginFavorite from './server/loginFavorite'
 import favoritePosition from '../../../../../types/favoritePosition'
 import removingEmptyLogs from './server/removingEmptyLogs'
+import { useRouter } from 'next/navigation'
 
 interface props extends user
 {
@@ -27,11 +28,12 @@ interface props extends user
 
 export default function ClientContent(props:props) 
 {
-    const{setMsg,setPopup}=useContext(global)
+    const{setMsg,setPopup,setloadSpinner}=useContext(global)
     const[favorites,setFavorites]=useState<Array<favorite>>(defaulFavorites)
     const{data} =useSession() 
     const{user}=data || {user:{}as user}
     const{username:name,id:idUser}=user as user
+    const router = useRouter()
 
     const{username,twitter,bio,initialFavorites}=props 
 
@@ -49,8 +51,19 @@ export default function ClientContent(props:props)
 
        const formData= new FormData(e.currentTarget)
        const data=Object.fromEntries(formData)
+       const{username}=data
 
-       const{err}=JSON.parse(await updateUser({...props,...data})) 
+       if(username==="")
+        {
+          return  setMsg({msg:"User's name is needed",type:"fail",show:true})
+        }
+
+       const {initialFavorites,...myProps} = props
+
+       setloadSpinner(true) 
+
+       const{err}=JSON.parse(await updateUser({...myProps,...data})) 
+    
        const thereIsFavorites = favorites.filter(fav=>fav.id!=="")
         
        await removingEmptyLogs({userId:idUser})
@@ -78,18 +91,28 @@ export default function ClientContent(props:props)
 
         await Promise.all(favoritesToDB);
 
-         window.location.href = `/user/${name}` 
+      }
+       
+       if(err)
+       {
+         setloadSpinner(false)
+         return setMsg({msg:"an error was occurred",type:"fail",show:true})
        }
 
-       if(err)return setMsg({msg:"an error was occurred",type:"fail",show:true})
-
+             
        const {error} = await signIn("credentials", {
         email:props.email,
         password:data.password||props.password,
         redirect: false,
       }) as SignInResponse
+       setloadSpinner(false)
 
-      if(!error)return setMsg({msg:"Profile Updated",type:"success",show:true})
+      if(!error)
+      {
+        setMsg({msg:"User updated",type:"success",show:true})
+        router.push(`/user/${username}`)
+        router.refresh()
+      }
     }
 
     function updateFavorites(newFavorite:favorite|Array<favorite>)
@@ -139,7 +162,7 @@ export default function ClientContent(props:props)
           <LabedInput
             label="Twitter handle"
             props={{
-              input: { maxLength: 602, name: "twitter", defaultValue: twitter },
+              input: { maxLength: 99, name: "twitter", defaultValue: twitter },
               container: { className: "flex-1" },
             }}
           />

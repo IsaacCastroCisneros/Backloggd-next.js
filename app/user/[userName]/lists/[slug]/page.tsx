@@ -19,6 +19,7 @@ export default async function page({params}:any)
     const{slug}=params
     const{res:list,err}=JSON.parse(await get({query:"select * from gameList where slug=?",data:[slug]}))
     if(err)return <ErrMsg/>
+
     const{id,name,description}=list[0] as list 
     const { res: gameIds } = JSON.parse(
       await get({
@@ -26,13 +27,20 @@ export default async function page({params}:any)
         data: [id],
       })
     ); 
-    const { res: temmpGames } = JSON.parse(
-      await get({
-        query: "select game_id, id from game where id in (?)",
-        data: [gameIds.map((game: { game_id: string }) => game.game_id)],
-      })
-    ); 
+    let temmpGames:Array<any>=[]
 
+    if(gameIds.length>0)
+    {
+      const {res} = JSON.parse(
+        await get({
+          query: "select game_id, id from game where id in (?)",
+          data: [gameIds.map((game: { game_id: string }) => game.game_id)],
+        })
+      ); 
+
+      temmpGames=res
+    }
+    
     const games = getAllGames({ogGameList:gameIds,temmpGames})
 
     const igdbGames = await getFullGameIGDB({
@@ -43,7 +51,7 @@ export default async function page({params}:any)
 
     return (
       <div>
-        <h1 className="text-[40px] text-[#fff] font-semibold">{name}</h1>
+        <h1 className="text-[40px] text-[#fff] font-semibold mob:text-[30px] overflow-hidden whitespace-nowrap text-ellipsis">{name}</h1>
         <p className="text-text4 mb-[.8rem]">{description}</p>
         <div className="flex gap-[2rem] mob0:gap-[1.2rem]">
           <section className="flex-1">

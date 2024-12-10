@@ -96,7 +96,7 @@ export default async function List({id,name,slug}:props)
           className="absolute left-0 translate-x-[200%] top-0 z-[1] mob0:hidden"
         />
       </Link>
-      <Link className='text-text2 text-[20.8px] font-medium hover:text-[#fff]' href={listUrl}>{name}</Link>
+      <Link className='text-text2 text-[20.8px] font-medium hover:text-[#fff] overflow-hidden whitespace-nowrap text-ellipsis' href={listUrl}>{name}</Link>
       <span className='text-text text-[12px]'>{listCount} Games</span>
     </div>
   );

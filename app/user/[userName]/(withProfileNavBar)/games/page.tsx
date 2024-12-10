@@ -24,7 +24,7 @@ export default async function page({params,searchParams}:any)
 
   const igdbGames = await getFullGameIGDB({ids,limit:40})
 
-  const finalGames = getFinalGames({games,igdbGames})
+  const finalGames = getFinalGames({games,igdbGames}).sort((a, b) => b.score - a.score)
 
   return (
     <>
