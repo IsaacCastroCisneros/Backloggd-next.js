@@ -8,6 +8,7 @@ import igdb from '@/util/igdb'
 import listItem from '../../interfaces/listItem'
 import { v4 as uuidv4 } from 'uuid'
 import getAllGames from '../util/getAllGames'
+import user from '@/interfaces/user'
 
 export default async function page({params}:any) 
 {
@@ -17,6 +18,8 @@ export default async function page({params}:any)
   const{res:list,err}=JSON.parse(await get({query:"select * from gameList where slug=?",data:[slug]})) 
   if(list.length===0)return notFound()
   const listData = list[0]
+
+  const user = session?.user as user
 
   const{res:gameList}=JSON.parse(await get({query:"select * from gameListItem where list_id=?",data:[listData.id]})) 
 
@@ -28,8 +31,6 @@ export default async function page({params}:any)
   ); 
 
   const games = getAllGames({temmpGames:temGames,ogGameList:gameList})  
-
-  console.log(games)
 
   async function gettingGameData(id:string):Promise<listItem>
   {
@@ -55,6 +56,6 @@ export default async function page({params}:any)
 
 
   return (
-    <ClientContent lists={lists} listData={listData} />
+    <ClientContent lists={lists} listData={listData} user={user} />
   )
 }

@@ -26,6 +26,8 @@ export default function ClientCotent({user}:props)
     {
       await creatingList({...data,user_id:user.id,lists})
       setMsg({msg:"List Created",type:"success",show:true})
+
+       window.location.href = `/user/${user.username}/lists`
     }
     catch(err)
     {

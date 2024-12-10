@@ -10,6 +10,7 @@ interface props
     user_id:string
     favorite_position:favoritePosition
     favorite:boolean
+    slug:string
 }
 
 export default async function loginFavorite(favorite:props) 
@@ -56,7 +57,7 @@ export default async function loginFavorite(favorite:props)
           thereIsFavorite[0].id,
         ]);
       }
-
+        
         await pool.query("insert into game set ?",favorite)
         return JSON.stringify({res:["updated"],err:null}) 
     }

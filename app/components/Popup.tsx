@@ -2,6 +2,7 @@
 import React, {useContext, useEffect, useState} from 'react'
 import { global } from '../context/GlobalContext';
 import { twMerge } from 'tailwind-merge';
+import useClickOutside from '@/hooks/useClickOutside';
 
 
 export default function Popup() 
@@ -9,6 +10,15 @@ export default function Popup()
   const{popup,setPopup}=useContext(global)
   const[myShow,setMyShow]=useState<boolean>(false)
   const{show,content,clickOutside}=popup
+
+  const{ref}=useClickOutside(clossingByClickingOutside)
+
+  function clossingByClickingOutside()
+  {
+    if(!clickOutside)return
+    setPopup(prev=>{return{...prev,show:false}})
+  }
+
 
   function hiddenShowing()
   {
@@ -31,11 +41,7 @@ export default function Popup()
      )
   }
 
-  function hideByClick()
-  {
-    if(!clickOutside)return
-    setPopup(prev=>{return{...prev,show:false}})
-  }
+
 
   useEffect(()=>
   {
@@ -86,15 +92,14 @@ export default function Popup()
           "bg-[#000] w-full h-full absolute duration-200",
           hiddenShowing().layer
         )}
-        onClick={hideByClick}
       ></div>
       <div
         className={twMerge(
-          "duration-200 w-fit flex justify-center",
+          "duration-200 w-full flex justify-center",
           hiddenShowing().popup
         )}
       >
-        <div className='w-fit'>{myShow && <>{content}</>}</div>
+        <div ref={ref}>{myShow && <>{content}</>}</div>
       </div>
     </div>
   );

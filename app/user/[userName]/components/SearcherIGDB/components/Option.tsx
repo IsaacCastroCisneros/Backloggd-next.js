@@ -15,12 +15,12 @@ interface props extends gameCardData
 export default function Option(props:props) 
 {
   const{setPopup}=useContext(global)
-  const{id,name,cover,updateFavorites,pos,date}=props
+  const{id,name,cover,updateFavorites,pos,date,slug}=props
 
   async function handleUpadteFavorite()
   {
     const myCover=cover ? choosingImgSize({url:cover,size:"cover_big"}) : ""
-    updateFavorites({id,cover:myCover,pos,isIn:true})
+    updateFavorites({id,cover:myCover,pos,isIn:true,slug})
     setPopup(prev=>({...prev,show:false}))
   }
 

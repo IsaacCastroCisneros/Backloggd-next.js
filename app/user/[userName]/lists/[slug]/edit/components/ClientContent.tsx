@@ -8,39 +8,35 @@ import listData from '../../../interfaces/listData'
 import updatingList from '../server/updatingList'
 import  { global } from '@/app/context/GlobalContext'
 import { useRouter } from 'next/navigation'
+import user from '@/interfaces/user'
 
 interface props
 {
   lists:Array<listItem>
   listData:listData
+  user:user
 }
 
-export default function ClientContent({lists:initialList,listData}:props) 
+export default function ClientContent({lists:initialList,listData,user}:props) 
 {
     const{lists,setList,handleDeleteItemList,submit}=useListFormData(initialList)
     const{setMsg}=useContext(global)
-    const router = useRouter()
 
     async function submittingForm(e:FormEvent<HTMLFormElement>)
     {
       const data = submit(e);
      
-      try
-      {
+      const{err}=JSON.parse(await updatingList({
+        oldList: { ...listData, list:initialList },
+        newList: { ...data, list:lists },
+      }))
 
-        await updatingList({
-          oldList: { ...listData, list:initialList },
-          newList: { ...data, list:lists },
-        });
+      if(err) return  setMsg({msg:"An Error was Occurred",type:"fail",show:true})
+
         
-        router.back()
+        window.location.href = `/user/${user.username}/lists`
         setMsg({msg:"List Updated",type:"success",show:true})
-      }
-      catch(err)
-      {
-        setMsg({msg:"An Error was Occurred",type:"fail",show:true})
-      }
-
+ 
     }
 
   return (

@@ -63,10 +63,8 @@ export default function ClientContent(props:props)
             const thereIs= thereIsFavorites.find(fav=>fav.pos===entry)
 
             if(thereIs)return thereIs
-            return {pos:entry,isIn:false,id:""}
+            return {pos:entry,isIn:false,id:"",slug:""}
           })
-        
-          console.log(final)
          
          const favoritesToDB = final.map((fav) =>
            loginFavorite({
@@ -74,18 +72,13 @@ export default function ClientContent(props:props)
              favorite: fav.isIn,
              user_id: idUser,
              favorite_position: fav.pos,
+             slug:fav.slug
            })
          );
 
-         try {
-           await Promise.all(favoritesToDB);
-         } catch (err) {
-           return setMsg({
-             msg: "an error was occurred",
-             type: "fail",
-             show: true,
-           });
-         }
+        await Promise.all(favoritesToDB);
+
+         window.location.href = `/user/${name}` 
        }
 
        if(err)return setMsg({msg:"an error was occurred",type:"fail",show:true})

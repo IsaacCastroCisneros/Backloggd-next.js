@@ -25,7 +25,7 @@ interface oldList extends listData
 }
 
 
-export default async function updatingList(props:props)
+export default async function updatingList(props:props):Promise<string>
 {
    const{oldList,newList}=props
    const{list:oldL,id,user_id}=oldList
@@ -45,9 +45,12 @@ export default async function updatingList(props:props)
           );
         }
         await pool.query<Array<RowDataPacket>>("update gameList set ? where id=?",[finalList,id])
+
+        return JSON.stringify({res:["success"],err:null})
    }
    catch(err)
    {
      console.log(err)
+     return JSON.stringify({res:[],err})
    }
 }

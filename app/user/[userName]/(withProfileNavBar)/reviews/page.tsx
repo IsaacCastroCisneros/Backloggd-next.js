@@ -21,7 +21,7 @@ export default async function page({params,searchParams}:any)
 
   const {res:all}=JSON.parse(await get({query:"select count(*) from game where user_id=? and review!=?",data:[user.id,""]})) 
   const allLists = all[0]["count(*)"]
-  const {res:results}=JSON.parse(await get({query:"select * from game where user_id=? and review!=? limit 15 offset ?",data:[user.id,"",getOffset(page,15)]})) 
+  const {res:results}=JSON.parse(await get({query:"select * from game where user_id=? and review!=? order by id desc limit 15 offset ?",data:[user.id,"",getOffset(page,15)]})) 
 
   const myPlatforms=results.reduce((final:any,plat:any)=>
     {

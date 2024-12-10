@@ -31,6 +31,7 @@ export default function Favorite(props:props)
       isIn: false,
       id,
       cover: "",
+      slug:""
     });
     setHover(false)
   }

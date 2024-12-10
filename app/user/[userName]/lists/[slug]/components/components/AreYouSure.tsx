@@ -3,12 +3,15 @@ import deleteList from './server/deleteList'
 import props from '../interfaces/props'
 import Button from '@/components/Button'
 import { global } from '@/app/context/GlobalContext'
-import { useRouter } from 'next/navigation'
+import { useSession } from 'next-auth/react'
+import user from '@/interfaces/user'
 
 export default function AreYouSure({listId,userId}:props) 
 {
    const{setMsg,setPopup}=useContext(global)
-   const router = useRouter()
+
+   const data = useSession().data
+   const user = data ? data.user as user : null 
 
    function handleClosePopup()
    {
@@ -21,7 +24,9 @@ export default function AreYouSure({listId,userId}:props)
      await deleteList({listId,userId})
      handleClosePopup()
      setMsg({type:"success",show:true,msg:"The list was deleted"})
-     router.push("/user")
+     
+     window.location.href = `/user/${user?.username}`
+      
    }
 
   return (

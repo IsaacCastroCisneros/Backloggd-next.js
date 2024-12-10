@@ -38,7 +38,7 @@ export default async function page()
     if(favorites.length>0)
     {
       const favIdArr=favorites.map(fav=>fav.game_id)  
-      const{res:coversIds}=await igdb({type:"games",query:`where id=(${favIdArr.join(",")}); fields cover;`})
+      const{res:coversIds}=await igdb({type:"games",query:`where id=(${favIdArr.join(",")}); fields cover,slug;`})
       const coverIdsArr=coversIds.filter(cov=>cov.cover).map(cov=>cov.cover)
       const{res:covers}=await igdb({type:"covers",query:`where id=(${coverIdsArr.join(",")}); fields url,game;`})
 
@@ -59,11 +59,12 @@ export default async function page()
       initialFavorites = finalCovers.map(cov=>
         {
           const pos = favorites.find(fav=>fav.game_id===cov.game) || {favorite_position:"0"}
-  
+      
           return{
             isIn:true,
             cover:choosingImgSize({url:cov.url,size:"cover_big"}),
             id:cov.game,
+            slug:"",
             pos:pos.favorite_position as favoritePosition
           }
         })
