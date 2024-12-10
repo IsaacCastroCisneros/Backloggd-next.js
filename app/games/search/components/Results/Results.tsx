@@ -5,6 +5,7 @@ import Card from './components/Card'
 import {useSession} from "next-auth/react"
 import user from '@/interfaces/user'
 import NavigationButton from './components/NavigationButton'
+import useMyUseSession from '@/hooks/useMyUseSession'
 
 interface props
 {
@@ -15,9 +16,7 @@ interface props
 
 export default function Results({results,offset,game}:props)  
 {
-  const {data}=useSession()
-  const {user:myUser}=data||{user:null}
-  const user = myUser as user|null
+  const user = useMyUseSession()
 
   return (
     <>

@@ -11,8 +11,7 @@ import favoritePosition from '@/types/favoritePosition'
 import choosingImgSize from '@/util/choosingImgSize'
 import updatingFavoritesByIndex from './ClientContent/util/updatingFavoritesByIndex'
 import defaulFavorites from './ClientContent/util/defaultFavorites'
-import pool from '@/config/db'
-import { RowDataPacket } from 'mysql2'
+
 
 interface values
 {

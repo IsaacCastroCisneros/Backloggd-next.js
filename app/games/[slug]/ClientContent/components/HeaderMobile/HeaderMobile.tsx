@@ -10,16 +10,14 @@ import Item from './components/Item';
 import Separator from '@/components/Separator';
 import { global } from '@/app/context/GlobalContext';
 import AddToListSelector from '../AddToListSelector/AddToListSelector';
-import { useSession } from 'next-auth/react';
-import user from '@/interfaces/user';
+import useMyUseSession from '@/hooks/useMyUseSession';
 
 export default function HeaderMobile() 
 {
   const{gameFinalData,gameDbData}=useContext(context)
   const{setPopup}=useContext(global)
 
-  const data = useSession().data
-  const user = data ? data.user as user : null 
+  const user = useMyUseSession()
 
   const{date,publisher,developer,name,id}=gameFinalData
   const{playing,plays}=gameDbData

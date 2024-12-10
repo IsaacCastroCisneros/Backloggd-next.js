@@ -8,14 +8,14 @@ import ErrMsg from '@/components/ErrMsg'
 import user from '@/interfaces/user'
 import Link from 'next/link'
 import Navbar from './components/Navbar'
+import myGetServerSession from '@/util/myGetServerSession'
 
 export default async function layout({children,params}:{children:ReactNode,params:any}) 
 {
   const{userName}=params
-  const session= await getServerSession(authOptions)
-  const user=session?.user as user
+  const user = await myGetServerSession()
 
-  const isMyProfile= session ? user.username===userName : false
+  const isMyProfile= user.username===userName
 
   try
   {

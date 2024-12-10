@@ -15,6 +15,7 @@ import score from '../../types/score'
 import { StaticScore } from '../StaticScore/StaticScore'
 import Link from 'next/link'
 import { faGamepad } from '@fortawesome/free-solid-svg-icons'
+import useMyUseSession from '@/hooks/useMyUseSession'
 
 export const gameCard = React.createContext<{
   gameCardData: gameCardData | null;
@@ -36,8 +37,7 @@ export default function GameCard(props:props)
   const{cover,name,position,isMenuSmall=false,size="normal",id,isScore=false,slug}=props
   const src = choosingImgSize({ url: cover || "", size: "cover_big" })
   const[hover,setHover]=useState<boolean>(false)
-  const {data}=useSession()
-  const {user}=data||{user:null}
+  const user = useMyUseSession()
 
   const initialScore = useScoreByUser({gameId:id,user:user as user})
 

@@ -14,6 +14,7 @@ import { faChevronDown, faGamepad, faPlay } from '@fortawesome/free-solid-svg-ic
 import useLogButtons from '@/hooks/useLogButtons/useLogButtons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import AddToListSelector from '../AddToListSelector/AddToListSelector'
+import useMyUseSession from '@/hooks/useMyUseSession'
 
 
 interface props extends HtmlHTMLAttributes<HTMLElement>
@@ -26,8 +27,7 @@ export default function LogAndScore({className,...props}:props)
 {
   const{setPopup}=useContext(global)
   const{gameFinalData,logGameData}=useContext(context)
-  const data = useSession().data
-  const user = data ? data.user as user : null 
+  const user = useMyUseSession()
 
   const{cover,id,name,dateYear,slug}=gameFinalData
   const{score,platformsIGDB}=logGameData

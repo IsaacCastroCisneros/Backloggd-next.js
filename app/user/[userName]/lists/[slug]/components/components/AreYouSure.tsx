@@ -5,13 +5,13 @@ import Button from '@/components/Button'
 import { global } from '@/app/context/GlobalContext'
 import { useSession } from 'next-auth/react'
 import user from '@/interfaces/user'
+import useMyUseSession from '@/hooks/useMyUseSession'
 
 export default function AreYouSure({listId,userId}:props) 
 {
    const{setMsg,setPopup}=useContext(global)
 
-   const data = useSession().data
-   const user = data ? data.user as user : null 
+   const user = useMyUseSession()
 
    function handleClosePopup()
    {

@@ -3,7 +3,6 @@
 import React from 'react'
 import Option from './components/Option'
 import { usePathname } from 'next/navigation'
-import { useSession } from 'next-auth/react'
 
 interface props
 {

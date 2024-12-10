@@ -1,26 +1,21 @@
 import ErrMsg from '@/components/ErrMsg'
 import GameCard from '@/components/GameCard/GameCard'
 import Separator from '@/components/Separator'
-import pool from '@/config/db'
 import list from '@/interfaces/list'
-import user from '@/interfaces/user'
-import { authOptions } from '@/pages/api/auth/[...nextauth]'
 import get from '@/server/get'
 import getFinalGames from '@/util/getFinalGames'
 import getFullGameIGDB from '@/util/getFullGameIGDB'
-import { RowDataPacket } from 'mysql2'
-import { getServerSession } from 'next-auth'
 import Link from 'next/link'
 import React from 'react'
 import getAllGames from './util/getAllGames'
 import DeleteList from './components/DeleteList'
+import myGetServerSession from '@/util/myGetServerSession'
 
 export default async function page({params}:any) 
 {
   try
   {
-    const session = await getServerSession(authOptions)
-    const user = session?.user as user
+    const user = await myGetServerSession()
     const{slug}=params
     const{res:list,err}=JSON.parse(await get({query:"select * from gameList where slug=?",data:[slug]}))
     if(err)return <ErrMsg/>

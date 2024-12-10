@@ -5,7 +5,6 @@ import Button from "./components/Button"
 import { faBookOpen, faLayerGroup } from '@fortawesome/free-solid-svg-icons';
 import { global } from '@/app/context/GlobalContext';
 import LogForm from '@/components/LogForm/LogForm';
-import { useSession } from 'next-auth/react';
 import user from '@/interfaces/user';
 import { gameCard } from '@/components/GameCard/GameCard';
 

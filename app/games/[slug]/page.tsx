@@ -14,6 +14,7 @@ import user from '@/interfaces/user'
 import logGameData from '@/interfaces/logGameData'
 import getReviews from './server/getReviews'
 import { logGameDataDefault } from './util/logGameDataDefault'
+import myGetServerSession from '@/util/myGetServerSession'
 
 
 const TBD = "TBD"
@@ -23,8 +24,8 @@ export default async function page({params}:any)
   const{slug}=params
   const {res} = await igdb({type:"games",query:`where slug="${slug}"; fields *;`}) as {res:Array<igdbResponse>} 
   const generalData= res[0]
-  const session= await getServerSession(authOptions)
-  const user = session?.user as user
+  const user= await myGetServerSession()
+
 
   
   const {
@@ -67,7 +68,7 @@ export default async function page({params}:any)
     }),
     request({type:"release_dates",id:`${release_datesIds.join(",")}`,fields:"human, y"}),
     request({type:"involved_companies",id:`${involved_companiesIds.join(",")}`,fields:"*"}),
-    session ? getGame(`${id}`,user.id) : "null",
+    user ? getGame(`${id}`,user.id) : "null",
     getReviews({gameId:`${id}`})
   ]);
 
