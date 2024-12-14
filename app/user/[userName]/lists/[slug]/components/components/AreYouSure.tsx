@@ -4,13 +4,12 @@ import props from '../interfaces/props'
 import Button from '@/components/Button'
 import { global } from '@/app/context/GlobalContext'
 import {useRouter} from 'next/navigation'
-import useMyUseSession from '@/hooks/useMyUseSession'
 
-export default function AreYouSure({listId,userId}:props) 
+export default function AreYouSure({listId,user}:props) 
 {
    const{setMsg,setPopup,setloadSpinner}=useContext(global)
    const router = useRouter()
-   const user = useMyUseSession()
+
 
    function handleClosePopup()
    {
@@ -21,7 +20,7 @@ export default function AreYouSure({listId,userId}:props)
    {
      e.preventDefault()
      setloadSpinner(true)
-     await deleteList({listId,userId})
+     await deleteList({listId,user})
      setloadSpinner(false)
 
      handleClosePopup()

@@ -10,13 +10,17 @@ import React from 'react'
 import getAllGames from './util/getAllGames'
 import DeleteList from './components/DeleteList'
 import myGetServerSession from '@/util/myGetServerSession'
+import Button from '@/components/Button'
+import authorizeUser from '@/util/authorizeUser'
 
 export default async function page({params}:any) 
 {
   try
   {
-    const user = await myGetServerSession()
-    const{slug}=params
+    const{slug,userName}=params
+    const{res}=await authorizeUser({userName})
+    const{user,authorized}=res[0]
+
     const{res:list,err}=JSON.parse(await get({query:"select * from gameList where slug=?",data:[slug]}))
     if(err)return <ErrMsg/>
 
@@ -51,7 +55,9 @@ export default async function page({params}:any)
 
     return (
       <div>
-        <h1 className="text-[40px] text-[#fff] font-semibold mob:text-[30px] overflow-hidden whitespace-nowrap text-ellipsis">{name}</h1>
+        <h1 className="text-[40px] text-[#fff] font-semibold mob:text-[30px] overflow-hidden whitespace-nowrap text-ellipsis">
+          {name}
+        </h1>
         <p className="text-text4 mb-[.8rem]">{description}</p>
         <div className="flex gap-[2rem] mob0:gap-[1.2rem]">
           <section className="flex-1">
@@ -74,18 +80,28 @@ export default async function page({params}:any)
           <section className="w-[285px] mob0:w-[150px] mob1:w-[100px]">
             <Link
               className="text-text2 font-medium hover:text-[#fff] line-clamp-2 mob0:text-[14px] mob1:text-[12px]"
-              href={`/user/${user.username}`}
+              href={`/user/${userName}`}
             >
-               {user.username}
+              {userName}
             </Link>
             <Separator className="my-[.5rem]" />
-            <Link
-              href={`${slug}/edit`}
-              className="bg-gray3 text-[#fff] rounded-[4px] hover:bg-gray font-medium block text-center px-[12px] py-[6px] mb-[.6rem] mob0:px-[9px] mob0:py-[4px] mob0:text-[14px]"
-            >
-              Edit List
-            </Link>
-            <DeleteList listId={id} userId={user.id}/>
+            {authorized&& (
+              <>
+                <Link
+                  href={`${slug}/edit`}
+                  className="bg-gray3 text-[#fff] rounded-[4px] hover:bg-gray font-medium block text-center px-[12px] py-[6px] mb-[.6rem] mob0:px-[9px] mob0:py-[4px] mob0:text-[14px]"
+                >
+                  Edit List
+                </Link>
+                <DeleteList listId={id} user={user} />
+              </>
+            )}
+            {
+              !user&&
+              <Link href={"/users/login"}>
+               <Button className='w-[100%]'>Loging to create lists</Button>
+              </Link>  
+            }
           </section>
         </div>
       </div>

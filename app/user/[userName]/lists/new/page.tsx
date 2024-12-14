@@ -1,14 +1,14 @@
-import { getServerSession } from "next-auth";
 import ClientContent from "./components/ClientCotent";
-import { authOptions } from "@/pages/api/auth/[...nextauth]";
-import { notFound } from "next/navigation";
-import user from "@/interfaces/user";
+import authorizeUser from "@/util/authorizeUser";
+import NotFound from "@/app/not-found";
 
 
-export default async function page() 
+export default async function page({params}:any) 
 {
-  const session = await getServerSession(authOptions)
-  if(session===null)return notFound()
+  const {res} = await authorizeUser({userName:params.userName})
+  const{authorized,user}=res[0]
+  if(!authorized) return NotFound()
+
  
-  return <ClientContent user={session.user as user}/>
+  return <ClientContent user={user}/>
 }

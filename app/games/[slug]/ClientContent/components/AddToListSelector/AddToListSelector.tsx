@@ -35,7 +35,6 @@ export default function AddToListSelector({user,gameId}:props)
      const formData = new FormData(e.currentTarget)
      const data=Object.values(Object.fromEntries(formData)) 
 
-     console.log(data)
      const requestArr=data.map(async(listId)=>
     {
       const id = listId as string

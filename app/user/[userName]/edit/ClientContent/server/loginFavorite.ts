@@ -2,20 +2,28 @@
 
 import pool from "@/config/db"
 import favoritePosition from "@/types/favoritePosition"
+import authorizeUser from "@/util/authorizeUser"
 import { RowDataPacket } from "mysql2"
 
 interface props 
 {
-    game_id:string
-    user_id:string
-    favorite_position:favoritePosition
-    favorite:boolean
-    slug:string
+  favorite:{game_id:string
+  user_id:string
+  favorite_position:favoritePosition
+  favorite:boolean
+  slug:string}
+  userName:string
+    
 }
 
-export default async function loginFavorite(favorite:props) 
+export default async function loginFavorite({favorite,userName}:props) 
 {
     const{favorite_position,user_id,game_id}=favorite
+
+/*     const{res}=await authorizeUser({userName})
+    const{authorized}=res[0]
+    
+    if(!authorized)return JSON.stringify({res:[],err:"unauthorized"}) */
 
     if(!favorite.favorite)
     {

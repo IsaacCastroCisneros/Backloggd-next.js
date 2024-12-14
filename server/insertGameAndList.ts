@@ -18,7 +18,6 @@ export default async function insertGameAndList({userId,list,listIdFromDb}:props
         
         if(gamesJustAdded.length!==myArr.length)
         {
-          console.log("lolol")
           const arr1 = myArr.map((item) => item[0]);
           const arr2 = [...gamesJustAdded];
 

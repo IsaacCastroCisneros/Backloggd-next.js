@@ -1,21 +1,18 @@
-import { authOptions } from '@/pages/api/auth/[...nextauth]'
 import { faTwitter } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { getServerSession } from 'next-auth'
 import React, { ReactNode } from 'react'
 import getUser from '../server/getUser'
 import ErrMsg from '@/components/ErrMsg'
 import user from '@/interfaces/user'
 import Link from 'next/link'
 import Navbar from './components/Navbar'
-import myGetServerSession from '@/util/myGetServerSession'
+import authorizeUser from '@/util/authorizeUser'
 
 export default async function layout({children,params}:{children:ReactNode,params:any}) 
 {
   const{userName}=params
-  const user = await myGetServerSession()
-
-  const isMyProfile= user.username===userName
+  const{res}=await authorizeUser({userName})
+  const{authorized}=res[0]
 
   try
   {
@@ -38,7 +35,7 @@ export default async function layout({children,params}:{children:ReactNode,param
               {twitter}
             </a>
           </section>
-          {isMyProfile && (
+          {authorized && (
             <Link href={`/user/${userName}/edit`} className="text-[#fff] px-[.2rem] bg-gray3 rounded-[.3rem] mob:text-mobText">
               Edit Profile
             </Link>

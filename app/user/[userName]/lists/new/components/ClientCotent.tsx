@@ -33,7 +33,7 @@ export default function ClientCotent({user}:props)
     try
     {
       setloadSpinner(true)
-      await creatingList({...data,user_id:user.id,lists})
+      await creatingList({...data,user_id:user.id,lists,userName:user.username})
       setloadSpinner(false)
       setMsg({msg:"List Created",type:"success",show:true})
 

@@ -3,9 +3,17 @@
 import pool from '@/config/db'
 import { RowDataPacket } from 'mysql2'
 import props from '../../interfaces/props'
+import authorizeUser from '@/util/authorizeUser'
+import user from '@/interfaces/user'
 
-export default async function deleteList({listId,userId}:props):Promise<string>
+export default async function deleteList({listId,user}:props):Promise<string>
 {
+  const{id:userId,username}=user as user
+  const{res}=await authorizeUser({userName:username})
+  const{authorized}=res[0]
+
+  if(!authorized)return JSON.stringify({res:[],err:"unauthorized"})
+
   try
   {
     const[games]=await pool.query<Array<RowDataPacket>>("select game_id from gameListItem where list_id=?",[listId])

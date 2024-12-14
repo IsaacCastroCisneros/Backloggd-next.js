@@ -2,8 +2,6 @@
 import React from 'react'
 import gameCardData from '../../../../../interfaces/gameCardData'
 import Card from './components/Card'
-import {useSession} from "next-auth/react"
-import user from '@/interfaces/user'
 import NavigationButton from './components/NavigationButton'
 import useMyUseSession from '@/hooks/useMyUseSession'
 

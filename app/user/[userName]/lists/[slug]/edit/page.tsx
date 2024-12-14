@@ -1,61 +1,53 @@
 import React from 'react'
 import ClientContent from './components/ClientContent'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/pages/api/auth/[...nextauth]'
 import { notFound } from 'next/navigation'
 import get from '@/server/get'
-import igdb from '@/util/igdb'
-import listItem from '../../interfaces/listItem'
-import { v4 as uuidv4 } from 'uuid'
-import getAllGames from '../util/getAllGames'
-import user from '@/interfaces/user'
+import gettingIdsFromIgdb from './util/gettingIdsFromIgdb'
+import authorizeUser from '@/util/authorizeUser'
+import NotFound from '@/app/not-found'
+
 
 export default async function page({params}:any) 
 {
-  const{slug}=params
-  const session = await getServerSession(authOptions)
-  if(session===null)return notFound()
-  const{res:list,err}=JSON.parse(await get({query:"select * from gameList where slug=?",data:[slug]})) 
+  const{slug,userName}=params
+  const{res,err}=await authorizeUser({userName})
+  if(err) return NotFound()
+
+  const{authorized,user}=res[0]
+
+  if(!authorized)return NotFound()
+
+  const{res:list}=JSON.parse(await get({query:"select * from gameList where slug=?",data:[slug]})) 
   if(list.length===0)return notFound()
   const listData = list[0]
 
-  const user = session?.user as user
 
   const{res:gameList}=JSON.parse(await get({query:"select * from gameListItem where list_id=?",data:[listData.id]})) 
 
-  const { res: temGames } = JSON.parse(
-    await get({
-      query: "select * from game where id in (?)",
-      data: [gameList.map((game: { game_id: string }) => game.game_id)],
-    })
-  ); 
+  if(gameList.length===0)
+  return (
+    <ClientContent lists={[]} listData={listData} user={user} />
+  )
 
-  const games = getAllGames({temmpGames:temGames,ogGameList:gameList})  
+  const {games,lists} = await gettingIdsFromIgdb(gameList)
+  let finalList= lists
 
-  async function gettingGameData(id:string):Promise<listItem>
+  if(gameList.length!==games.length)
   {
-    const {res} = await igdb({type:"games",query:`where id=${id}; fields *;`})
-    const {cover,name,id:igdbId}= res[0]
+    const counts = gameList.reduce((acc:any, game:any) => {
+      acc[game.game_id] = (acc[game.game_id] || 0) + 1;
+      return acc;
+    }, {});
+    
+    const restOfTheGameLists= gameList.filter((game:any)=> counts[game.game_id] > 1 && counts[game.game_id]-- > 0);
+    
+    const {lists} = await gettingIdsFromIgdb(restOfTheGameLists)
 
-    let finalCover=""
-
-    if(cover)
-    {
-      const {res}= await igdb({type:"covers",query:`where id=${cover}; fields url;`})
-      finalCover = res[0].url
-    }
-
-    return {name,id:igdbId,listId:uuidv4(),cover:finalCover}
+    finalList=[...finalList,...lists]
   }
-
-  const lists = await Promise.all(
-    games.map(async (game: { game_id: string }) =>
-      gettingGameData(game.game_id)
-    )
-  );
 
 
   return (
-    <ClientContent lists={lists} listData={listData} user={user} />
+    <ClientContent lists={finalList} listData={listData} user={user} />
   )
 }

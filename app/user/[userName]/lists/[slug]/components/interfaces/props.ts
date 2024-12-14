@@ -1,5 +1,7 @@
+import user from "@/interfaces/user"
+
 export default interface props
 {
     listId:string
-    userId:string
+    user:user
 }

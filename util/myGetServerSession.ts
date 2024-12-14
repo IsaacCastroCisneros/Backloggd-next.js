@@ -6,7 +6,8 @@ import { getServerSession } from 'next-auth'
 
 export default async function myGetServerSession() 
 {
-    const session= await getServerSession(authOptions)
+    const session:null|{user:user} = await getServerSession(authOptions)
+    if(session===null)return session
     const user = session?.user as user
 
     return user

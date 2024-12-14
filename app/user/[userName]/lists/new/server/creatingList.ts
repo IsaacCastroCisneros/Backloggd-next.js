@@ -4,6 +4,7 @@ import pool from '@/config/db'
 import { RowDataPacket } from 'mysql2'
 import listItem from '../../interfaces/listItem'
 import insertGameAndList from '@/server/insertGameAndList'
+import authorizeUser from '@/util/authorizeUser'
 
 interface props
 {
@@ -12,11 +13,17 @@ interface props
     description:string
     lists:Array<listItem>
     slug:string
+    userName:string
 }
 
 
-export default async function creatingList({lists,user_id,slug,...props}:props):Promise<string> 
+export default async function creatingList({lists,user_id,slug,userName,...props}:props):Promise<string> 
 {
+   const{res}=await authorizeUser({userName})
+   const{authorized}=res[0]
+
+   if(!authorized)return JSON.stringify({res:[],err:"unauthorized"})
+
    try
    {  
      let mySlug = slug 
@@ -28,7 +35,7 @@ export default async function creatingList({lists,user_id,slug,...props}:props):
       const slugArr= mySlug.split("-")
       
       mySlug = [...slugArr, count].join("-");
-    }
+    } 
 
     const [results] =await pool.query<Array<RowDataPacket>>("insert into gameList set ?",{...props,user_id,slug:mySlug})
   

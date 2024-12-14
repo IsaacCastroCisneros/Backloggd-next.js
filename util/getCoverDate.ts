@@ -15,6 +15,5 @@ export default function getCoverDate({games}:{games:Array<Record<any,any>>}):{co
       }
     })
     
-  console.log(coversIds.length)
   return {coversIds:coversIds.join(','),dateIds:dateIds.join(',')}
 }

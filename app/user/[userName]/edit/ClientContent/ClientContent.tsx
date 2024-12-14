@@ -20,6 +20,7 @@ import loginFavorite from './server/loginFavorite'
 import favoritePosition from '../../../../../types/favoritePosition'
 import removingEmptyLogs from './server/removingEmptyLogs'
 import { useRouter } from 'next/navigation'
+import sameUserName from '../../server/sameUserName'
 
 interface props extends user
 {
@@ -58,11 +59,20 @@ export default function ClientContent(props:props)
           return  setMsg({msg:"User's name is needed",type:"fail",show:true})
         }
 
+       const isTheSameUserName = await sameUserName({userName:username as string})
+       if(username!==name)
+       {
+         if(isTheSameUserName)
+          {
+            return  setMsg({msg:"The user's name already exists",type:"fail",show:true})
+          }
+       }
+
        const {initialFavorites,...myProps} = props
 
        setloadSpinner(true) 
 
-       const{err}=JSON.parse(await updateUser({...myProps,...data})) 
+       const{err}=JSON.parse(await updateUser({newUserData:{...myProps,...data},userName:name})) 
     
        const thereIsFavorites = favorites.filter(fav=>fav.id!=="")
         
@@ -80,13 +90,13 @@ export default function ClientContent(props:props)
           })
          
          const favoritesToDB = final.map((fav) =>
-           loginFavorite({
-             game_id: fav.id,
-             favorite: fav.isIn,
-             user_id: idUser,
-             favorite_position: fav.pos,
-             slug:fav.slug
-           })
+           loginFavorite({favorite:{ game_id: fav.id,
+            favorite: fav.isIn,
+            user_id: idUser,
+            favorite_position: fav.pos,
+            slug:fav.slug},
+            userName:name
+           } )
          );
 
         await Promise.all(favoritesToDB);

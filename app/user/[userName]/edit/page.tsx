@@ -11,6 +11,8 @@ import favoritePosition from '@/types/favoritePosition'
 import choosingImgSize from '@/util/choosingImgSize'
 import updatingFavoritesByIndex from './ClientContent/util/updatingFavoritesByIndex'
 import defaulFavorites from './ClientContent/util/defaultFavorites'
+import authorizeUser from '@/util/authorizeUser'
+import NotFound from '@/app/not-found'
 
 
 interface values
@@ -20,9 +22,12 @@ interface values
   bio:string
 }
 
-export default async function page() 
+export default async function page({params}:any) 
 {
-
+  const{res}=await authorizeUser({userName:params.userName})
+  const{authorized}=res[0]
+  
+  if(!authorized)return NotFound()
   
   try
   {
