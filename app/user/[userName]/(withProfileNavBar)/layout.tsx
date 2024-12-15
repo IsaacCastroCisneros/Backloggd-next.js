@@ -7,11 +7,13 @@ import user from '@/interfaces/user'
 import Link from 'next/link'
 import Navbar from './components/Navbar'
 import authorizeUser from '@/util/authorizeUser'
+import NotFound from '@/app/not-found'
 
 export default async function layout({children,params}:{children:ReactNode,params:any}) 
 {
   const{userName}=params
-  const{res}=await authorizeUser({userName})
+  const{res,err}=await authorizeUser({userName})
+  if(err)return NotFound()
   const{authorized}=res[0]
 
   try
