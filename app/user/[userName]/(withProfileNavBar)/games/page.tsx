@@ -9,7 +9,7 @@ export default async function page({params,searchParams}:any)
 {
   const {userName} = params
   const{page:ogPage,type="all"}= searchParams
-
+  
   const page =Number(ogPage||1)
 
   const {res,err} =JSON.parse(await getUser({userName}))

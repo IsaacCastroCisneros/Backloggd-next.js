@@ -41,7 +41,7 @@ export default async function page({params,searchParams}:any)
         ))}
       </div>
       <PaginationPanel
-        path={`/user/${userName}/lists`}
+        path={`/user/${userName}/lists?`}
         maxBypage={12}
         allElements={allLists}
         page={Number(page)}

@@ -65,7 +65,7 @@ export default async function page({params,searchParams}:any)
           <Review {...review}  key={pos}/>
         ))
       }
-      <PaginationPanel allElements={allLists} path={`/user/${userName}/reviews`} page={page} maxBypage={15} />
+      <PaginationPanel allElements={allLists} path={`/user/${userName}/reviews?`} page={page} maxBypage={15} />
     </div>
   )
  return null

@@ -1,8 +1,4 @@
-import React from 'react'
-import getUser from '../../../server/getUser'
 import gameByType from '../interfaces/gameByType'
-import NotFound from '@/app/not-found'
-import user from '@/interfaces/user'
 import getGamesByPage from '@/server/getGamesByPage'
 import getOffset from '@/components/PaginationPanel/util/getOffset'
 import { game } from '@/interfaces/game'

@@ -14,6 +14,7 @@ interface props
   maxBypage:number
   page:number
   path:string
+  customPath?:string
 }
 
 export default function PaginationPanel(myProps:props) 
@@ -28,7 +29,7 @@ export default function PaginationPanel(myProps:props)
     <div className="flex w-full justify-center relative mt-[3.5rem]">
       {page > 1 && (
         <Link
-          href={`${path}?page=${page - 1}`}
+          href={`${path}page=${page - 1}`}
           className="text-text2 absolute left-0"
         >
           <FontAwesomeIcon icon={faChevronLeft} /> <span className='mob:hidden'>Prev</span> 
@@ -57,7 +58,7 @@ export default function PaginationPanel(myProps:props)
       </div>
       {page < pages && (
         <Link
-          href={`${path}?page=${page + 1}`}
+          href={`${path}page=${page + 1}`}
           className="text-text2 absolute right-0"
         >
           <span className='mob:hidden'>

@@ -70,7 +70,7 @@ export default function ClientContent(props:gameByType)
         <PaginationPanel
           maxBypage={40}
           page={page}
-          path="/user/lelosss/games"
+          path={`/user/${userName}/games?type=${type}&`} 
           allElements={Number(quantity)}
         />
       </>

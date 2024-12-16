@@ -1,8 +1,6 @@
 "use server"
 
 import axios from 'axios';
-import gettingIGDBKey from './gettingIGDBKey';
-import { json } from 'stream/consumers';
 
 interface props
 {

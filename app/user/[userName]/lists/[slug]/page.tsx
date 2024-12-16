@@ -9,7 +9,6 @@ import Link from 'next/link'
 import React from 'react'
 import getAllGames from './util/getAllGames'
 import DeleteList from './components/DeleteList'
-import myGetServerSession from '@/util/myGetServerSession'
 import Button from '@/components/Button'
 import authorizeUser from '@/util/authorizeUser'
 
