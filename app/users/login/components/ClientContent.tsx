@@ -3,7 +3,7 @@
 import React,{useContext, useState} from 'react'
 import Form from '../../components/Form'
 import Input from '@/components/Input'
-import { signIn,signOut,SignInResponse } from "next-auth/react"
+import { signIn,SignInResponse } from "next-auth/react"
 import logUser from '@/interfaces/logUser'
 import useErrLIst from '@/hooks/useErrLIst'
 import {login as schema} from "@/util/validations"
@@ -15,8 +15,8 @@ export default function ClientContent()
 {
   const[values,setValues]=useState<logUser>(
     {
-       email:"",
-       password:""
+       email:"isaac@gmail.com",
+       password:"isaac*"
     })
   const errList = useErrLIst({schema,values})
   const [errServer,setErrServer]=useState<Array<string>|null>(null)
@@ -52,8 +52,14 @@ export default function ClientContent()
         isOk={errList === null}
         submit={submittingForm}
       >
+        <div className='p-[.8rem] rounded-[.5rem] bg-myPink3 text-text9'>
+          <strong>User for testing:</strong><br/>
+          -isaac@gmail.com<br/>
+          -isaac*<br/>
+        </div>
         <Input
           name="email"
+          defaultValue="isaac@gmail.com"
           type="email"
           placeholder="Email address"
           msg={errors.email}
@@ -66,6 +72,7 @@ export default function ClientContent()
         <Input
           name="password"
           placeholder="Password"
+          defaultValue="isaac*"
           minLength={6}
           msg={errors.password}
           underText="Minimum 6 characters"

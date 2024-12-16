@@ -7,6 +7,7 @@ import { global } from '@/app/context/GlobalContext';
 import LogForm from '@/components/LogForm/LogForm';
 import user from '@/interfaces/user';
 import { gameCard } from '@/components/GameCard/GameCard';
+import AddToListSelector from '@/components/AddToListSelector/AddToListSelector';
 
 interface props
 {
@@ -42,7 +43,10 @@ export default function Menu({show}:props)
         >
           Edit Log
         </Button>
-        <Button icon={faLayerGroup}>List Entry</Button>
+        {
+          user&&gameCardData&&
+          <Button icon={faLayerGroup} onClick={()=>setPopup({show:true,content:<AddToListSelector gameId={gameCardData.id} user={user}/>,clickOutside:true})}>List Entry</Button>
+        }
       </ul>
     </div>
   );

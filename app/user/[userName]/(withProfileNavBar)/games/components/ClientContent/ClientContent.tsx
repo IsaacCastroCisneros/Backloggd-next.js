@@ -16,7 +16,7 @@ export default function ClientContent(props:gameByType)
 {
 
     const{page,type,userName}=props
-    const{data,isFetching}=useQuery(["gamesByType",props],request,{refetchOnWindowFocus:false})
+    const{data,isLoading}=useQuery(["gamesByType",props],request,{refetchOnWindowFocus:false})
 
     const{finalGames,quantity}=data || {finalGames:[],quantity:""}
 
@@ -27,7 +27,6 @@ export default function ClientContent(props:gameByType)
        
        return res
     }
-
 
     return (
       <>
@@ -41,13 +40,13 @@ export default function ClientContent(props:gameByType)
               />
             ))}
         </div>
-        {!isFetching && (
+        {!isLoading && (
             <span className=" text-text text-[14.4px] block mb-[.6rem]">
             {quantity} Games
             </span>
         )}
         <div className="grid grid-cols-[repeat(auto-fill,minmax(93.59px,1fr))] gap-x-[.5rem] gap-y-[2rem]">
-          {!isFetching && (
+          {!isLoading && (
             <>
               {finalGames.map((game:gameCardData) => (
                 <GameCard
@@ -62,11 +61,11 @@ export default function ClientContent(props:gameByType)
             </>
           )}
         </div>
-        {finalGames.length === 0 &&!isFetching&& (
+        {finalGames.length === 0 &&!isLoading&& (
           <ThereAreNot topic={type === "all" ? "games" : `${type} games`} />
         )}
         {
-           isFetching&&<LoadingSpinner className='mt-0'/>
+           isLoading&&!data&&<LoadingSpinner className='mt-0'/>
         }
         <PaginationPanel
           maxBypage={40}

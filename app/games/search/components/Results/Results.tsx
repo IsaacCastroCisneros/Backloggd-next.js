@@ -19,7 +19,7 @@ export default function Results(props:props)
 {
   const{offset=0,game}=props
   const user = useMyUseSession()
-  const{data:results,isFetching}=useQuery(["gamesByType",props],request,{refetchOnWindowFocus:false})
+  const{data:results,isFetching}=useQuery(["searchResults",props],request,{refetchOnWindowFocus:false})
 
    async function request({queryKey}:any)
     {
@@ -31,9 +31,7 @@ export default function Results(props:props)
 
   return (
     <>
-      {
-        isFetching&&<LoadingSpinner/>
-      }
+      {isFetching &&!results&& <LoadingSpinner />}
       {results && (
         <>
           <div className="flex flex-col gap-[1.8rem] pt-[5rem] mb-[2rem]">
@@ -46,7 +44,12 @@ export default function Results(props:props)
               <NavigationButton game={game} offset={offset} type="prev" />
             )}
             {results.length === 25 && (
-              <NavigationButton game={game} offset={offset} type="next" className='ml-auto' />
+              <NavigationButton
+                game={game}
+                offset={offset}
+                type="next"
+                className="ml-auto"
+              />
             )}
           </div>
           {results.length < 25 && (

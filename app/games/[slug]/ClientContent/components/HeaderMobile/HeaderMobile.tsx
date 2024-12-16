@@ -9,8 +9,8 @@ import { faLayerGroup } from '@fortawesome/free-solid-svg-icons';
 import Item from './components/Item';
 import Separator from '@/components/Separator';
 import { global } from '@/app/context/GlobalContext';
-import AddToListSelector from '../AddToListSelector/AddToListSelector';
 import useMyUseSession from '@/hooks/useMyUseSession';
+import AddToListSelector from '@/components/AddToListSelector/AddToListSelector';
 
 export default function HeaderMobile() 
 {

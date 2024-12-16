@@ -11,6 +11,9 @@ import { global } from '@/app/context/GlobalContext'
 import LogForm from '@/components/LogForm/LogForm'
 import LoginForLogLink from '@/components/LoginForLogLink'
 import useScoreByUser from '@/hooks/useScoreByUser'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faLayerGroup } from '@fortawesome/free-solid-svg-icons'
+import AddToListSelector from '@/components/AddToListSelector/AddToListSelector'
 
 interface props extends gameCardData
 {
@@ -64,20 +67,50 @@ export default function Card(props:props)
         </span>
       </span>
       <div className="flex flex-col ml-auto items-center gap-[.5rem]">
-        {user &&<Score size="normal" slug={slug} user={user} id={id} initialScore={initialScore} />}
+        {user && (
+          <Score
+            size="normal"
+            slug={slug}
+            user={user}
+            id={id}
+            initialScore={initialScore}
+          />
+        )}
         {user && (
           <Button
             className="whitespace-nowrap"
             onClick={() =>
               setPopup({
                 show: true,
-                content: <LogForm {...props} platformsId={platforms} state="byPlatformsIds" user={user} />,
+                content: (
+                  <LogForm
+                    {...props}
+                    platformsId={platforms}
+                    state="byPlatformsIds"
+                    user={user}
+                  />
+                ),
                 clickOutside: false,
               })
             }
           >
             Log or Review
           </Button>
+        )}
+        {user && (
+          <button
+            className="text-text hover:text-[#fff] hover:underline flex gap-[.4rem] items-center mob1:text-[.8rem]"
+            onClick={() =>
+              setPopup({
+                show: true,
+                content: <AddToListSelector user={user} gameId={id} />,
+                clickOutside: true,
+              })
+            }
+          >
+            <span>List entry</span>
+            <FontAwesomeIcon icon={faLayerGroup} />
+          </button>
         )}
         {!user && <LoginForLogLink />}
       </div>

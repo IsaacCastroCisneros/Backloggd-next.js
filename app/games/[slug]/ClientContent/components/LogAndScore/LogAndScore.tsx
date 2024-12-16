@@ -13,7 +13,7 @@ import ButtonLog from '../LeftContainer/components/ButtonLog'
 import { faChevronDown, faGamepad, faPlay } from '@fortawesome/free-solid-svg-icons'
 import useLogButtons from '@/hooks/useLogButtons/useLogButtons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import AddToListSelector from '../AddToListSelector/AddToListSelector'
+import AddToListSelector from '@/components/AddToListSelector/AddToListSelector'
 import useMyUseSession from '@/hooks/useMyUseSession'
 
 
