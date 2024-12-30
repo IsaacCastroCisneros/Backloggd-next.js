@@ -1,8 +1,15 @@
 import React from 'react'
 import ClientContent from './components/ClientContent'
+import get from '@/server/get'
 
-export default function page() {
+export default async function page() 
+{
+  const lol = await get({query:"select * from users"})
+
   return (
-    <ClientContent/>
-  )
+    <>
+      <span className="text-[#fff]">{lol}</span>
+      <ClientContent />
+    </>
+  );
 }
