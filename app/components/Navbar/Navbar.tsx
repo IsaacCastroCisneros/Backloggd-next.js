@@ -49,7 +49,6 @@ export default  function Navbar()
   function handleSingOut()
   {
     signOut()
-    router.push("/")
   }
 
   const {username} = !session ? {username:""}:session.user  
