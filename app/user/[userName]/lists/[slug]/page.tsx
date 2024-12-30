@@ -20,13 +20,13 @@ export default async function page({params}:any)
     const{res}=await authorizeUser({userName})
     const{user,authorized}=res[0]
 
-    const{res:list,err}=JSON.parse(await get({query:"select * from gameList where slug=?",data:[slug]}))
+    const{res:list,err}=JSON.parse(await get({query:"select * from game_list where slug=?",data:[slug]}))
     if(err)return <ErrMsg/>
 
     const{id,name,description}=list[0] as list 
     const { res: gameIds } = JSON.parse(
       await get({
-        query: "select game_id from gameListItem where list_id=?",
+        query: "select game_id from game_list_item where list_id=?",
         data: [id],
       })
     ); 

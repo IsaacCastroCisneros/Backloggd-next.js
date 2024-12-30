@@ -17,12 +17,12 @@ export default async function page({params}:any)
 
   if(!authorized)return NotFound()
 
-  const{res:list}=JSON.parse(await get({query:"select * from gameList where slug=?",data:[slug]})) 
+  const{res:list}=JSON.parse(await get({query:"select * from game_list where slug=?",data:[slug]})) 
   if(list.length===0)return notFound()
   const listData = list[0]
 
 
-  const{res:gameList}=JSON.parse(await get({query:"select * from gameListItem where list_id=?",data:[listData.id]})) 
+  const{res:gameList}=JSON.parse(await get({query:"select * from game_list_item where list_id=?",data:[listData.id]})) 
 
   if(gameList.length===0)
   return (

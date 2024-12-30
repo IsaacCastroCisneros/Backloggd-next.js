@@ -30,7 +30,7 @@ export default async function page({params}:any)
   const fullFavorites:Array<gameCardData> = await getFullGameIGDB({ids})  
   const {res:loggedCount} =JSON.parse(await get({query:"select count(*) from game where user_id=?",data:id})) 
   const gamesLoggedCount = loggedCount[0]["count(*)"]
-  const {res:totalList} =JSON.parse(await get({query:"select count(*) from gameList where user_id=?",data:id})) 
+  const {res:totalList} =JSON.parse(await get({query:"select count(*) from game_list where user_id=?",data:id})) 
   const totalListCount = totalList[0]["count(*)"]
   const {res:totalReviews} =JSON.parse(await get({query:`select count(*) from game where user_id=? and review!=""`,data:id})) 
   const totalReviewsCount = totalReviews[0]["count(*)"]

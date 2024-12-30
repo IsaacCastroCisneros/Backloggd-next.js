@@ -16,8 +16,8 @@ export default async function deleteList({listId,user}:props):Promise<string>
 
   try
   {
-    const[games]=await pool.query<Array<RowDataPacket>>("select game_id from gameListItem where list_id=?",[listId])
-    await pool.query<Array<RowDataPacket>>("delete from gameListItem where list_id=?",[listId])
+    const[games]=await pool.query<Array<RowDataPacket>>("select game_id from game_list_item where list_id=?",[listId])
+    await pool.query<Array<RowDataPacket>>("delete from game_list_item where list_id=?",[listId])
     
     const gamesAboutToDelete = games.map(async(game)=>
     {
@@ -26,7 +26,7 @@ export default async function deleteList({listId,user}:props):Promise<string>
 
     await Promise.all(gamesAboutToDelete)
 
-    await pool.query<Array<RowDataPacket>>("delete from gameList where id=?",[listId])
+    await pool.query<Array<RowDataPacket>>("delete from game_list where id=?",[listId])
 
     return JSON.stringify({res:["success"],err:null})
   }

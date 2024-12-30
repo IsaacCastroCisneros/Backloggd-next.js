@@ -18,11 +18,11 @@ export default async function List({id,name,slug}:props)
 
   const [promise1,promise2] =  await Promise.all([
     get({
-      query: "select * from gameListItem where list_id=? limit 5",
+      query: "select * from game_list_item where list_id=? limit 5",
       data: id,
     }),
     get({
-      query: "select count(*) from gameListItem where list_id=?",
+      query: "select count(*) from game_list_item where list_id=?",
       data: id,
     }),
   ]);

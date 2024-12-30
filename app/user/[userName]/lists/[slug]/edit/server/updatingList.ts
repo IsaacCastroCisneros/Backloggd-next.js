@@ -46,10 +46,10 @@ export default async function updatingList(props:props):Promise<string>
         {
           if(oldL.length>0)
           {
-            const [results] = await pool.query<Array<RowDataPacket>>("select game_id from gameListItem where list_id=?",[id])
+            const [results] = await pool.query<Array<RowDataPacket>>("select game_id from game_list_item where list_id=?",[id])
             const ids = results.map(id=>id.game_id)
   
-            await pool.query<Array<RowDataPacket>>("delete from gameListItem where list_id=?",[id])
+            await pool.query<Array<RowDataPacket>>("delete from game_list_item where list_id=?",[id])
           
             await pool.query<Array<RowDataPacket>>(
               "delete from game where id in (?) and score=? and status=? and review=? and platform=? and favorite=? and favorite_position is null",
@@ -67,7 +67,7 @@ export default async function updatingList(props:props):Promise<string>
           finalSlug= await validateSameSlug({slug,listName:name})
         }
         
-        await pool.query<Array<RowDataPacket>>("update gameList set ? where id=?",[{...finalList,slug:finalSlug},id])
+        await pool.query<Array<RowDataPacket>>("update game_list set ? where id=?",[{...finalList,slug:finalSlug},id])
 
         return JSON.stringify({res:["success"],err:null})
    }

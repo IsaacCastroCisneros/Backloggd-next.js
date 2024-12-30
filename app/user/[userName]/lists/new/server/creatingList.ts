@@ -27,7 +27,7 @@ export default async function creatingList({lists,user_id,slug,userName,...props
    try
    {  
      let mySlug = slug 
-     const [nameCount] =await pool.query<Array<RowDataPacket>>("select count(*) from gameList where name=?",[props.name])
+     const [nameCount] =await pool.query<Array<RowDataPacket>>("select count(*) frlist where name=?",[props.name])
      const count = nameCount[0]["count(*)"]
 
      if(count>0)
@@ -37,7 +37,7 @@ export default async function creatingList({lists,user_id,slug,userName,...props
       mySlug = [...slugArr, count].join("-");
     } 
 
-    const [results] =await pool.query<Array<RowDataPacket>>("insert into gameList set ?",{...props,user_id,slug:mySlug})
+    const [results] =await pool.query<Array<RowDataPacket>>("insert into game_list set ?",{...props,user_id,slug:mySlug})
   
     if(lists.length===0)return JSON.stringify({res:[props,mySlug],err:null})
 
