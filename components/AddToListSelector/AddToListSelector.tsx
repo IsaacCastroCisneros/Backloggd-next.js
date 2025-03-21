@@ -34,7 +34,8 @@ export default function AddToListSelector({user,gameId}:props)
 
      const formData = new FormData(e.currentTarget)
      const data=Object.values(Object.fromEntries(formData)) 
-
+     
+     console.log("hey")
      if(data.length===0)return setMsg({show:true,msg:"Select a list",type:"fail"})
 
      const requestArr=data.map(async(listId)=>
