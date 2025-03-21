@@ -27,7 +27,8 @@ export default async function creatingList({lists,user_id,slug,userName,...props
    try
    {  
      let mySlug = slug 
-     const [nameCount] =await pool.query<Array<RowDataPacket>>("select count(*) frlist where name=?",[props.name])
+     console.log()
+     const [nameCount] =await pool.query<Array<RowDataPacket>>("select count(*) from game_list where name=?",[props.name])
      const count = nameCount[0]["count(*)"]
 
      if(count>0)
