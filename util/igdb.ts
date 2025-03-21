@@ -17,7 +17,7 @@ export default async function igdb({type,query=""}:props):Promise<{res:Array<any
      {
         'Accept': 'application/json',
         'Client-ID' : 'h8j1a9qs3atk4blop7oiz3yvouv5py',
-        'Authorization' :  'Bearer i7hi10f7lxb7cez73yxfeeqed7b1sm', 
+        'Authorization' :  'Bearer 1ci0tu1a9tm1tubm2v549mwhgmlase', 
      }
    }
    try
