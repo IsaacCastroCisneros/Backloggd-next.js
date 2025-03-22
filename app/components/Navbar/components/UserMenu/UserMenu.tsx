@@ -19,7 +19,7 @@ export default function UserMenu({username,handleSingOut}:props)
   return (
     <>
       <ul
-        className={`relative rounded-[.4rem_.4rem_0_0] ${
+        className={`relative rounded-[.4rem_.4rem_0_0] mob:hidden ${
           show ? "bg-gray3" : ""
         }`}
         onMouseEnter={() => setShow(true)}

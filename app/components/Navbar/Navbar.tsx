@@ -69,7 +69,7 @@ export default  function Navbar()
             Backloggd
           </Link>
         )}
-        <div className="flex gap-[.8rem] mob:hidden">
+        <div className="flex gap-[.8rem]">
           {session && (
             <UserMenu username={username} handleSingOut={handleSingOut} />
           )}
@@ -80,17 +80,20 @@ export default  function Navbar()
             </ul>
           )}
           <Searcher
+            props={{div:{className:"mob:hidden"}}}
             submittingForm={submittingForm}
             params={params}
             setParams={setParams}
           />
         </div>
-        <button
-          className="hidden mob:block text-text3 px-[.5rem] py-[.3rem] rounded-[.3rem] border-[1px] border-border"
-          onClick={handleToggleHeigth}
-        >
-          <FontAwesomeIcon icon={faBars} size="xl" />
-        </button>
+        {session !== null && (
+          <button
+            className="hidden mob:block text-text3 px-[.5rem] py-[.3rem] rounded-[.3rem] border-[1px] border-border"
+            onClick={handleToggleHeigth}
+          >
+            <FontAwesomeIcon icon={faBars} size="xl" />
+          </button>
+        )}
       </nav>
       <div
         className="duration-200 overflow-hidden"
