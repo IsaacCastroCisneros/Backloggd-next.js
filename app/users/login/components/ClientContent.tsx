@@ -34,6 +34,7 @@ export default function ClientContent()
     }) as SignInResponse
     setLoading(false)
     console.log(error)
+    console.log(process.env.DB_HOST)
 
     if(error)return setErrServer(JSON.parse(error).errors)
     setMsg({show:true,type:'success',msg:"You are in"}) 
