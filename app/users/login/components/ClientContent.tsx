@@ -33,6 +33,7 @@ export default function ClientContent()
       redirect: false,
     }) as SignInResponse
     setLoading(false)
+    console.log(error)
 
     if(error)return setErrServer(JSON.parse(error).errors)
     setMsg({show:true,type:'success',msg:"You are in"}) 
